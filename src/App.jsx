@@ -3,6 +3,7 @@ import useLang from "./hooks/useLang.js";
 import T from "./data/translations.js";
 import { WA_NUMBER } from "./data/facilities.js";
 import { useState } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import Nav        from "./components/Nav.jsx";
 import Home       from "./components/Home.jsx";
@@ -44,6 +45,8 @@ export default function App() {
       >
         💬
       </a>
+      
+      <SpeedInsights />
     </div>
   );
 }

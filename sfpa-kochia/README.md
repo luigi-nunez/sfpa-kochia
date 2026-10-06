@@ -1,0 +1,41 @@
+# Kochia — SFPA Digital Health PWA
+
+Bilingual (Arabic/English) sexual and reproductive health gateway for SFPA Sudan.
+
+## Stack
+
+- React 18 + Vite 5
+- vite-plugin-pwa (Workbox, offline-ready)
+- Zero runtime dependencies beyond React
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+## Deploy to Vercel via GitHub
+
+1. Push this repository to GitHub.
+2. In Vercel: **Add New Project → Import Git Repository**.
+3. Framework preset: **Vite**. Build command: `npm run build`. Output: `dist`.
+4. Deploy. All SPA routing is handled by `vercel.json`.
+
+## Customisation checklist before go-live
+
+| Item | File | Field |
+|------|------|-------|
+| WhatsApp number | `src/data/facilities.js` | `WA_NUMBER` |
+| Facility coordinates | `src/data/facilities.js` | `FACILITIES` array |
+| Organisation name | `src/data/translations.js` | `orgName` |
+| PWA app name | `vite.config.js` | `manifest.name` |
+| Theme colour | `vite.config.js` | `manifest.theme_color` |
+| App icons | `public/icons/` | Replace `icon-192.png`, `icon-512.png` |
+
+## Architecture notes
+
+- All translatable strings live in `src/data/translations.js` — white-label by editing one file.
+- Content (articles, videos, tools, FAQs) lives in `src/data/` — swap without touching components.
+- Components are stateless where possible; state lives in `App.jsx`.
+- RTL layout is driven by a `dir` attribute on the root element; no CSS duplication needed.

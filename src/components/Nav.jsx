@@ -1,67 +1,64 @@
-// Consolidated nav — 5 tabs on desktop/mobile (Resources replaces separate Info+Videos)
-export default function Nav({ tab, setTab, lang, setLang, t }) {
-  const NAV = [
-    { id: "home",      label: t.nav.home,      emoji: "🏠" },
-    { id: "resources", label: t.nav.resources, emoji: "📚" },
-    { id: "tools",     label: t.nav.tools,     emoji: "🔧" },
-    { id: "faq",       label: t.nav.faq,       emoji: "💬" },
-    { id: "facilities",label: t.nav.facilities,emoji: "📍" },
-  ];
+import { T } from "../data/translations.js";
 
-  const Logo = () => (
-    <div className="logo-wrap">
-      <div className="logo-circle">K</div>
-      <div>
-        <div className="logo-name">{t.appName}</div>
-        <div className="logo-sub">{t.orgName}</div>
-      </div>
-    </div>
-  );
+const TABS = [
+  { id: "home",      icon: "🏠" },
+  { id: "resources", icon: "📖" },
+  { id: "tools",     icon: "🩺" },
+  { id: "faq",       icon: "💬" },
+  { id: "facilities",icon: "📍" },
+];
 
-  const LangToggle = () => (
-    <div className="lang-toggle">
-      <button className={`lang-btn ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")}>EN</button>
-      <button className={`lang-btn ${lang === "ar" ? "active" : ""}`} onClick={() => setLang("ar")}>عر</button>
-    </div>
+// SFPA logo mark — simplified people figures + red circle (SVG inline)
+function SfpaLogoMark() {
+  return (
+    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      {/* Red circle accent */}
+      <circle cx="20" cy="6" r="5" fill="#CC2200" />
+      {/* People figures */}
+      <circle cx="8"  cy="10" r="3"   fill="#0D1F6E" />
+      <circle cx="16" cy="10" r="3"   fill="#0D1F6E" />
+      <path d="M3 22 Q5 15 8 15 Q11 15 13 22"  fill="#0D1F6E" />
+      <path d="M11 22 Q13 15 16 15 Q19 15 21 22" fill="#0D1F6E" />
+    </svg>
   );
+}
+
+export default function Nav({ tab, setTab, lang, onToggleLang }) {
+  const t = T[lang];
 
   return (
     <>
-      {/* Desktop */}
-      <nav className="desktop-nav">
-        <div className="desktop-nav-inner">
-          <Logo />
-          <div className="desktop-nav-tabs">
-            {NAV.map(n => (
-              <button
-                key={n.id}
-                className={`desk-tab ${tab === n.id ? "active" : ""}`}
-                onClick={() => setTab(n.id)}
-              >
-                <span>{n.emoji}</span>{n.label}
-              </button>
-            ))}
+      {/* Top bar */}
+      <header className="nav-top">
+        <div className="nav-logo">
+          <div className="nav-logo-mark">
+            <SfpaLogoMark />
           </div>
-          <LangToggle />
+          <div className="nav-org">
+            <span className="nav-org-en">SFPA · {t.appName}</span>
+            <span className="nav-org-ar">{t.orgName}</span>
+          </div>
         </div>
-      </nav>
+        <button
+          className="nav-lang-btn"
+          onClick={onToggleLang}
+          aria-label="Switch language"
+        >
+          {lang === "ar" ? "EN" : "ع"}
+        </button>
+      </header>
 
-      {/* Mobile topbar */}
-      <div className="mob-topbar">
-        <Logo />
-        <LangToggle />
-      </div>
-
-      {/* Mobile bottom nav */}
-      <nav className="mobile-nav">
-        {NAV.map(n => (
+      {/* Bottom tab bar */}
+      <nav className="nav-bottom" aria-label="Main navigation">
+        {TABS.map(({ id, icon }) => (
           <button
-            key={n.id}
-            className={`mob-btn ${tab === n.id ? "active" : ""}`}
-            onClick={() => setTab(n.id)}
+            key={id}
+            className={`nav-tab${tab === id ? " active" : ""}`}
+            onClick={() => setTab(id)}
+            aria-current={tab === id ? "page" : undefined}
           >
-            <span className="mob-icon">{n.emoji}</span>
-            <span>{n.label}</span>
+            <span className="nav-icon" aria-hidden="true">{icon}</span>
+            <span>{t.nav[id]}</span>
           </button>
         ))}
       </nav>

@@ -1,24 +1,103 @@
-const FAQS = {
+export const faqs = {
   en: [
-    { id: "f1", cat: "fp",     q: "Can I get pregnant while breastfeeding?",                  a: "Yes — breastfeeding is not a reliable contraceptive method. The Lactational Amenorrhoea Method (LAM) requires exclusive breastfeeding, no period, and a baby under 6 months. If any condition is not met, use another contraceptive method." },
-    { id: "f2", cat: "fp",     q: "How soon can I become pregnant after stopping the pill?",  a: "Fertility typically returns within 1–3 months after stopping combined oral contraceptives, though some women conceive immediately. The pill does not affect long-term fertility. If you do not want to become pregnant, start another method right away." },
-    { id: "f3", cat: "anc",    q: "How many antenatal visits are recommended?",               a: "WHO recommends a minimum of 8 antenatal care contacts — ideally at weeks 12, 20, 26, 30, 34, 36, 38, and 40. More visits may be needed if complications arise. SFPA clinics provide full ANC services." },
-    { id: "f4", cat: "sti",    q: "Can I have an STI without any symptoms?",                  a: "Yes. Many STIs — including chlamydia, gonorrhoea, herpes, and HIV — can be completely asymptomatic. Regular testing is important, especially after unprotected sex. SFPA clinics offer confidential, free STI testing." },
-    { id: "f5", cat: "gbv",    q: "What should I do immediately after a sexual assault?",     a: "Go to the nearest health facility or SFPA clinic as quickly as possible. Emergency contraception (within 72 hours), post-exposure prophylaxis for HIV (within 72 hours), injury treatment, and psychosocial support are all available. You are not required to report to police to receive medical care." },
-    { id: "f6", cat: "cancer", q: "When should I start cervical cancer screening?",           a: "WHO recommends starting cervical screening at age 25, every 3–5 years for women with no abnormal results. Visit an SFPA clinic to find out what is right for you." },
-    { id: "f7", cat: "mental", q: "Is anxiety during pregnancy normal?",                      a: "Mild worry is normal, but persistent anxiety or panic attacks that interfere with daily life are worth discussing with a provider. SFPA counsellors can provide support or refer you to a specialist." },
-    { id: "f8", cat: "fp",     q: "Does the emergency contraceptive pill cause an abortion?", a: "No. Emergency contraception prevents pregnancy by delaying or stopping ovulation. If fertilisation has already occurred, it will not terminate the pregnancy. It must be taken as early as possible — ideally within 72 hours." },
+    {
+      id: "conf",
+      cat: "Confidentiality",
+      q: "Are SFPA services really confidential?",
+      a: "Yes. SFPA is committed to strict confidentiality. Information you share with SFPA counsellors or health providers is not disclosed to third parties — including family members — without your explicit consent. Your privacy is a right, not a favour.",
+    },
+    {
+      id: "cost",
+      cat: "Access & Cost",
+      q: "How much do SFPA services cost?",
+      a: "Most SFPA services — including contraception, counselling, STI testing, and antenatal care — are provided free of charge or at very low cost. Speak to the branch team about any fees. No one is turned away for inability to pay.",
+    },
+    {
+      id: "who",
+      cat: "Access & Cost",
+      q: "Who can access SFPA services?",
+      a: "SFPA serves all community members regardless of age, marital status, or background. Young people, single individuals, and married couples are all welcome. Services are non-judgmental and respectful.",
+    },
+    {
+      id: "ec-abortion",
+      cat: "Contraception",
+      q: "Is emergency contraception the same as abortion?",
+      a: "No. Emergency contraception (the morning-after pill) prevents pregnancy by delaying or preventing ovulation. It does not end an existing pregnancy and is not an abortifacient. It must be taken within 72–120 hours after unprotected sex.",
+    },
+    {
+      id: "iud-pain",
+      cat: "Contraception",
+      q: "Does IUD insertion hurt?",
+      a: "You may feel cramping or discomfort during and shortly after IUD insertion, similar to strong period cramps. This usually passes within a day or two. SFPA providers take care to make the procedure as comfortable as possible and will talk you through each step.",
+    },
+    {
+      id: "sti-nosy",
+      cat: "STI / HIV",
+      q: "If I test positive for an STI, will anyone be told?",
+      a: "SFPA handles all test results with strict confidentiality. In some cases, counsellors will discuss partner notification with you — but the decision remains yours. No one outside the clinical care team will be informed without your consent.",
+    },
+    {
+      id: "hiv-life",
+      cat: "STI / HIV",
+      q: "Is HIV a death sentence?",
+      a: "No. HIV is a manageable chronic condition. With antiretroviral therapy (ART), people living with HIV can live long, healthy lives. Early diagnosis and consistent treatment are key. SFPA provides HIV counselling and testing, and refers to treatment services.",
+    },
+    {
+      id: "gbv-anon",
+      cat: "GBV Support",
+      q: "Can I report GBV and remain anonymous?",
+      a: "You can speak with an SFPA counsellor about your experience without making a formal report. Counsellors will not report your case to authorities without your consent. If you choose to pursue legal action, SFPA can support you through that process.",
+    },
   ],
+
   ar: [
-    { id: "f1", cat: "fp",     q: "هل يمكنني الحمل أثناء الرضاعة الطبيعية؟",                     a: "نعم — الرضاعة الطبيعية ليست طريقة موثوقة لمنع الحمل. طريقة رضاعة الثدي واللاطمث تتطلب الرضاعة الحصرية وعدم وجود دورة شهرية وطفل عمره أقل من 6 أشهر. إذا لم تتحقق أي شرط، استخدمي طريقة أخرى." },
-    { id: "f2", cat: "fp",     q: "كم من الوقت يستغرق عودة الخصوبة بعد إيقاف الحبوب؟",          a: "تعود الخصوبة عادةً خلال 1–3 أشهر. الحبوب لا تؤثر على الخصوبة طويلة المدى. إذا لم ترغبي في الحمل، ابدئي باستخدام طريقة أخرى فوراً." },
-    { id: "f3", cat: "anc",    q: "كم عدد جلسات رعاية ما قبل الولادة الموصى بها؟",              a: "توصي منظمة الصحة العالمية بحد أدنى 8 جلسات. قد تكون هناك حاجة لزيارات إضافية في حالة حدوث مضاعفات. تقدم عيادات الجمعية خدمات رعاية كاملة." },
-    { id: "f4", cat: "sti",    q: "هل يمكنني الإصابة بمرض منقول جنسياً دون أي أعراض؟",         a: "نعم. العديد من الأمراض المنقولة جنسياً يمكن أن تكون بلا أعراض. الاختبار المنتظم مهم. تقدم عيادات الجمعية اختبارات سرية ومجانية." },
-    { id: "f5", cat: "gbv",    q: "ماذا يجب أن أفعل فوراً بعد الاعتداء الجنسي؟",               a: "اذهبي إلى أقرب منشأة صحية في أسرع وقت. منع الحمل الطارئ والعلاج الوقائي للإيدز وعلاج الإصابات والدعم النفسي — كلها متاحة. لستِ مضطرة للإبلاغ للشرطة لتلقي الرعاية." },
-    { id: "f6", cat: "cancer", q: "متى يجب أن أبدأ فحص سرطان عنق الرحم؟",                     a: "توصي منظمة الصحة العالمية ببدء الفحص في سن 25، كل 3–5 سنوات. زوري عيادة الجمعية لمعرفة ما يناسبك." },
-    { id: "f7", cat: "mental", q: "هل القلق أثناء الحمل طبيعي؟",                               a: "القلق الخفيف طبيعي، لكن القلق المستمر أو نوبات الهلع تستحق المناقشة مع مقدم رعاية صحية. مستشارو الجمعية يمكنهم تقديم الدعم أو الإحالة لمتخصص." },
-    { id: "f8", cat: "fp",     q: "هل تسبب حبوب منع الحمل الطارئة إجهاضاً؟",                  a: "لا. تمنع حبوب منع الحمل الطارئة الحمل عن طريق تأخير الإباضة. إذا كان الإخصاب قد حدث فلن تنهي الحمل. يجب تناولها في أقرب وقت — مثالياً خلال 72 ساعة." },
+    {
+      id: "conf",
+      cat: "السرية",
+      q: "هل خدمات الجمعية سرية فعلًا؟",
+      a: "نعم. تلتزم الجمعية بالسرية التامة. المعلومات التي تشاركينها مع مستشاري الجمعية أو مقدمي الرعاية الصحية لا تُكشف لأطراف ثالثة — بما فيهم أفراد العائلة — دون موافقتك الصريحة. خصوصيتك حق وليست منّة.",
+    },
+    {
+      id: "cost",
+      cat: "الوصول والتكلفة",
+      q: "كم تكلف خدمات الجمعية؟",
+      a: "معظم خدمات الجمعية — بما في ذلك منع الحمل والاستشارات وفحوصات الأمراض المنقولة جنسيًا ورعاية ما قبل الولادة — مقدمة مجانًا أو بتكلفة منخفضة جدًا. تحدثي مع فريق الفرع بشأن أي رسوم. لا يُرفض أحد بسبب عدم القدرة على الدفع.",
+    },
+    {
+      id: "who",
+      cat: "الوصول والتكلفة",
+      q: "من يمكنه الوصول إلى خدمات الجمعية؟",
+      a: "تخدم الجمعية جميع أفراد المجتمع بغض النظر عن العمر أو الحالة الاجتماعية أو الخلفية. الشباب والأفراد غير المتزوجين والأزواج المتزوجون جميعهم مرحب بهم. الخدمات غير محكومة بالأحكام المسبقة ومحترمة.",
+    },
+    {
+      id: "ec-abortion",
+      cat: "منع الحمل",
+      q: "هل منع الحمل الطارئ هو نفسه الإجهاض؟",
+      a: "لا. يمنع منع الحمل الطارئ (حبة اليوم التالي) الحمل عن طريق تأخير أو منع الإباضة. لا ينهي حملًا قائمًا وليس وسيلة للإجهاض. يجب تناوله خلال ٧٢–١٢٠ ساعة بعد الجماع غير المحمي.",
+    },
+    {
+      id: "iud-pain",
+      cat: "منع الحمل",
+      q: "هل تركيب اللولب مؤلم؟",
+      a: "قد تشعرين بتشنج أو انزعاج أثناء تركيب اللولب وبعده مباشرة، مشابه لتشنجات الدورة الشهرية الشديدة. عادةً ما يمر هذا خلال يوم أو يومين. يحرص مقدمو الرعاية في الجمعية على جعل الإجراء مريحًا قدر الإمكان وسيشرحون لكِ كل خطوة.",
+    },
+    {
+      id: "sti-nosy",
+      cat: "الأمراض المنقولة جنسيًا / فيروس نقص المناعة",
+      q: "إذا كانت نتيجة فحصي إيجابية، هل سيُخبر أحد؟",
+      a: "تتعامل الجمعية مع جميع نتائج الفحوصات بسرية تامة. في بعض الحالات، سيناقش المستشارون معكِ إخطار الشريك — لكن القرار يبقى لكِ. لن يُبلَّغ أحد خارج فريق الرعاية السريرية دون موافقتكِ.",
+    },
+    {
+      id: "hiv-life",
+      cat: "الأمراض المنقولة جنسيًا / فيروس نقص المناعة",
+      q: "هل الإصابة بفيروس نقص المناعة حكم بالإعدام؟",
+      a: "لا. فيروس نقص المناعة البشرية حالة مزمنة قابلة للإدارة. مع العلاج المضاد للفيروسات القهقرية، يمكن للأشخاص المصابين العيش حياة طويلة وصحية. التشخيص المبكر والعلاج المنتظم هما المفتاحان. تقدم الجمعية استشارات وفحوصات لفيروس نقص المناعة وتحيل إلى خدمات العلاج.",
+    },
+    {
+      id: "gbv-anon",
+      cat: "دعم العنف",
+      q: "هل يمكنني الإبلاغ عن العنف والبقاء مجهولة الهوية؟",
+      a: "يمكنك التحدث مع مستشار الجمعية حول تجربتك دون تقديم بلاغ رسمي. لن يُبلّغ المستشارون عن حالتك للسلطات دون موافقتكِ. إذا اخترتِ اتخاذ إجراءات قانونية، يمكن للجمعية دعمك خلال تلك العملية.",
+    },
   ],
 };
-
-export default FAQS;

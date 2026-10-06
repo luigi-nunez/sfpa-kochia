@@ -1,70 +1,82 @@
+import { WA_NUMBER, CALL_CENTRE_NUMBER, waUrl, isPlaceholder } from "../config.js";
 import { T } from "../data/translations.js";
 
 const CARDS = [
-  { tab: "resources", icon: "📖", descKey: "heroTitle" },
-  { tab: "tools",     icon: "🩺", descKey: "toolsIntro" },
-  { tab: "faq",       icon: "💬", descKey: "disclaimer" },
-  { tab: "facilities",icon: "📍", descKey: "searchPlaceholder" },
+  { tab: "resources",  icon: "📖" },
+  { tab: "tools",      icon: "🩺" },
+  { tab: "faq",        icon: "💬" },
+  { tab: "facilities", icon: "📍" },
 ];
-
-const CARD_DESCS = {
-  en: {
-    resources:  "Articles and videos on family planning, STIs, maternal health, and more.",
-    tools:      "Quick self-check tools for contraception, pregnancy, and STI guidance.",
-    faq:        "Answers to common questions about SFPA services and reproductive health.",
-    facilities: "Find your nearest SFPA clinic and get in touch directly.",
-  },
-  ar: {
-    resources:  "مقالات وفيديوهات حول تنظيم الأسرة والأمراض الجنسية وصحة الأم والمزيد.",
-    tools:      "أدوات فحص ذاتي سريعة لمنع الحمل والحمل وإرشادات الأمراض الجنسية.",
-    faq:        "إجابات على الأسئلة الشائعة حول خدمات الجمعية والصحة الإنجابية.",
-    facilities: "ابحث عن أقرب عيادة للجمعية وتواصل مباشرة.",
-  },
-};
 
 export default function Home({ lang, setTab }) {
   const t = T[lang];
-  const descs = CARD_DESCS[lang];
+  const callPh = isPlaceholder(CALL_CENTRE_NUMBER);
+  const waPh   = isPlaceholder(WA_NUMBER);
 
   return (
     <div>
-      {/* Hero */}
-      <section className="home-hero">
+      <section className="hero">
         <div className="hero-badge">🔒 {t.heroBadge}</div>
         <h1>{t.heroTitle}</h1>
         <p className="hero-sub">{t.heroSub}</p>
-        <div className="hero-sfpa-tag">
-          <span className="sfpa-dot" />
-          <span className="sfpa-tagline">{t.sfpaTagline}</span>
+        <div className="hero-conf">
+          <span className="hero-conf-icon" aria-hidden="true">🔐</span>
+          <span>{t.heroConfidentiality}</span>
         </div>
       </section>
 
-      {/* Confidentiality banner */}
-      <div className="home-banner" role="note">
-        <span className="banner-icon">🔐</span>
-        <span className="banner-text">{t.heroBannerText}</span>
+      <div className="get-support" role="complementary" aria-label={t.getSupportTitle}>
+        <div className="get-support-title">{t.getSupportTitle}</div>
+        <div className="support-actions">
+          {waPh
+            ? <button className="support-btn" disabled style={{ opacity: 0.55, cursor: "default" }}
+                aria-label={`${t.getSupportWA} — ${t.getSupportPlaceholder}`}>
+                <div className="support-btn-icon wa" aria-hidden="true">💬</div>
+                <div className="support-btn-label">{t.getSupportWA}</div>
+                <span className="support-btn-arrow" aria-hidden="true">›</span>
+              </button>
+            : <a className="support-btn" href={waUrl(lang)} target="_blank" rel="noopener noreferrer"
+                aria-label={t.getSupportWA}>
+                <div className="support-btn-icon wa" aria-hidden="true">💬</div>
+                <div className="support-btn-label">{t.getSupportWA}</div>
+                <span className="support-btn-arrow" aria-hidden="true">›</span>
+              </a>
+          }
+          {callPh
+            ? <button className="support-btn" disabled style={{ opacity: 0.55, cursor: "default" }}
+                aria-label={`${t.getSupportCall} — ${t.getSupportPlaceholder}`}>
+                <div className="support-btn-icon call" aria-hidden="true">📞</div>
+                <div className="support-btn-label">{t.getSupportCall}</div>
+                <span className="support-btn-arrow" aria-hidden="true">›</span>
+              </button>
+            : <a className="support-btn" href={`tel:+${CALL_CENTRE_NUMBER}`}
+                aria-label={t.getSupportCall}>
+                <div className="support-btn-icon call" aria-hidden="true">📞</div>
+                <div className="support-btn-label">{t.getSupportCall}</div>
+                <span className="support-btn-arrow" aria-hidden="true">›</span>
+              </a>
+          }
+          <button className="support-btn" onClick={() => setTab("facilities")} aria-label={t.getSupportClinic}>
+            <div className="support-btn-icon loc" aria-hidden="true">📍</div>
+            <div className="support-btn-label">{t.getSupportClinic}</div>
+            <span className="support-btn-arrow" aria-hidden="true">›</span>
+          </button>
+        </div>
+        {(waPh || callPh) && <div className="support-placeholder">{t.getSupportPlaceholder}</div>}
       </div>
 
-      {/* Navigation cards */}
-      <div className="home-grid">
+      <div className="home-grid" role="navigation" aria-label="Main sections">
         {CARDS.map(({ tab, icon }) => (
-          <button
-            key={tab}
-            className="nav-card"
-            onClick={() => setTab(tab)}
-            aria-label={t.nav[tab]}
-          >
+          <button key={tab} className="nav-card" onClick={() => setTab(tab)}
+            aria-label={`${t.nav[tab]}: ${t.cardDescs[tab]}`}>
             <div className="card-icon" aria-hidden="true">{icon}</div>
             <h3>{t.nav[tab]}</h3>
-            <p>{descs[tab]}</p>
+            <p>{t.cardDescs[tab]}</p>
           </button>
         ))}
       </div>
 
-      {/* Footer */}
-      <footer style={{ textAlign: "center", padding: "16px 16px 8px", fontSize: "11px", color: "var(--grey-400)" }}>
-        {t.footerText}
-      </footer>
+      <div className="home-footer" aria-label="Footer">{t.footer}</div>
     </div>
   );
 }

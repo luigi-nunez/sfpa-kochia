@@ -1,29 +1,35 @@
-import { useEffect } from "react";
+import { useRef, useEffect } from "react";
 
 export default function Modal({ title, onClose, children }) {
-  // Lock scroll while modal is open
+  const closeRef = useRef(null);
+
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
+    closeRef.current?.focus();
+    const onKey = e => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
   }, []);
 
-  // Close on backdrop click
-  function handleOverlay(e) {
-    if (e.target === e.currentTarget) onClose();
-  }
-
   return (
-    <div className="modal-overlay" onClick={handleOverlay} role="dialog" aria-modal="true" aria-label={title}>
-      <div className="modal-sheet">
-        <div className="modal-handle" aria-hidden="true" />
-        <div className="modal-header">
-          <h2 className="modal-title">{title}</h2>
-          <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
+    <div
+      className="overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      onClick={e => e.target === e.currentTarget && onClose()}
+    >
+      <div className="sheet">
+        <div className="sheet-handle" aria-hidden="true" />
+        <div className="sheet-hdr">
+          <h2 className="sheet-title">{title}</h2>
+          <button className="close-btn" onClick={onClose} ref={closeRef} aria-label="Close">✕</button>
         </div>
-        <div className="modal-body">
-          {children}
-        </div>
+        <div className="sheet-body">{children}</div>
       </div>
     </div>
   );

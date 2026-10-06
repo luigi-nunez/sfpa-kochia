@@ -1,138 +1,97 @@
 import { useState } from "react";
-import Modal from "./Modal.jsx";
 import { T } from "../data/translations.js";
-import { tools } from "../data/tools.js";
-import { WA_NUMBER } from "../data/facilities.js";
-
-function waUrl(toolTitle, lang) {
-  const body = lang === "ar"
-    ? `مرحبًا، أحتاج إلى معلومات حول: ${toolTitle}`
-    : `Hello, I need information about: ${toolTitle}`;
-  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(body)}`;
-}
+import { TOOLS } from "../data/tools.js";
+import Modal from "./Modal.jsx";
+import GetSupportInline from "./GetSupportInline.jsx";
 
 function ProgressDots({ total, current }) {
   return (
-    <div className="tool-progress" aria-hidden="true">
+    <div className="progress-dots" role="progressbar"
+      aria-valuenow={current + 1} aria-valuemax={total} aria-valuemin={1}>
       {Array.from({ length: total }).map((_, i) => (
-        <div
-          key={i}
-          className={`progress-dot${i < current ? " done" : i === current ? " active" : ""}`}
-        />
+        <div key={i} className={`dot${i < current ? " done" : i === current ? " active" : ""}`} />
       ))}
     </div>
   );
 }
 
-function ToolQuestionnaire({ tool, lang, onClose }) {
-  const t = T[lang];
-  const [stepIdx, setStepIdx] = useState(0);
-  const [result, setResult]   = useState(null);
-
-  const step = tool.steps[stepIdx];
+function ToolQ({ tool, t, lang, onClose, onFindClinic }) {
+  const [step, setStep]     = useState(0);
+  const [result, setResult] = useState(null);
 
   function pick(opt) {
-    if (opt.next === "result") {
-      setResult(opt.result);
-    } else {
-      setStepIdx(opt.next);
-    }
+    if (opt.next === "result") setResult(opt.result);
+    else setStep(opt.next);
   }
 
-  function reset() {
-    setStepIdx(0);
-    setResult(null);
+  if (result) {
+    return (
+      <div>
+        <div className={`result-box${result.type === "warning" ? " warn" : ""}`} role="status">
+          <div className="result-label">{result.type === "warning" ? "⚠ " : "✓ "}{result.title}</div>
+          <p style={{ whiteSpace: "pre-line" }}>{result.body}</p>
+        </div>
+        {result.showSupport && (
+          <GetSupportInline t={t} lang={lang}
+            onFindClinic={result.showClinic ? () => { onClose(); onFindClinic(); } : null}
+            showWA={true} showCall={true} showClinic={!!result.showClinic} />
+        )}
+        <button className="cancel-btn" style={{ marginTop: 14 }}
+          onClick={() => { setStep(0); setResult(null); }}>{t.startOver}</button>
+        <button className="cancel-btn" onClick={onClose}>{t.cancel}</button>
+        <p className="disclaimer">{t.disclaimer}</p>
+      </div>
+    );
   }
-
-  return (
-    <>
-      {!result ? (
-        <div className="tool-q">
-          <ProgressDots total={tool.steps.length} current={stepIdx} />
-          <h3>{step.q}</h3>
-          <div className="tool-options">
-            {step.opts.map((opt, i) => (
-              <button key={i} className="tool-opt" onClick={() => pick(opt)}>
-                {opt.label}
-              </button>
-            ))}
-          </div>
-          <button className="tool-cancel" onClick={onClose}>{t.cancel}</button>
-        </div>
-      ) : (
-        <div>
-          <div className={`tool-result${result.type === "warning" ? " warning" : ""}`}>
-            <div className="result-label">
-              {result.type === "warning" ? "⚠️ " : "✅ "}
-              {result.title}
-            </div>
-            <p>{result.body}</p>
-            {result.showWA && (
-              <div className="wa-cta">
-                <a
-                  className="wa-btn"
-                  href={waUrl(tool.title, lang)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span aria-hidden="true">💬</span> {t.whatsappCta}
-                </a>
-              </div>
-            )}
-          </div>
-          <button className="tool-cancel" onClick={reset} style={{ marginTop: 12 }}>
-            {t.startOver}
-          </button>
-          <button className="tool-cancel" onClick={onClose}>
-            {t.cancel}
-          </button>
-          <p className="disclaimer">{t.disclaimer}</p>
-        </div>
-      )}
-    </>
-  );
-}
-
-export default function Tools({ lang }) {
-  const t = T[lang];
-  const toolList = tools[lang];
-  const [openTool, setOpenTool] = useState(null);
-  const activeTool = toolList.find(tl => tl.id === openTool);
 
   return (
     <div>
-      <div className="section-header">
+      <ProgressDots total={tool.steps.length} current={step} />
+      <div className="tool-q">
+        <h3 id="tool-question">{tool.steps[step].q}</h3>
+        <div className="tool-opts" role="group" aria-labelledby="tool-question">
+          {tool.steps[step].opts.map((opt, i) => (
+            <button key={i} className="tool-opt" onClick={() => pick(opt)}>{opt.label}</button>
+          ))}
+        </div>
+      </div>
+      <button className="cancel-btn" style={{ marginTop: 14 }} onClick={onClose}>{t.cancel}</button>
+    </div>
+  );
+}
+
+export default function Tools({ lang, setTab }) {
+  const t = T[lang];
+  const toolList = TOOLS[lang];
+  const [open, setOpen] = useState(null);
+  const active = toolList.find(tl => tl.id === open);
+
+  return (
+    <div>
+      <div className="sec-hdr">
         <h2>{t.nav.tools}</h2>
         <p>{t.toolsIntro}</p>
       </div>
-
-      <div className="tools-list">
-        {toolList.map(tool => (
-          <button
-            key={tool.id}
-            className="tool-card"
-            onClick={() => setOpenTool(tool.id)}
-            aria-label={tool.title}
-          >
-            <div className="tool-icon-wrap" aria-hidden="true">{tool.icon}</div>
+      <div className="tool-proto-note" role="note">{t.toolsProtoNote}</div>
+      <div className="tools-grid">
+        {toolList.map(tl => (
+          <button key={tl.id} className="tool-card" onClick={() => setOpen(tl.id)}
+            aria-label={`${tl.title}: ${tl.desc}`}>
+            <div className="tool-icon" aria-hidden="true">{tl.icon}</div>
             <div className="tool-info">
-              <h3>{tool.title}</h3>
-              <p>{tool.desc}</p>
+              <h3>{tl.title}</h3>
+              <p>{tl.desc}</p>
             </div>
             <span className="tool-arrow" aria-hidden="true">›</span>
           </button>
         ))}
       </div>
-
-      <p className="disclaimer">{t.disclaimer}</p>
-
-      {openTool && activeTool && (
-        <Modal title={activeTool.title} onClose={() => setOpenTool(null)}>
-          <ToolQuestionnaire
-            tool={activeTool}
-            lang={lang}
-            onClose={() => setOpenTool(null)}
-          />
+      <p className="disclaimer" style={{ margin: "8px 16px 16px" }}>{t.disclaimer}</p>
+      {open && active && (
+        <Modal title={active.title} onClose={() => setOpen(null)}>
+          <ToolQ tool={active} t={t} lang={lang}
+            onClose={() => setOpen(null)}
+            onFindClinic={() => setTab("facilities")} />
         </Modal>
       )}
     </div>

@@ -1,64 +1,54 @@
 import { T } from "../data/translations.js";
 
-const TABS = [
-  { id: "home",      icon: "🏠" },
-  { id: "resources", icon: "📖" },
-  { id: "tools",     icon: "🩺" },
-  { id: "faq",       icon: "💬" },
-  { id: "facilities",icon: "📍" },
-];
-
-// SFPA logo mark — simplified people figures + red circle (SVG inline)
-function SfpaLogoMark() {
+function LogoMark() {
   return (
-    <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      {/* Red circle accent */}
-      <circle cx="20" cy="6" r="5" fill="#CC2200" />
-      {/* People figures */}
-      <circle cx="8"  cy="10" r="3"   fill="#0D1F6E" />
-      <circle cx="16" cy="10" r="3"   fill="#0D1F6E" />
-      <path d="M3 22 Q5 15 8 15 Q11 15 13 22"  fill="#0D1F6E" />
-      <path d="M11 22 Q13 15 16 15 Q19 15 21 22" fill="#0D1F6E" />
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+      <rect width="28" height="28" rx="7" fill="rgba(255,255,255,0.2)" />
+      <ellipse cx="14" cy="11" rx="5" ry="7" fill="none" stroke="white" strokeWidth="2" />
+      <ellipse cx="14" cy="17" rx="5" ry="5" fill="rgba(204,34,0,0.85)" />
+      <circle cx="14" cy="14" r="2" fill="white" />
     </svg>
   );
 }
 
-export default function Nav({ tab, setTab, lang, onToggleLang }) {
+const TABS = [
+  { id: "home",       icon: "🏠" },
+  { id: "resources",  icon: "📖" },
+  { id: "tools",      icon: "🩺" },
+  { id: "faq",        icon: "💬" },
+  { id: "facilities", icon: "📍" },
+];
+
+export default function Nav({ tab, setTab, lang, setLang }) {
   const t = T[lang];
+  const ariaLabel = lang === "ar" ? "Switch to English" : "التبديل إلى العربية";
 
   return (
     <>
-      {/* Top bar */}
-      <header className="nav-top">
+      <div className="nav-top">
         <div className="nav-logo">
-          <div className="nav-logo-mark">
-            <SfpaLogoMark />
-          </div>
-          <div className="nav-org">
-            <span className="nav-org-en">SFPA · {t.appName}</span>
-            <span className="nav-org-ar">{t.orgName}</span>
-          </div>
+          <LogoMark />
+          <span>{t.appName}</span>
         </div>
         <button
-          className="nav-lang-btn"
-          onClick={onToggleLang}
-          aria-label="Switch language"
+          className="lang-btn"
+          onClick={() => setLang(lang === "en" ? "ar" : "en")}
+          aria-label={ariaLabel}
         >
-          {lang === "ar" ? "EN" : "ع"}
+          {lang === "en" ? "العربية" : "English"}
         </button>
-      </header>
-
-      {/* Bottom tab bar */}
+      </div>
       <nav className="nav-bottom" aria-label="Main navigation">
         {TABS.map(({ id, icon }) => (
           <button
             key={id}
-            className={`nav-tab${tab === id ? " active" : ""}`}
+            className={`tab-btn${tab === id ? " active" : ""}`}
             onClick={() => setTab(id)}
             aria-current={tab === id ? "page" : undefined}
+            aria-label={t.nav[id]}
           >
-            <span className="nav-icon" aria-hidden="true">{icon}</span>
-            <span>{t.nav[id]}</span>
+            <span className="tab-icon" aria-hidden="true">{icon}</span>
+            <span className="tab-label">{t.nav[id]}</span>
           </button>
         ))}
       </nav>

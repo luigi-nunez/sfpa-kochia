@@ -1,54 +1,67 @@
-import { T } from "../data/translations.js";
+// Consolidated nav — 5 tabs on desktop/mobile (Resources replaces separate Info+Videos)
+export default function Nav({ tab, setTab, lang, setLang, t }) {
+  const NAV = [
+    { id: "home",      label: t.nav.home,      emoji: "🏠" },
+    { id: "resources", label: t.nav.resources, emoji: "📚" },
+    { id: "tools",     label: t.nav.tools,     emoji: "🔧" },
+    { id: "faq",       label: t.nav.faq,       emoji: "💬" },
+    { id: "facilities",label: t.nav.facilities,emoji: "📍" },
+  ];
 
-function LogoMark() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-      <rect width="28" height="28" rx="7" fill="rgba(255,255,255,0.2)" />
-      <ellipse cx="14" cy="11" rx="5" ry="7" fill="none" stroke="white" strokeWidth="2" />
-      <ellipse cx="14" cy="17" rx="5" ry="5" fill="rgba(204,34,0,0.85)" />
-      <circle cx="14" cy="14" r="2" fill="white" />
-    </svg>
+  const Logo = () => (
+    <div className="logo-wrap">
+      <div className="logo-circle">K</div>
+      <div>
+        <div className="logo-name">{t.appName}</div>
+        <div className="logo-sub">{t.orgName}</div>
+      </div>
+    </div>
   );
-}
 
-const TABS = [
-  { id: "home",       icon: "🏠" },
-  { id: "resources",  icon: "📖" },
-  { id: "tools",      icon: "🩺" },
-  { id: "faq",        icon: "💬" },
-  { id: "facilities", icon: "📍" },
-];
-
-export default function Nav({ tab, setTab, lang, setLang }) {
-  const t = T[lang];
-  const ariaLabel = lang === "ar" ? "Switch to English" : "التبديل إلى العربية";
+  const LangToggle = () => (
+    <div className="lang-toggle">
+      <button className={`lang-btn ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")}>EN</button>
+      <button className={`lang-btn ${lang === "ar" ? "active" : ""}`} onClick={() => setLang("ar")}>عر</button>
+    </div>
+  );
 
   return (
     <>
-      <div className="nav-top">
-        <div className="nav-logo">
-          <LogoMark />
-          <span>{t.appName}</span>
+      {/* Desktop */}
+      <nav className="desktop-nav">
+        <div className="desktop-nav-inner">
+          <Logo />
+          <div className="desktop-nav-tabs">
+            {NAV.map(n => (
+              <button
+                key={n.id}
+                className={`desk-tab ${tab === n.id ? "active" : ""}`}
+                onClick={() => setTab(n.id)}
+              >
+                <span>{n.emoji}</span>{n.label}
+              </button>
+            ))}
+          </div>
+          <LangToggle />
         </div>
-        <button
-          className="lang-btn"
-          onClick={() => setLang(lang === "en" ? "ar" : "en")}
-          aria-label={ariaLabel}
-        >
-          {lang === "en" ? "العربية" : "English"}
-        </button>
+      </nav>
+
+      {/* Mobile topbar */}
+      <div className="mob-topbar">
+        <Logo />
+        <LangToggle />
       </div>
-      <nav className="nav-bottom" aria-label="Main navigation">
-        {TABS.map(({ id, icon }) => (
+
+      {/* Mobile bottom nav */}
+      <nav className="mobile-nav">
+        {NAV.map(n => (
           <button
-            key={id}
-            className={`tab-btn${tab === id ? " active" : ""}`}
-            onClick={() => setTab(id)}
-            aria-current={tab === id ? "page" : undefined}
-            aria-label={t.nav[id]}
+            key={n.id}
+            className={`mob-btn ${tab === n.id ? "active" : ""}`}
+            onClick={() => setTab(n.id)}
           >
-            <span className="tab-icon" aria-hidden="true">{icon}</span>
-            <span className="tab-label">{t.nav[id]}</span>
+            <span className="mob-icon">{n.emoji}</span>
+            <span>{n.label}</span>
           </button>
         ))}
       </nav>

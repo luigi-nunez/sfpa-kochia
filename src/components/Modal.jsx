@@ -1,35 +1,24 @@
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 
-export default function Modal({ title, onClose, children }) {
-  const closeRef = useRef(null);
-
+export default function Modal({ open, onClose, children, lang }) {
   useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    closeRef.current?.focus();
-    const onKey = e => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      document.removeEventListener("keydown", onKey);
-    };
-  }, []);
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  if (!open) return null;
 
   return (
     <div
-      className="overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-label={title}
+      className="modal-backdrop"
       onClick={e => e.target === e.currentTarget && onClose()}
     >
-      <div className="sheet">
-        <div className="sheet-handle" aria-hidden="true" />
-        <div className="sheet-hdr">
-          <h2 className="sheet-title">{title}</h2>
-          <button className="close-btn" onClick={onClose} ref={closeRef} aria-label="Close">✕</button>
-        </div>
-        <div className="sheet-body">{children}</div>
+      <div
+        className={`modal-box ${lang === "ar" ? "app-ar" : "app-en"}`}
+        dir={lang === "ar" ? "rtl" : "ltr"}
+      >
+        <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
+        {children}
       </div>
     </div>
   );

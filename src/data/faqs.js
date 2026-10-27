@@ -39,7 +39,7 @@ export const FAQS = [
     id: 'f05',
     cat_en: 'Services',
     cat_ar: 'الخدمات',
-    q_en: 'Do I need a husband or parent's permission to access services?',
+    q_en: 'Do I need a husband or parent\'s permission to access services?',
     q_ar: 'هل أحتاج إذن الزوج أو الوالدين للحصول على الخدمات؟',
     a_en: 'SFPA Sudan provides services to individuals based on their own informed consent. Clients do not require permission from a spouse or parent to access most SRH services. Speak with a counsellor for specific guidance.',
     a_ar: 'تقدم الجمعية خدماتها للأفراد بناءً على موافقتهم المستنيرة. لا يحتاج العملاء عموماً لإذن الزوج أو الوالدين للحصول على معظم خدمات الصحة الجنسية والإنجابية. تحدث مع مستشار للتوجيه التفصيلي.',

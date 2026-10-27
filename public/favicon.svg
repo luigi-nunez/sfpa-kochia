@@ -1,4 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <circle cx="16" cy="16" r="16" fill="#0F9B8E"/>
-  <text x="16" y="22" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="white">K</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="22" fill="#00796B"/>
+  <circle cx="72" cy="22" r="10" fill="#C0272D"/>
+  <path d="M18 80 Q18 32 50 27 Q82 32 82 80" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="26" cy="51" r="7" fill="#fff"/>
+  <line x1="26" y1="58" x2="26" y2="78" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="74" cy="51" r="7" fill="#fff"/>
+  <line x1="74" y1="58" x2="74" y2="78" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="50" cy="45" r="7" fill="#fff"/>
+  <line x1="50" y1="52" x2="50" y2="78" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
 </svg>

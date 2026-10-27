@@ -1,116 +1,186 @@
-const TOOLS = {
-  en: [
-    {
-      id: "fp", icon: "💊", name: "Family Planning Advisor",
-      desc: "Find the contraceptive method that best fits your health situation and preferences.",
-      steps: [
-        { q: "Have you given birth before?",                          opts: ["Yes, within the last 6 months", "Yes, more than 6 months ago", "No, never"] },
-        { q: "Are you currently breastfeeding?",                      opts: ["Yes", "No", "Not applicable"] },
-        { q: "Do you have any of these conditions?",                  opts: ["High blood pressure", "Migraines with aura", "Blood clotting disorder", "None of the above"] },
-        { q: "How important is a hormone-free method to you?",        opts: ["Very important", "Somewhat important", "Not important"] },
-      ],
-      results: {
-        default: { title: "Recommended options for you", body: "Based on your answers, short-acting hormonal methods (pills, injectables) or long-acting options like an IUD or implant may suit you well. A copper IUD is a hormone-free choice effective for up to 10 years.\n\nVisit an SFPA clinic or reach us via WhatsApp for a personalised consultation." },
-        bf:      { title: "Breastfeeding-safe options",   body: "Since you are breastfeeding, progestin-only methods — the mini-pill, progestin injection, implant, or hormonal IUD — are recommended. The combined pill is not recommended in the first 6 months of breastfeeding.\n\nA copper IUD is an excellent hormone-free option." },
-      },
-    },
-    {
-      id: "anc", icon: "🤱", name: "ANC Checklist",
-      desc: "Check whether you have completed the essential antenatal care contacts for your stage of pregnancy.",
-      steps: [
-        { q: "How many weeks pregnant are you?",                      opts: ["Less than 12 weeks", "12–20 weeks", "20–28 weeks", "28–36 weeks", "More than 36 weeks"] },
-        { q: "Have you had a blood test for anaemia and blood type?", opts: ["Yes", "No", "I don't know"] },
-        { q: "Are you taking iron and folic acid supplements?",        opts: ["Yes, regularly", "Yes, not consistently", "No"] },
-        { q: "Have you had an ultrasound scan this pregnancy?",        opts: ["Yes, more than once", "Yes, once", "No"] },
-      ],
-      results: {
-        default: { title: "Your ANC checklist summary", body: "There may be recommended care steps you have not yet completed.\n\nKey actions:\n• Schedule an ultrasound if you have not had one.\n• Take iron and folic acid daily.\n• Watch for danger signs: severe headache, swelling, reduced fetal movement.\n\nVisit an SFPA clinic for a full antenatal assessment." },
-      },
-    },
-    {
-      id: "cse", icon: "📚", name: "Sexuality Education Quiz",
-      desc: "Test your knowledge of sexual and reproductive health — and learn something new.",
-      steps: [
-        { q: "Which method reliably prevents both pregnancy AND STIs?",                          opts: ["The pill", "The male condom", "The IUD", "Withdrawal"] },
-        { q: "At what age is the HPV vaccine most effective?",                                   opts: ["9–14 years", "18–25 years", "Only after first sexual contact", "Any age"] },
-        { q: "True or false: a person on ART with an undetectable viral load can transmit HIV.", opts: ["True", "False — U=U means Undetectable = Untransmittable", "Depends on contact type"] },
-        { q: "FGM (female genital mutilation) is:",                                              opts: ["A harmless cultural tradition", "A human rights violation with no medical benefits", "Required by any major religion", "Beneficial for reproductive health"] },
-      ],
-      results: {
-        default: { title: "Quiz complete — here are the answers", body: "1. The male condom — the only method protecting against both pregnancy and STIs.\n2. Ages 9–14 — vaccination before first sexual contact gives the best immune response.\n3. False — U=U is scientifically established.\n4. FGM is a human rights violation. It has no medical benefits and causes lasting harm.\n\nExplore the Information section or speak with an SFPA counsellor for more." },
-      },
-    },
-    {
-      id: "mental", icon: "🧠", name: "Mental Health Screen",
-      desc: "A brief check for common signs of postpartum or general mental health concerns.",
-      steps: [
-        { q: "Over the past 2 weeks, how often have you felt down, hopeless, or unable to enjoy things?", opts: ["Not at all", "A few days", "More than half the days", "Nearly every day"] },
-        { q: "Have you had significant sleep difficulties beyond what a newborn requires?",                opts: ["No", "Yes, mild", "Yes, significantly"] },
-        { q: "Have you had thoughts of harming yourself or not wanting to be here?",                      opts: ["No", "Rarely, passing thoughts only", "Yes, frequently"] },
-        { q: "Do you feel supported by people around you?",                                               opts: ["Yes, well supported", "Somewhat supported", "Mostly not supported", "Not at all"] },
-      ],
-      results: {
-        default: { title: "Thank you for sharing", body: "Your answers suggest you may be experiencing some emotional challenges. This is more common than most people realise.\n\nSteps to consider:\n• Talk to someone you trust.\n• Contact an SFPA counsellor via WhatsApp or by visiting a clinic.\n• If you are in immediate distress, please reach out to a trusted person right away.\n\nYou are not alone.", showWA: true },
-        low:     { title: "Your responses look positive", body: "Your answers suggest you are managing well at the moment. Continue to check in with yourself regularly.\n\nIf anything changes, SFPA counsellors are available via WhatsApp or at any clinic.", showWA: false },
-      },
-    },
-  ],
-  ar: [
-    {
-      id: "fp", icon: "💊", name: "مستشار تنظيم الأسرة",
-      desc: "ابحثي عن طريقة منع الحمل التي تناسب حالتك الصحية وتفضيلاتك.",
-      steps: [
-        { q: "هل سبق أن أنجبتِ من قبل؟",                                           opts: ["نعم، خلال الأشهر الستة الماضية", "نعم، منذ أكثر من ستة أشهر", "لا، لم أنجب"] },
-        { q: "هل ترضعين الثدي حالياً؟",                                             opts: ["نعم", "لا", "غير قابل للتطبيق"] },
-        { q: "هل لديكِ أي من هذه الحالات؟",                                         opts: ["ضغط دم مرتفع", "صداع نصفي مع هالة", "اضطراب تخثر الدم", "لا شيء مما ذكر"] },
-        { q: "ما مدى أهمية أن تكون الطريقة خالية من الهرمونات؟",                    opts: ["مهم جداً", "مهم إلى حد ما", "غير مهم"] },
-      ],
-      results: {
-        default: { title: "الخيارات الموصى بها لك", body: "بناءً على إجاباتك، قد تناسبكِ طرق هرمونية قصيرة المفعول أو خيارات طويلة الأمد مثل اللولب أو الغرسة. اللولب النحاسي خيار خالٍ من الهرمونات وفعال لمدة تصل إلى 10 سنوات.\n\nزوري عيادة الجمعية أو تواصلي معنا عبر واتساب للحصول على استشارة شخصية." },
-        bf:      { title: "خيارات آمنة أثناء الرضاعة", body: "بما أنك ترضعين، يوصى بطرق البروجستين فقط — الحبوب الصغيرة، حقن البروجستين، الغرسة، أو اللولب الهرموني. لا يُوصى بالحبوب المركبة خلال أول 6 أشهر من الرضاعة.\n\nاللولب النحاسي خيار ممتاز خالٍ من الهرمونات." },
-      },
-    },
-    {
-      id: "anc", icon: "🤱", name: "قائمة مراجعة رعاية ما قبل الولادة",
-      desc: "تحققي من استكمالك لجلسات الرعاية قبل الولادة الأساسية.",
-      steps: [
-        { q: "كم أسبوعاً مضى على حملك؟",                                            opts: ["أقل من 12 أسبوعاً", "12–20 أسبوعاً", "20–28 أسبوعاً", "28–36 أسبوعاً", "أكثر من 36 أسبوعاً"] },
-        { q: "هل أجريتِ فحص دم للكشف عن فقر الدم وفصيلة الدم؟",                    opts: ["نعم", "لا", "لا أعرف"] },
-        { q: "هل تتناولين مكملات الحديد وحمض الفوليك؟",                              opts: ["نعم، بانتظام", "نعم، بشكل غير منتظم", "لا"] },
-        { q: "هل أجريتِ فحصاً بالموجات فوق الصوتية خلال هذا الحمل؟",                opts: ["نعم، أكثر من مرة", "نعم، مرة واحدة", "لا"] },
-      ],
-      results: {
-        default: { title: "ملخص قائمة مراجعتك", body: "قد تكون هناك خطوات رعاية موصى بها لم تستكمليها بعد.\n\nالإجراءات الرئيسية:\n• حددي موعداً للموجات فوق الصوتية إن لم تكوني أجريتها.\n• تأكدي من تناول الحديد وحمض الفوليك يومياً.\n• تابعي علامات الخطر.\n\nزوري عيادة الجمعية للتقييم الكامل." },
-      },
-    },
-    {
-      id: "cse", icon: "📚", name: "اختبار التثقيف الجنسي",
-      desc: "اختبري معرفتك بالصحة الجنسية والإنجابية.",
-      steps: [
-        { q: "أيٌّ مما يلي يقي من الحمل والأمراض المنقولة جنسياً معاً؟",            opts: ["حبوب منع الحمل", "الواقي الذكري", "اللولب", "العزل"] },
-        { q: "في أي عمر يكون لقاح HPV أكثر فاعلية؟",                               opts: ["9–14 سنة", "18–25 سنة", "فقط بعد أول اتصال جنسي", "أي عمر"] },
-        { q: "صح أم خطأ: من يتلقى العلاج ولديه حمل فيروسي غير قابل للكشف يمكنه نقل الإيدز.", opts: ["صح", "خطأ — U=U تعني غير قابل للكشف = غير قابل للانتقال", "يعتمد على نوع الاتصال"] },
-        { q: "ختان الإناث هو:",                                                      opts: ["تقليد ثقافي غير ضار", "انتهاك لحقوق الإنسان بلا فوائد طبية", "مطلوب من قِبَل دين رئيسي", "مفيد للصحة الإنجابية"] },
-      ],
-      results: {
-        default: { title: "شكراً لإتمامك الاختبار — الإجابات الصحيحة", body: "١. الواقي الذكري — هو الطريقة الوحيدة التي تحمي من الحمل والأمراض معاً.\n٢. الأعمار 9–14 — التطعيم قبل أول اتصال جنسي يوفر أفضل استجابة مناعية.\n٣. خطأ — U=U راسخة علمياً.\n٤. ختان الإناث انتهاك لحقوق الإنسان ويسبب ضرراً دائماً." },
-      },
-    },
-    {
-      id: "mental", icon: "🧠", name: "فحص الصحة النفسية",
-      desc: "فحص سريع للعلامات الشائعة لمخاوف الصحة النفسية.",
-      steps: [
-        { q: "خلال الأسبوعين الماضيين، كم مرة شعرتِ بالإحباط أو اليأس؟",           opts: ["لا على الإطلاق", "بعض الأيام", "أكثر من نصف الأيام", "كل يوم تقريباً"] },
-        { q: "هل واجهتِ صعوبة ملحوظة في النوم؟",                                    opts: ["لا", "نعم، بشكل خفيف", "نعم، بشكل ملحوظ"] },
-        { q: "هل راودتكِ أفكار بإيذاء نفسك؟",                                       opts: ["لا", "نادراً، أفكار عابرة فقط", "نعم، بشكل متكرر"] },
-        { q: "هل تشعرين بدعم من حولكِ؟",                                             opts: ["نعم، مدعومة جيداً", "مدعومة إلى حد ما", "غالباً غير مدعومة", "لا على الإطلاق"] },
-      ],
-      results: {
-        default: { title: "شكراً لمشاركتك", body: "تشير إجاباتك إلى أنك قد تواجهين بعض التحديات العاطفية.\n\nخطوات للنظر فيها:\n• تحدثي مع شخص تثقين به.\n• تواصلي مع مستشارة الجمعية عبر واتساب أو بزيارة عيادة.\n• إذا كنتِ في ضائقة فورية، يرجى التواصل فوراً.\n\nلستِ وحدكِ.", showWA: true },
-        low:     { title: "ردودك تبدو إيجابية", body: "تشير إجاباتك إلى أنك تتعاملين بشكل جيد في الوقت الحالي.\n\nإذا تغير أي شيء، فإن مستشارات الجمعية متاحات عبر واتساب أو في أي عيادة.", showWA: false },
-      },
-    },
-  ],
-};
+// Interactive decision-aid tools.
+// Each tool has a list of steps. Each step has a question and options.
+// Each option may either move to the next step (next: 'step_id') or resolve to a result (result: 'result_id').
+// Results are defined in the results map.
 
-export default TOOLS;
+export const TOOLS = [
+  {
+    id: 't01',
+    icon: '🛡️',
+    title_en: 'Which contraceptive method suits me?',
+    title_ar: 'أي وسيلة منع حمل تناسبني؟',
+    desc_en: 'Answer a few questions to explore contraceptive options that may fit your situation.',
+    desc_ar: 'أجب على بعض الأسئلة لاستكشاف خيارات منع الحمل التي قد تناسب وضعك.',
+    steps: [
+      {
+        id: 'q1',
+        q_en: 'Are you hoping to become pregnant in the next year?',
+        q_ar: 'هل تخططين للحمل خلال السنة القادمة؟',
+        opts: [
+          { label_en: 'Yes', label_ar: 'نعم', next: 'q_soon' },
+          { label_en: 'No — not within the next year', label_ar: 'لا — ليس خلال السنة القادمة', next: 'q2' },
+          { label_en: "I don't want to become pregnant at all", label_ar: 'لا أريد الحمل نهائياً', next: 'q_never' },
+        ],
+      },
+      {
+        id: 'q_soon',
+        q_en: 'Since pregnancy is planned soon, what are you most concerned about right now?',
+        q_ar: 'بما أن الحمل قريب، ما الذي يشغل تفكيرك الآن؟',
+        opts: [
+          { label_en: 'Getting pregnant as soon as possible', label_ar: 'الحمل في أقرب وقت ممكن', result: 'r_no_method' },
+          { label_en: 'Protection until I am ready', label_ar: 'الحماية حتى أكون مستعدة', result: 'r_short_act' },
+        ],
+      },
+      {
+        id: 'q_never',
+        q_en: 'Are you certain you never want a pregnancy?',
+        q_ar: 'هل أنتِ متأكدة أنك لا تريدين الحمل أبداً؟',
+        opts: [
+          { label_en: 'Yes — I want a permanent option', label_ar: 'نعم — أريد خياراً دائماً', result: 'r_permanent' },
+          { label_en: "Not 100% sure — I'd like a long-acting reversible option", label_ar: 'لستُ متأكدة 100% — أريد خياراً طويل المدى قابلاً للعكس', result: 'r_larc' },
+        ],
+      },
+      {
+        id: 'q2',
+        q_en: 'How important is it that you can stop the method and return to fertility quickly?',
+        q_ar: 'ما مدى أهمية إمكانية إيقاف الوسيلة والعودة للخصوبة بسرعة؟',
+        opts: [
+          { label_en: 'Very important — I may want to get pregnant within 1–2 years', label_ar: 'مهم جداً — قد أرغب في الحمل خلال 1–2 سنة', result: 'r_short_act' },
+          { label_en: 'Not urgent — I want something that lasts several years', label_ar: 'ليس عاجلاً — أريد شيئاً يدوم عدة سنوات', next: 'q3' },
+        ],
+      },
+      {
+        id: 'q3',
+        q_en: 'Do you prefer to avoid taking a pill every day?',
+        q_ar: 'هل تفضلين تجنّب تناول حبة يومياً؟',
+        opts: [
+          { label_en: "Yes — I'd prefer 'set and forget'", label_ar: 'نعم — أفضّل ما لا يحتاج تذكّراً يومياً', result: 'r_larc' },
+          { label_en: 'No — I am comfortable with a daily routine', label_ar: 'لا — مرتاحة للروتين اليومي', result: 'r_pills' },
+        ],
+      },
+    ],
+    results: {
+      r_no_method: {
+        title_en: "No contraception needed right now",
+        title_ar: 'لا تحتاجين لوسيلة الآن',
+        body_en: 'Since you are planning pregnancy soon, you may not need contraception. Speak with a health provider about preparing for a healthy pregnancy, including folic acid supplementation and antenatal care.',
+        body_ar: 'بما أنك تخططين للحمل قريباً، قد لا تحتاجين لوسيلة منع حمل. تحدثي مع مختص حول الاستعداد لحمل صحي، بما يشمل حمض الفوليك ورعاية ما قبل الولادة.',
+        wa_en: 'Hello, I would like advice on planning a healthy pregnancy.',
+        wa_ar: 'مرحباً، أريد نصيحة حول التخطيط لحمل صحي.',
+      },
+      r_short_act: {
+        title_en: 'Short-acting methods may suit you',
+        title_ar: 'الطرق قصيرة المدى قد تناسبك',
+        body_en: 'Methods like combined oral contraceptive pills, progestogen-only pills, or injectable contraceptives (DMPA) offer effective protection and fertility returns quickly after stopping. Condoms also protect against STIs. A counsellor can help you choose the best fit.',
+        body_ar: 'تقدم الطرق مثل حبوب منع الحمل المركبة أو حبوب البروجستيرون أو الحقن حماية فعّالة، وتعود الخصوبة بسرعة بعد الإيقاف. الواقيات توفر أيضاً حماية من الأمراض. مستشار يمكنه مساعدتك في الاختيار.',
+        wa_en: 'Hello, I would like advice on short-acting contraceptive methods.',
+        wa_ar: 'مرحباً، أريد نصيحة حول وسائل منع الحمل قصيرة المدى.',
+      },
+      r_larc: {
+        title_en: 'Long-acting reversible contraception (LARC)',
+        title_ar: 'وسائل منع الحمل طويلة المدى القابلة للعكس',
+        body_en: 'LARCs such as the IUD (copper or hormonal) or sub-dermal implant are more than 99% effective, last several years, and fertility returns quickly once removed. They are a good fit if you want reliable, long-term protection without thinking about it daily. Ask an SFPA counsellor for more information.',
+        body_ar: 'تُعدّ اللولب الرحمي (نحاسي أو هرموني) والكبسولات تحت الجلد من أكثر من 99% فعالية، وتدوم سنوات، وتعود الخصوبة بسرعة عند الإزالة. مناسبة إذا أردتِ حماية موثوقة دون تفكير يومي. تحدثي مع مستشار الجمعية.',
+        wa_en: 'Hello, I would like information about long-acting reversible contraception (IUD or implant).',
+        wa_ar: 'مرحباً، أريد معلومات حول وسائل منع الحمل طويلة المدى (اللولب أو الكبسولة).',
+      },
+      r_pills: {
+        title_en: 'Combined oral contraceptive pills',
+        title_ar: 'حبوب منع الحمل المركبة',
+        body_en: 'The combined pill is taken daily and is over 99% effective with perfect use. It can also help with period pain and regularity. It is available at SFPA clinics. A counsellor will check your health history to make sure it is right for you.',
+        body_ar: 'تؤخذ الحبوب المركبة يومياً وفعاليتها أكثر من 99% مع الاستخدام المثالي. يمكنها أيضاً المساعدة في ألم الدورة وانتظامها. تتوفر في عيادات الجمعية. سيتحقق المستشار من تاريخك الصحي للتأكد من ملاءمتها.',
+        wa_en: 'Hello, I would like information about oral contraceptive pills.',
+        wa_ar: 'مرحباً، أريد معلومات حول حبوب منع الحمل.',
+      },
+      r_permanent: {
+        title_en: 'Speak with a specialist',
+        title_ar: 'تحدثي مع مختص',
+        body_en: 'Permanent contraception (such as tubal ligation) is available but requires counselling and careful consideration. Please speak with a specialist at an SFPA clinic to explore your options and ensure an informed decision.',
+        body_ar: 'يتوفر منع الحمل الدائم (كربط قناتَي فالوب) لكنه يتطلب استشارة ومراعاة دقيقة. تحدثي مع مختص في عيادات الجمعية لاستكشاف خياراتك وضمان اتخاذ قرار مستنير.',
+        wa_en: 'Hello, I would like to speak with a specialist about permanent contraception options.',
+        wa_ar: 'مرحباً، أريد التحدث مع مختص حول خيارات منع الحمل الدائم.',
+      },
+    },
+  },
+
+  {
+    id: 't02',
+    icon: '🔬',
+    title_en: 'Should I get an STI test?',
+    title_ar: 'هل ينبغي لي إجراء فحص الأمراض المنقولة جنسياً؟',
+    desc_en: 'A quick self-assessment to help you decide whether STI testing is recommended for you.',
+    desc_ar: 'تقييم ذاتي سريع لمساعدتك في تحديد ما إذا كان فحص الأمراض المنقولة جنسياً موصى به.',
+    steps: [
+      {
+        id: 'q1',
+        q_en: 'Have you had unprotected sex (without a condom) in the past 12 months?',
+        q_ar: 'هل مارستَ جنساً غير محمي (بدون واقٍ) خلال الـ12 شهراً الماضية؟',
+        opts: [
+          { label_en: 'Yes', label_ar: 'نعم', next: 'q2' },
+          { label_en: 'No', label_ar: 'لا', next: 'q_no_unprot' },
+        ],
+      },
+      {
+        id: 'q_no_unprot',
+        q_en: 'Do you have any current symptoms such as unusual discharge, sores, burning when urinating, or pelvic pain?',
+        q_ar: 'هل لديك أعراض حالية مثل إفراز غير طبيعي، أو قروح، أو حرقة عند التبول، أو ألم في الحوض؟',
+        opts: [
+          { label_en: 'Yes', label_ar: 'نعم', result: 'r_test_symptoms' },
+          { label_en: 'No', label_ar: 'لا', result: 'r_low_risk' },
+        ],
+      },
+      {
+        id: 'q2',
+        q_en: 'Did you have more than one partner, or a new partner, in the past 12 months?',
+        q_ar: 'هل كان لديك أكثر من شريك، أو شريك جديد، خلال الـ12 شهراً الماضية؟',
+        opts: [
+          { label_en: 'Yes', label_ar: 'نعم', result: 'r_test_recommended' },
+          { label_en: 'No — one long-term partner', label_ar: 'لا — شريك واحد طويل الأمد', next: 'q3' },
+        ],
+      },
+      {
+        id: 'q3',
+        q_en: 'Do you have any symptoms such as unusual discharge, sores, burning when urinating, or pelvic pain?',
+        q_ar: 'هل لديك أعراض مثل إفراز غير طبيعي، أو قروح، أو حرقة عند التبول، أو ألم في الحوض؟',
+        opts: [
+          { label_en: 'Yes', label_ar: 'نعم', result: 'r_test_symptoms' },
+          { label_en: 'No', label_ar: 'لا', result: 'r_test_regular' },
+        ],
+      },
+    ],
+    results: {
+      r_test_recommended: {
+        title_en: 'Testing is recommended',
+        title_ar: 'الفحص موصى به',
+        body_en: 'Based on your answers, getting tested for STIs is a good idea. Many STIs have no symptoms but can affect your health if untreated. SFPA clinics offer confidential, affordable (and some free) STI testing. Early detection means effective treatment.',
+        body_ar: 'بناءً على إجاباتك، إجراء فحص الأمراض المنقولة جنسياً فكرة جيدة. كثير منها لا تُسبب أعراضاً لكن قد تؤثر على صحتك إذا لم تُعالج. تقدم عيادات الجمعية فحصاً سرياً وبأسعار معقولة (وبعضها مجاني). الكشف المبكر يعني علاجاً فعّالاً.',
+        wa_en: 'Hello, I would like information about STI testing at an SFPA clinic.',
+        wa_ar: 'مرحباً، أريد معلومات حول فحص الأمراض المنقولة جنسياً في عيادات الجمعية.',
+      },
+      r_test_symptoms: {
+        title_en: 'Please seek care soon',
+        title_ar: 'يرجى طلب الرعاية قريباً',
+        body_en: 'You have symptoms that should be checked by a health professional. Please visit an SFPA clinic or contact a counsellor as soon as possible. Many STIs are easily treated when caught early.',
+        body_ar: 'لديك أعراض ينبغي أن يفحصها مختص صحي. يرجى زيارة عيادة الجمعية أو التواصل مع مستشار في أقرب وقت ممكن. كثير من الأمراض المنقولة جنسياً تُعالج بسهولة إذا اكتُشفت مبكراً.',
+        wa_en: 'Hello, I have some symptoms I am concerned about and would like advice.',
+        wa_ar: 'مرحباً، لديّ بعض الأعراض المقلقة وأريد المشورة.',
+      },
+      r_test_regular: {
+        title_en: 'Regular testing is a good practice',
+        title_ar: 'الفحص الدوري ممارسة جيدة',
+        body_en: 'Your risk appears lower, but regular STI testing (at least once a year if you are sexually active) is a healthy habit. You can book a confidential test at any SFPA clinic.',
+        body_ar: 'يبدو خطرك منخفضاً، لكن الفحص الدوري للأمراض المنقولة جنسياً (مرة على الأقل سنوياً إذا كنتَ نشطاً جنسياً) عادة صحية جيدة. يمكنك حجز فحص سري في أي عيادة من عيادات الجمعية.',
+        wa_en: 'Hello, I would like to book a confidential STI test.',
+        wa_ar: 'مرحباً، أريد حجز فحص سري للأمراض المنقولة جنسياً.',
+      },
+      r_low_risk: {
+        title_en: 'Your risk appears low',
+        title_ar: 'يبدو خطرك منخفضاً',
+        body_en: 'Based on your answers, your risk of an STI appears to be low right now. However, regular testing is still a healthy habit if you are sexually active. If you develop any symptoms, seek care promptly.',
+        body_ar: 'بناءً على إجاباتك، يبدو خطر إصابتك بأمراض منقولة جنسياً منخفضاً حالياً. لكن الفحص الدوري لا يزال عادة صحية جيدة إذا كنتَ نشطاً جنسياً. إذا ظهرت عليك أعراض، اطلب الرعاية فوراً.',
+        wa_en: 'Hello, I have some questions about STI prevention.',
+        wa_ar: 'مرحباً، لديّ أسئلة حول الوقاية من الأمراض المنقولة جنسياً.',
+      },
+    },
+  },
+];

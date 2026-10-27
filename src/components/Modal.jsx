@@ -1,23 +1,16 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-export default function Modal({ open, onClose, children, lang }) {
+export default function Modal({ onClose, children }) {
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
-
-  if (!open) return null;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   return (
-    <div
-      className="modal-backdrop"
-      onClick={e => e.target === e.currentTarget && onClose()}
-    >
-      <div
-        className={`modal-box ${lang === "ar" ? "app-ar" : "app-en"}`}
-        dir={lang === "ar" ? "rtl" : "ltr"}
-      >
-        <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
+    <div className="ov" role="dialog" aria-modal="true" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="mbox">
+        <button className="mclose" onClick={onClose} aria-label="Close">✕</button>
         {children}
       </div>
     </div>

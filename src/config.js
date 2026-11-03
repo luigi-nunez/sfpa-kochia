@@ -3,5 +3,5 @@
 // WA_NUMBER: WhatsApp number in international format (digits only, no +)
 // CALL_CENTRE: Telephone / call centre number shown in the UI as a separate contact option.
 
-export const WA_NUMBER = '';    // e.g. '24912345678'
+export const WA_NUMBER = '249965100301';    // e.g. '24912345678'
 export const CALL_CENTRE = '';  // e.g. '249155000000'

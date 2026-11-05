@@ -57,7 +57,7 @@ export default function HomeView({ lang, setTab }) {
               <span className="sc-desc">{t.callCentreDesc}</span>
               {CALL_CENTRE ? (
                 <a
-                  className="sc-btn sec"
+                  className="sc-btn pri"
                   href={`tel:${CALL_CENTRE}`}
                   style={{ textDecoration: 'none', display: 'inline-block', textAlign: 'center' }}
                 >

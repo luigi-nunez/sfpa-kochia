@@ -54,8 +54,7 @@ export const UI = {
     book: {
       eyebrow: 'Appointments', title: 'Book an appointment', step: 'Step', of: 'of',
       demoBanner: 'This page does not save or send anything. At the end you choose to continue on WhatsApp or by phone. Clinic details are placeholders until SFPA confirms them.',
-      s1: 'Which clinic would you like to visit?', useLocation: 'Use my location', locating: 'Finding your location…',
-      locNone: 'Clinic locations are not available yet, so clinics are listed in their usual order.', locDenied: 'Location unavailable. Choose a clinic from the list.',
+      s1: 'Which clinic would you like to visit?',
       s2: 'What do you need?', s2note: 'Some services start with a private conversation on WhatsApp.',
       s3: 'Which day suits you?', s3note: 'SFPA will confirm what is available when they get back to you.', dOr: 'Or a specific day',
       days: { asap: 'As soon as possible', thisWeek: 'Any day this week', nextWeek: 'Any day next week', sun: 'Sunday', mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday' },
@@ -201,8 +200,7 @@ export const UI = {
     book: {
       eyebrow: 'المواعيد', title: 'احجز موعداً', step: 'الخطوة', of: 'من',
       demoBanner: 'هذه الصفحة لا تحفظ أو ترسل أي شيء. في النهاية تختار المتابعة عبر واتساب أو الهاتف. بيانات العيادات مؤقتة حتى تؤكدها الجمعية.',
-      s1: 'أي عيادة تود زيارتها؟', useLocation: 'استخدم موقعي', locating: 'جارٍ تحديد موقعك…',
-      locNone: 'مواقع العيادات غير متاحة بعد، لذا تظهر العيادات بترتيبها المعتاد.', locDenied: 'تعذّر تحديد الموقع. اختر عيادة من القائمة.',
+      s1: 'أي عيادة تود زيارتها؟',
       s2: 'ماذا تحتاج؟', s2note: 'بعض الخدمات تبدأ بمحادثة سرية عبر واتساب.',
       s3: 'أي يوم يناسبك؟', s3note: 'ستؤكد الجمعية المواعيد المتاحة عندما تتواصل معك.', dOr: 'أو يوم محدد',
       days: { asap: 'في أقرب وقت ممكن', thisWeek: 'أي يوم هذا الأسبوع', nextWeek: 'أي يوم الأسبوع القادم', sun: 'الأحد', mon: 'الاثنين', tue: 'الثلاثاء', wed: 'الأربعاء', thu: 'الخميس' },

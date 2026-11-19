@@ -1,5 +1,6 @@
 // Leaflet + OpenStreetMap tiles, loaded only when the clinics page opens.
-// Only clinics with confirmed lat/lng get a marker; nothing is guessed.
+// Only clinics with published lat/lng get a marker; nothing is guessed. Town-level
+// coordinates (precision 'town') get a hollow "approximate" pin and never zoom to street level.
 import { useEffect, useRef, useState } from 'react';
 import { useSite } from '../../lib/site.jsx';
 
@@ -45,22 +46,30 @@ export default function ClinicMap({ clinics, selected, onSelect }) {
     markers.current = {};
     const located = clinics.filter((c) => c.lat != null && c.lng != null);
     located.forEach((c) => {
-      const icon = L.divIcon({ className: 'map-pin', html: '<span></span>', iconSize: [28, 36], iconAnchor: [14, 34] });
-      const m = L.marker([c.lat, c.lng], { icon, title: lang === 'ar' ? c.name_ar : c.name_en }).addTo(group);
-      m.bindPopup(`<strong>${lang === 'ar' ? c.name_ar : c.name_en}</strong>`);
+      const approx = c.precision !== 'exact';
+      const icon = L.divIcon({ className: `map-pin${approx ? ' approx' : ''}`, html: '<span></span>', iconSize: [28, 36], iconAnchor: [14, 34] });
+      const name = lang === 'ar' ? c.name_ar : c.name_en;
+      const city = lang === 'ar' ? c.city_ar : c.city_en;
+      const m = L.marker([c.lat, c.lng], { icon, title: name }).addTo(group);
+      const popup = document.createElement('div');
+      const strong = document.createElement('strong'); strong.textContent = name; popup.appendChild(strong);
+      const small = document.createElement('small'); small.textContent = approx ? `${city} · ${t.clinics.approxPopup}` : city;
+      popup.appendChild(document.createElement('br')); popup.appendChild(small);
+      m.bindPopup(popup);
       m.on('click', () => onSelect?.(c.id));
       markers.current[c.id] = m;
     });
     if (located.length > 1) map.current.fitBounds(L.latLngBounds(located.map((c) => [c.lat, c.lng])), { padding: [30, 30] });
-    else if (located.length === 1) map.current.setView([located[0].lat, located[0].lng], 13);
+    else if (located.length === 1) map.current.setView([located[0].lat, located[0].lng], located[0].precision === 'exact' ? 13 : 8);
   }
 
   useEffect(drawMarkers, [clinics, lang]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const m = markers.current[selected];
-    if (m && map.current) { map.current.setView(m.getLatLng(), 14); m.openPopup(); }
-  }, [selected]);
+    const c = clinics.find((x) => x.id === selected);
+    if (m && map.current) { map.current.setView(m.getLatLng(), c?.precision === 'exact' ? 14 : 9); m.openPopup(); }
+  }, [selected]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const anyLocated = clinics.some((c) => c.lat != null && c.lng != null);
   const notice = failed || !online ? t.clinics.mapOffline : !anyLocated ? t.clinics.mapPending : null;

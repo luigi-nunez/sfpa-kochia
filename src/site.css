@@ -455,3 +455,52 @@ h1, h2, h3 { color: var(--txt); }
   .hdr, .ftr, .mbar, .donate-tab, .wa-fab, .no-print, .demo-banner { display: none !important; }
   .card { box-shadow: none; }
 }
+
+/* SFPA content integration (sudanfpa.org import) ---------------------------- */
+.art-reproductive-health { background: linear-gradient(140deg, #253D87, #5B78D6); }
+.art-women { background: linear-gradient(140deg, #A3171A, #E0484A); }
+.art-outreach { background: linear-gradient(140deg, #0B5E31, #2E9C61); }
+.art-gbv { background: linear-gradient(140deg, #4B2C82, #7C5BC2); }
+.tag-status { background: var(--surf); color: var(--txts); border: 1px solid var(--bdr); }
+.source-line { margin-top: 12px; font-size: .8125rem; color: var(--txtm); }
+.source-line a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.pending-line { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+.stats-src { font-size: .8125rem; opacity: .8; padding-bottom: 20px; text-align: center; }
+.stats-src a { color: #fff; text-decoration: underline; }
+
+.notice-warn { border-color: #D9A44A; background: #FFF8EC; color: #5C3600; }
+.notice-warn svg { color: #B26B00; flex-shrink: 0; margin-top: 2px; }
+.notice-warn a { color: inherit; font-weight: 700; }
+:root[data-theme="dark"] .notice-warn { background: #2E2210; color: #FFDDA6; border-color: #A57422; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .notice-warn { background: #2E2210; color: #FFDDA6; border-color: #A57422; } }
+.clinic-advisory { display: flex; gap: 6px; align-items: flex-start; margin-top: 10px; padding: 8px 10px; border-radius: var(--r-md); font-size: .8125rem; font-weight: 600; background: var(--cta-l); color: var(--cta); }
+.clinic-advisory svg { flex-shrink: 0; margin-top: 2px; }
+.spoints { margin: 0 0 14px; font-size: .875rem; }
+.spoints summary { cursor: pointer; font-weight: 600; color: var(--p); min-height: 32px; display: flex; align-items: center; }
+.spoints ul { list-style: none; display: grid; gap: 8px; margin-top: 6px; }
+.spoints li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; align-items: center; padding: 8px 10px; border-radius: var(--r-md); background: var(--surf); }
+.spoints strong { font-weight: 600; }
+.map-pin.approx span { background: transparent; border: 3px dashed var(--cta); box-shadow: none; }
+:root[data-theme="dark"] .map-pin.approx span { border-color: #FF8A8C; }
+.map-legend { display: flex; gap: 8px; align-items: center; margin-top: 8px; font-size: .8125rem; color: var(--txtm); }
+.legend-pin { width: 14px; height: 14px; border: 2px dashed var(--cta); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); flex-shrink: 0; }
+.leaflet-popup-content small { color: #555; }
+
+.goals { list-style: none; display: grid; gap: 14px; max-width: 900px; margin-inline: auto; }
+@media (min-width: 760px) { .goals { grid-template-columns: 1fr 1fr; } }
+.goals li { display: flex; gap: 12px; align-items: flex-start; background: var(--bg); border: 1px solid var(--bdr); border-radius: var(--r-lg); padding: 16px; }
+.goals p { line-height: 1.55; }
+.founded { display: flex; gap: 10px; align-items: baseline; margin: 6px 0 12px; color: var(--txts); }
+.founded strong { font-size: 2rem; color: var(--p); line-height: 1; }
+.numbers .num { display: grid; gap: 6px; text-align: center; justify-items: center; }
+.numbers .num strong { font-size: clamp(1.6rem, 3.4vw, 2.2rem); color: var(--p); line-height: 1.1; }
+.dept, .partner { display: grid; gap: 8px; align-content: start; }
+.dept h3, .partner h3 { font-size: 1rem; }
+.partner .tag { justify-self: start; }
+.social-links { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 999px) {
+  .city-filter { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .city-btn { flex-shrink: 0; white-space: nowrap; scroll-snap-align: start; }
+}
+.ftr-social { display: flex; flex-wrap: wrap; gap: 14px; }
+.ftr-social a { text-decoration: underline; text-underline-offset: 3px; }

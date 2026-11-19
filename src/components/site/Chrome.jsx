@@ -277,7 +277,7 @@ export function Footer() {
           <ul className="ftr-contact">
             <li><Icon name="pin" size={18} /><span>{SITE.address ? tx(SITE.address, lang) : `${t.contact.address}: ${t.common.tbc}`}</span></li>
             {SITE.callCentre && <li><Icon name="call" size={18} /><a href={`tel:${SITE.callCentre}`} dir="ltr">{SITE.callCentre}</a></li>}
-            <li><Icon name="mail" size={18} /><span>{SITE.email || `${t.contact.email}: ${t.common.tbc}`}</span></li>
+            <li><Icon name="mail" size={18} />{SITE.email ? <a href={`mailto:${SITE.email}`} dir="ltr">{SITE.email}</a> : <span>{`${t.contact.email}: ${t.common.tbc}`}</span>}</li>
             <li><Icon name="clock" size={18} /><span>{SITE.hours ? tx(SITE.hours, lang) : `${t.contact.hours}: ${t.common.tbc}`}</span></li>
           </ul>
           <InstallButton className="btn btn-outline-light btn-sm" />

@@ -67,8 +67,8 @@ The app is now a full SFPA website as well as the Kochia PWA. Layout, navigation
 | `/` | Home: hero, quick access, stats, specialties tabs, service catalogue, programmes, news, CTA |
 | `/services`, `/services/:slug` | Service catalogue in four groups, and one page per service with linked prices |
 | `/services/prices` | Full price list (original Kochia view) |
-| `/clinics` | Clinic directory with city filter, Leaflet/OpenStreetMap map, WhatsApp, directions, and booking |
-| `/book` | Six-step booking demo (clinic, service, day, time, details, review) with confirmation, .ics export, and WhatsApp share |
+| `/clinics` | Branch directory (15 branches, 14 states) with state filter, service points, Leaflet/OpenStreetMap map of approximate locations, WhatsApp, and booking |
+| `/book` | Four-step, data-free appointment request (branch, service, day, then WhatsApp or phone) |
 | `/telehealth` | Remote support by WhatsApp and phone; video consultations marked "coming soon" |
 | `/programmes`, `/news`, `/news/:slug`, `/about`, `/contact`, `/donate`, `/privacy` | Organisation pages |
 | `/learn`, `/tools`, `/faq` | Original Kochia articles, tools, and FAQ |
@@ -79,18 +79,25 @@ Routing uses the History API (`src/lib/router.jsx`), so no dependency was added 
 
 | Content | File |
 |---|---|
-| Organisation details (email, address, hours, socials, donation link) | `src/content/site.js` |
+| Organisation details, source URLs, 2025 statistics | `src/content/site.js` |
+| History, vision, mission, goals, departments, partners | `src/content/org.js` |
 | Service catalogue | `src/content/specialties.js` (links to prices in `src/data/services.js` via `priceIds`) |
 | Programmes | `src/content/programmes.js` |
 | News | `src/content/news.js` |
 | Website UI strings (EN/AR) | `src/data/ui.js` |
-| Clinics | `src/data/facilities.js` (add `lat`/`lng` to put a clinic on the map) |
+| Branches and service points | `src/data/facilities.js` |
 
 Content uses `{ en, ar }` pairs and plain arrays, so a headless CMS (WordPress REST, Strapi, or similar) can later return the same shape without frontend changes.
 
+### Content imported from sudanfpa.org
+
+History, vision, mission, goals, departments, partners, the six programme areas, the 15-branch directory, two news stories, and the 2025 statistics come from SFPA's existing website (retrieved 19 November 2026). Every imported block links back to its source page. See `docs/sfpa-content-audit.md` for the full audit, the comparison with sudanfpa.org and CEMOPLAF, and the prioritised validation list.
+
+Branches are shown as reported, never as confirmed open. Coordinates mark the town, so the map uses dashed "approximate" pins and offers no directions. Branch phone numbers on sudanfpa.org are placeholders and are never shown; calls route to the 1700 call centre.
+
 ### Placeholders still to replace
 
-Anything unconfirmed renders with a visible orange "To be confirmed", "Placeholder", or "Sample" marker rather than invented data. Items to supply: head-office address, email, opening hours, social links, donation payment link, clinic addresses/hours/phones/coordinates, mission and vision, founding year and history, programme descriptions, news stories, and photography. The Arabic copy needs review by an SFPA Arabic speaker.
+Anything unconfirmed renders with a visible orange "To be confirmed" or "Status not confirmed" marker rather than invented data. Still to supply: branch operating status, branch phones and hours, street addresses for 12 branches, building-level coordinates, head-office hours, programme objectives and results, post-1965 milestones, values, donation payment link, newer news with photos, and Arabic review of translated text.
 
 ### Privacy in the demo flows
 
@@ -100,7 +107,7 @@ The booking flow keeps everything in component state, never stores or transmits 
 
 - All health content is bilingual (Arabic RTL / English LTR). Language is toggled at runtime; `dir` and `lang` are set on `<html>`.
 - Prices in `services.js` are from the SFPA Medical Services Registry. `price: null` means the service is free.
-- Clinic records in `facilities.js` are placeholders — populate with verified data before go-live.
+- Branch records in `facilities.js` come from sudanfpa.org and are unverified; see `docs/sfpa-content-audit.md`.
 - The app is fully offline-capable once loaded (Workbox pre-caches all JS, CSS, and HTML; Google Fonts are cached on first network fetch).
 
 ## Architecture notes

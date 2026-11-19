@@ -3,9 +3,9 @@ import { Link } from '../lib/router.jsx';
 import { useSite } from '../lib/site.jsx';
 import { tx, fmtNum } from '../lib/i18n.js';
 import { GROUPS, SPECIALTIES } from '../content/specialties.js';
-import { PROGRAMMES } from '../content/programmes.js';
+import { FEATURED_PROGRAMMES } from '../content/programmes.js';
 import { NEWS } from '../content/news.js';
-import { getStats } from '../content/site.js';
+import { SITE, STATS_2025 } from '../content/site.js';
 import Icon from '../components/Icon.jsx';
 import { SectionHead, ServiceTile, ProgrammeCard, NewsCard, CtaBand, WaButton } from '../components/site/Blocks.jsx';
 
@@ -74,7 +74,8 @@ function Specialties() {
 export default function HomePage() {
   const { lang, t } = useSite();
   const h = t.home;
-  const st = getStats();
+  const stat = (id) => STATS_2025.items.find((i) => i.id === id);
+  const band = [stat('branches'), stat('outlets'), stat('sessions')];
 
   return (
     <>
@@ -107,13 +108,12 @@ export default function HomePage() {
         ))}
       </div>
 
-      <section className="stats" aria-label="SFPA in numbers">
+      <section className="stats" aria-label={h.statsLabel}>
         <div className="wrap stats-in">
-          <div className="stat"><strong>{fmtNum(st.services, lang)}</strong><span>{h.stats.services}</span></div>
-          <div className="stat"><strong>{fmtNum(st.free, lang)}</strong><span>{h.stats.free}</span></div>
-          <div className="stat"><strong>{lang === 'ar' ? '٪١٠٠' : '100%'}</strong><span>{h.stats.confidential}</span></div>
-          <div className="stat"><strong>{fmtNum(2, lang)}</strong><span>{h.stats.languages}</span></div>
+          <div className="stat"><strong>{SITE.founded.toLocaleString(lang === 'ar' ? 'ar-SD' : 'en-US', { useGrouping: false })}</strong><span>{h.founded}</span></div>
+          {band.map((b) => <div key={b.id} className="stat"><strong>{fmtNum(b.value, lang)}</strong><span>{tx(b.label, lang)}</span></div>)}
         </div>
+        <p className="wrap stats-src">{h.statsSource} <Link to="/about#numbers">{h.statsMore}</Link></p>
       </section>
 
       <Specialties />
@@ -137,7 +137,7 @@ export default function HomePage() {
       <section className="sec">
         <div className="wrap">
           <SectionHead eyebrow={h.progEyebrow} title={h.progTitle} center />
-          <div className="grid-3">{PROGRAMMES.map((p) => <ProgrammeCard key={p.id} p={p} />)}</div>
+          <div className="grid-3">{FEATURED_PROGRAMMES.map((p) => <ProgrammeCard key={p.id} p={p} />)}</div>
         </div>
       </section>
 

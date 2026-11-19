@@ -11,7 +11,7 @@ import { FACILITIES } from '../data/facilities.js';
 import { SPECIALTIES } from '../content/specialties.js';
 import { SITE } from '../content/site.js';
 import Icon from '../components/Icon.jsx';
-import { cityOf } from './ClinicsPage.jsx';
+import { placeOf } from './ClinicsPage.jsx';
 
 const TOTAL = 4;
 const GENERAL_DAYS = ['asap', 'thisWeek', 'nextWeek'];
@@ -69,7 +69,7 @@ export default function BookingPage() {
                 {FACILITIES.map((f) => (
                   <label key={f.id} className={`opt${centre === f.id ? ' on' : ''}`}>
                     <input type="radio" name="centre" checked={centre === f.id} onChange={() => setCentre(f.id)} />
-                    <span className="opt-main"><strong>{nm(f)}</strong><small>{cityOf(f, lang)} · {lang === 'ar' ? f.address_ar : f.address_en}</small></span>
+                    <span className="opt-main"><strong>{nm(f)}</strong><small>{placeOf(f, lang)}{f.advisory ? ` · ${t.clinics.advisoryShort}` : ''}</small></span>
                   </label>
                 ))}
               </div>

@@ -78,8 +78,6 @@ export const T = {
       disclaimer: 'Prices are indicative and subject to change. Contact your nearest SFPA clinic to confirm current pricing.',
     },
     voice: {
-      toggleOn: 'Voice mode on',
-      toggleOff: 'Voice mode off',
       listen: 'Listen',
       stop: 'Stop',
       noVoice: 'No English voice is installed on this device. You can add one in your phone\'s text-to-speech settings.',
@@ -167,8 +165,6 @@ export const T = {
       disclaimer: 'الأسعار استرشادية وقابلة للتغيير. تواصل مع أقرب عيادة للتأكد من الأسعار الحالية.',
     },
     voice: {
-      toggleOn: 'وضع الصوت مفعّل',
-      toggleOff: 'وضع الصوت متوقف',
       listen: 'استمع',
       stop: 'إيقاف',
       noVoice: 'لا يوجد صوت عربي مثبت على هذا الجهاز. يمكنك إضافته من إعدادات تحويل النص إلى كلام في هاتفك.',

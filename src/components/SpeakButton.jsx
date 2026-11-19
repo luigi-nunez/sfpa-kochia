@@ -1,10 +1,11 @@
 import { useVoice } from '../hooks/useVoice.jsx';
 import { T } from '../data/translations.js';
 
-// Listen / Stop control. Renders nothing unless voice mode is on.
-export default function SpeakButton({ id, text, lang, className = '' }) {
+// Listen / Stop control. Shown wherever the browser supports speech; hidden otherwise
+// so users never see a button that does nothing.
+export default function SpeakButton({ id, text, lang, className = '', onStart, onStop }) {
   const v = useVoice();
-  if (!v?.enabled) return null;
+  if (!v?.supported) return null;
   const t = T[lang].voice;
   const playing = v.speakingId === id;
 
@@ -16,7 +17,8 @@ export default function SpeakButton({ id, text, lang, className = '' }) {
         aria-pressed={playing}
         onClick={(e) => {
           e.stopPropagation();
-          if (playing) v.stop(); else v.speak(id, text);
+          if (playing) { v.stop(); onStop?.(); }
+          else { v.speak(id, text); onStart?.(); }
         }}
       >
         <span aria-hidden="true">{playing ? '⏹' : '🔊'}</span>

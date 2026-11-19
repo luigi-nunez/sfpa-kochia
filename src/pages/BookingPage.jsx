@@ -11,19 +11,17 @@ import { FACILITIES } from '../data/facilities.js';
 import { SPECIALTIES } from '../content/specialties.js';
 import { SITE } from '../content/site.js';
 import Icon from '../components/Icon.jsx';
-import { WaButton } from '../components/site/Blocks.jsx';
 import { cityOf } from './ClinicsPage.jsx';
 
 const TOTAL = 4;
 const GENERAL_DAYS = ['asap', 'thisWeek', 'nextWeek'];
 const WEEKDAYS = ['sun', 'mon', 'tue', 'wed', 'thu']; // Sudan working week; Friday and Saturday are the weekend
-const dist = (a, b) => Math.hypot(a.lat - b.lat, (a.lng - b.lng) * Math.cos((a.lat * Math.PI) / 180));
 
 export default function BookingPage() {
   const { lang, t, wa } = useSite();
   const b = t.book;
   const q = useQuery();
-  const pre = SPECIALTIES.find((s) => s.slug === q.get('service') && s.bookable);
+  const pre = SPECIALTIES.find((s) => s.slug === q.get('service'));
   const preC = FACILITIES.find((f) => f.id === q.get('centre'));
 
   const [step, setStep] = useState(preC ? (pre ? 3 : 2) : 1);
@@ -31,30 +29,11 @@ export default function BookingPage() {
   const [service, setService] = useState(pre?.slug ?? null);
   const [day, setDay] = useState(null);
   const [via, setVia] = useState(null);
-  const [order, setOrder] = useState(FACILITIES);
-  const [locMsg, setLocMsg] = useState('');
 
   const C = FACILITIES.find((f) => f.id === centre);
   const S = SPECIALTIES.find((s) => s.slug === service);
   const nm = (f) => (lang === 'ar' ? f.name_ar : f.name_en);
   const dayLabel = (d) => b.days[d];
-
-  function locate() {
-    const located = FACILITIES.filter((f) => f.lat != null && f.lng != null);
-    if (!located.length) { setLocMsg(b.locNone); return; }
-    if (!navigator.geolocation) { setLocMsg(b.locDenied); return; }
-    setLocMsg(b.locating);
-    // The position is used only in this browser to sort the list. It is never sent anywhere.
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const me = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        setOrder([...located].sort((x, y) => dist(me, x) - dist(me, y)).concat(FACILITIES.filter((f) => f.lat == null)));
-        setLocMsg('');
-      },
-      () => setLocMsg(b.locDenied),
-      { timeout: 8000, maximumAge: 600000 },
-    );
-  }
 
   function goTo(s) {
     setStep(s);
@@ -86,10 +65,8 @@ export default function BookingPage() {
           {step === 1 && (
             <fieldset>
               <legend className="h2">{b.s1}</legend>
-              <div className="btn-row"><button type="button" className="btn btn-outline btn-sm" onClick={locate}><Icon name="navigate" size={16} />{b.useLocation}</button></div>
-              {locMsg && <p className="muted-sm">{locMsg}</p>}
               <div className="opt-list">
-                {order.map((f) => (
+                {FACILITIES.map((f) => (
                   <label key={f.id} className={`opt${centre === f.id ? ' on' : ''}`}>
                     <input type="radio" name="centre" checked={centre === f.id} onChange={() => setCentre(f.id)} />
                     <span className="opt-main"><strong>{nm(f)}</strong><small>{cityOf(f, lang)} · {lang === 'ar' ? f.address_ar : f.address_en}</small></span>
@@ -102,18 +79,12 @@ export default function BookingPage() {
           {step === 2 && (
             <fieldset>
               <legend className="h2">{b.s2}</legend>
-              <p className="muted-sm">{b.s2note}</p>
               <div className="opt-grid">
-                {SPECIALTIES.map((s) => s.bookable ? (
+                {SPECIALTIES.map((s) => (
                   <label key={s.slug} className={`opt opt-tile${service === s.slug ? ' on' : ''}`}>
                     <input type="radio" name="service" checked={service === s.slug} onChange={() => setService(s.slug)} />
                     <Icon name={s.icon} size={22} /><span>{tx(s.title, lang)}</span>
                   </label>
-                ) : (
-                  <div key={s.slug} className="opt opt-tile opt-wa">
-                    <Icon name={s.icon} size={22} /><span>{tx(s.title, lang)}</span>
-                    <WaButton className="btn btn-wa btn-xs" label={t.common.askWhatsapp} text={tx(s.title, lang)} />
-                  </div>
                 ))}
               </div>
             </fieldset>

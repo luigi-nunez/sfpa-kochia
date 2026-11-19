@@ -77,6 +77,12 @@ kochia-pwa/
 3. Vercel auto-detects Vite. Accept the defaults (build command: `vite build`, output directory: `dist`).
 4. Deploy. The `vercel.json` rewrite rule ensures client-side routing works correctly.
 
+## Voice mode
+
+A speaker toggle in the header turns on read-aloud. When it is on, articles and open FAQ answers show a Listen button, and each tool question (with its numbered options) and result is read automatically. The setting is remembered on the device.
+
+Voice mode uses the browser's built-in text-to-speech (Web Speech API). Nothing is sent to SFPA or any backend, and on-device voices are chosen over cloud voices where both exist. Quality depends on the phone: most Android devices include an Arabic voice in Google text-to-speech, but some need it downloaded under Settings → Text-to-speech. If no voice is installed for the current language, the app says so under the Listen button. Voices read Modern Standard Arabic, not Sudanese dialect.
+
 ## Constraints (do not add)
 
 - No login or authentication

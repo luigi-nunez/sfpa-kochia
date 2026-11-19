@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useVoice } from '../hooks/useVoice.jsx';
+import SpeakButton from './SpeakButton.jsx';
+import { T } from '../data/translations.js';
 import Modal from './Modal.jsx';
 import { WA_NUMBER } from '../config.js';
 
@@ -25,9 +28,35 @@ export default function ToolModal({ tool, lang, onClose }) {
   }
 
   const title = lang === 'ar' ? tool.title_ar : tool.title_en;
+  const voice = useVoice();
+  const optWord = T[lang].voice.option;
+
+  // Text read aloud for the current question: the question, then each numbered option.
+  const stepText = step
+    ? [
+        lang === 'ar' ? step.q_ar : step.q_en,
+        ...step.opts.map((o, i) => `${optWord} ${i + 1}: ${lang === 'ar' ? o.label_ar : o.label_en}.`),
+      ].join('\n')
+    : '';
+  const resultText = result
+    ? [lang === 'ar' ? result.title_ar : result.title_en, lang === 'ar' ? result.body_ar : result.body_en].join('\n')
+    : '';
+
+  // In voice mode, read each new question or result automatically. The tap that
+  // opened the tool or chose an option counts as the user gesture browsers require.
+  useEffect(() => {
+    if (!voice?.enabled) return;
+    if (result) voice.speak(`tool-${tool.id}-result`, resultText);
+    else voice.speak(`tool-${tool.id}-${stepId}`, stepText);
+  }, [stepId, result, lang]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function close() {
+    voice?.stop();
+    onClose();
+  }
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={close}>
       <p className="mtitle">{title}</p>
 
       {!result ? (
@@ -37,6 +66,7 @@ export default function ToolModal({ tool, lang, onClose }) {
             <div className="tfill" style={{ width: `${progress}%` }} />
           </div>
           <p className="tq">{lang === 'ar' ? step.q_ar : step.q_en}</p>
+          <SpeakButton id={`tool-${tool.id}-${stepId}`} lang={lang} className="spk-block" text={stepText} />
           <div className="topts">
             {step.opts.map((opt, i) => (
               <button key={i} className="topt" onClick={() => choose(opt)}>
@@ -45,7 +75,7 @@ export default function ToolModal({ tool, lang, onClose }) {
             ))}
           </div>
           <div className="tfoot">
-            <button className="tcan" onClick={onClose}>{lang === 'ar' ? 'إلغاء' : 'Cancel'}</button>
+            <button className="tcan" onClick={close}>{lang === 'ar' ? 'إلغاء' : 'Cancel'}</button>
           </div>
         </>
       ) : (
@@ -55,6 +85,7 @@ export default function ToolModal({ tool, lang, onClose }) {
           </div>
           <p className="rhead">{lang === 'ar' ? 'نتيجتك' : 'Your result'}</p>
           <p className="rtitle">{lang === 'ar' ? result.title_ar : result.title_en}</p>
+          <SpeakButton id={`tool-${tool.id}-result`} lang={lang} className="spk-block" text={resultText} />
           <p className="rbody">{lang === 'ar' ? result.body_ar : result.body_en}</p>
 
           <div className="wac">
@@ -91,7 +122,7 @@ export default function ToolModal({ tool, lang, onClose }) {
             <button className="rrst" onClick={reset}>
               {lang === 'ar' ? 'ابدأ من جديد' : 'Start again'}
             </button>
-            <button className="rcls" onClick={onClose}>
+            <button className="rcls" onClick={close}>
               {lang === 'ar' ? 'إغلاق' : 'Close'}
             </button>
           </div>

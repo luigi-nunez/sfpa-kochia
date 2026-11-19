@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import { useVoice } from '../hooks/useVoice.jsx';
 import { T } from '../data/translations.js';
 import { FAQS } from '../data/faqs.js';
+import SpeakButton from './SpeakButton.jsx';
 
 export default function FAQView({ lang }) {
   const t = T[lang].faq;
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(null);
+  const voice = useVoice();
 
   const filtered = FAQS.filter((f) => {
     const q = query.toLowerCase();
@@ -13,6 +16,7 @@ export default function FAQView({ lang }) {
   });
 
   function toggle(id) {
+    voice?.stop();
     setOpen(open === id ? null : id);
   }
 
@@ -43,7 +47,17 @@ export default function FAQView({ lang }) {
                 <span className="fchev">▼</span>
               </button>
               <div className="fans">
-                <div className="fains">{lang === 'ar' ? f.a_ar : f.a_en}</div>
+                <div className="fains">
+                  {open === f.id && (
+                    <SpeakButton
+                      id={`faq-${f.id}`}
+                      lang={lang}
+                      className="spk-block"
+                      text={lang === 'ar' ? `${f.q_ar}\n${f.a_ar}` : `${f.q_en}\n${f.a_en}`}
+                    />
+                  )}
+                  {lang === 'ar' ? f.a_ar : f.a_en}
+                </div>
               </div>
             </div>
           ))}

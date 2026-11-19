@@ -328,10 +328,6 @@ h1, h2, h3 { color: var(--txt); }
 .day { position: relative; display: grid; justify-items: center; gap: 0; padding: 10px 4px; border: 1.5px solid var(--bdr); border-radius: var(--r-md); cursor: pointer; }
 .day strong { font-size: 1.25rem; }
 .day small { color: var(--txtm); font-size: .75rem; }
-.time-grid { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
-.time { position: relative; display: grid; justify-items: center; padding: 12px 6px; border: 1.5px solid var(--bdr); border-radius: var(--r-md); cursor: pointer; font-weight: 600; }
-.time.full { opacity: .45; cursor: not-allowed; text-decoration: line-through; }
-.time small { font-size: .6875rem; font-weight: 500; text-decoration: none; }
 .field { display: grid; gap: 6px; }
 .field label, .field .label { font-weight: 600; font-size: .875rem; }
 .field input, .field select, .field textarea { width: 100%; min-height: 46px; padding: 10px 14px; border: 1.5px solid var(--bdr); border-radius: var(--r-md); background: var(--bg); color: var(--txt); font: inherit; }
@@ -347,18 +343,18 @@ h1, h2, h3 { color: var(--txt); }
 .summary > div { display: grid; grid-template-columns: 110px 1fr auto; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--bdr); }
 .summary dt { color: var(--txtm); font-size: .8125rem; }
 .summary dd { font-weight: 600; }
-.done .summary > div { grid-template-columns: 110px 1fr; }
 .consent { display: flex; gap: 10px; align-items: flex-start; font-size: .875rem; line-height: 1.55; cursor: pointer; }
 .consent input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--p); flex-shrink: 0; }
+.book-card .label { font-weight: 600; font-size: .875rem; margin-top: 4px; }
+.via-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.via-grid small { font-weight: 400; color: var(--txtm); font-size: .8125rem; line-height: 1.45; }
+.via-panel { display: grid; gap: 10px; padding: 16px; border-radius: var(--r-md); background: var(--surf); border: 1px solid var(--bdr); }
+.wa-preview { margin: 0; padding: 12px 14px; border-radius: var(--r-md); background: var(--bg); border: 1px solid var(--bdr); font: inherit; font-size: .875rem; line-height: 1.6; white-space: pre-wrap; }
+.call-list { margin: 0; padding-inline-start: 18px; display: grid; gap: 4px; font-size: .9375rem; }
+.req-note { display: flex; gap: 10px; align-items: flex-start; font-size: .875rem; color: var(--txts); line-height: 1.55; }
+.req-note svg { flex-shrink: 0; color: var(--p); margin-top: 1px; }
 .book-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 18px; }
 .book-nav .btn { min-width: 140px; }
-.done { text-align: center; }
-.done .summary { text-align: start; }
-.done h1 { font-size: 1.5rem; margin: 14px 0 6px; }
-.done h1 .muted { font-size: 1rem; font-weight: 500; }
-.done-icon { display: inline-grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: #E3F5EA; color: var(--wa); }
-.code { font-size: 1.0625rem; margin-bottom: 4px; }
-.code strong { letter-spacing: .06em; font-size: 1.25rem; }
 
 /* Telehealth */
 .tele-hero { display: grid; gap: 32px; align-items: center; }

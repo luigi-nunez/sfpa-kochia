@@ -1,9 +1,13 @@
 // SFPA Sudan clinic data.
 // Coordinates, phone numbers, and service lists are intentionally left empty.
 // Populate with verified clinic data before deployment.
+// When lat/lng are set, the clinic appears on the map and gets a Directions button.
+// whatsapp: optional per-clinic number (digits only); falls back to the central WhatsApp line.
 export const FACILITIES = [
   {
     id: 'c01',
+    city_en: 'Khartoum',
+    city_ar: 'الخرطوم',
     name_en: 'SFPA Main Clinic — Khartoum',
     name_ar: 'العيادة الرئيسية — الخرطوم',
     address_en: 'Address to be confirmed',
@@ -18,6 +22,8 @@ export const FACILITIES = [
   },
   {
     id: 'c02',
+    city_en: 'Omdurman',
+    city_ar: 'أم درمان',
     name_en: 'SFPA Clinic — Omdurman',
     name_ar: 'عيادة الجمعية — أم درمان',
     address_en: 'Address to be confirmed',
@@ -32,6 +38,8 @@ export const FACILITIES = [
   },
   {
     id: 'c03',
+    city_en: 'Bahri',
+    city_ar: 'بحري',
     name_en: 'SFPA Clinic — Bahri (Khartoum North)',
     name_ar: 'عيادة الجمعية — بحري (الخرطوم بحري)',
     address_en: 'Address to be confirmed',

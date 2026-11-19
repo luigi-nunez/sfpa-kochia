@@ -56,6 +56,46 @@ kochia-pwa/
 └── package.json
 ```
 
+## Website layer (CEMOPLAF-style)
+
+The app is now a full SFPA website as well as the Kochia PWA. Layout, navigation, and flows follow the CEMOPLAF Ecuador site (cemoplaf.org.ec) as a reference, in SFPA's own brand (navy `#253D87` and red `#EA2324`, sampled from the logo). It stays a React + Vite SPA on Vercel; nothing here depends on WordPress.
+
+### Routes
+
+| Path | Page |
+|---|---|
+| `/` | Home: hero, quick access, stats, specialties tabs, service catalogue, programmes, news, CTA |
+| `/services`, `/services/:slug` | Service catalogue in four groups, and one page per service with linked prices |
+| `/services/prices` | Full price list (original Kochia view) |
+| `/clinics` | Clinic directory with city filter, Leaflet/OpenStreetMap map, WhatsApp, directions, and booking |
+| `/book` | Six-step booking demo (clinic, service, day, time, details, review) with confirmation, .ics export, and WhatsApp share |
+| `/telehealth` | Remote support by WhatsApp and phone; video consultations marked "coming soon" |
+| `/programmes`, `/news`, `/news/:slug`, `/about`, `/contact`, `/donate`, `/privacy` | Organisation pages |
+| `/learn`, `/tools`, `/faq` | Original Kochia articles, tools, and FAQ |
+
+Routing uses the History API (`src/lib/router.jsx`), so no dependency was added for it. `vercel.json` already rewrites all paths to `index.html`, and the service worker serves it offline.
+
+### Where content lives (CMS-ready)
+
+| Content | File |
+|---|---|
+| Organisation details (email, address, hours, socials, donation link) | `src/content/site.js` |
+| Service catalogue | `src/content/specialties.js` (links to prices in `src/data/services.js` via `priceIds`) |
+| Programmes | `src/content/programmes.js` |
+| News | `src/content/news.js` |
+| Website UI strings (EN/AR) | `src/data/ui.js` |
+| Clinics | `src/data/facilities.js` (add `lat`/`lng` to put a clinic on the map) |
+
+Content uses `{ en, ar }` pairs and plain arrays, so a headless CMS (WordPress REST, Strapi, or similar) can later return the same shape without frontend changes.
+
+### Placeholders still to replace
+
+Anything unconfirmed renders with a visible orange "To be confirmed", "Placeholder", or "Sample" marker rather than invented data. Items to supply: head-office address, email, opening hours, social links, donation payment link, clinic addresses/hours/phones/coordinates, mission and vision, founding year and history, programme descriptions, news stories, and photography. The Arabic copy needs review by an SFPA Arabic speaker.
+
+### Privacy in the demo flows
+
+The booking flow keeps everything in component state, never stores or transmits it, and wipes the name and phone on confirmation. Geolocation (when clinic coordinates exist) only sorts the list on the device. The contact form opens WhatsApp with a prefilled message, and the user decides whether to send it. The site uses no analytics.
+
 ## Content notes
 
 - All health content is bilingual (Arabic RTL / English LTR). Language is toggled at runtime; `dir` and `lang` are set on `<html>`.
@@ -90,6 +130,7 @@ Voice mode uses the browser's built-in text-to-speech (Web Speech API). Nothing 
 - No backend database (Supabase, Firebase, Odoo, OpenEMR, etc.)
 - No real WhatsApp / Turn.io API integration (the FAB opens a `wa.me` link only)
 - No fabricated clinic coordinates, phone numbers, or prices not confirmed by SFPA
+- No real booking backend until SFPA approves data safeguards (the booking flow is a demo)
 
 ## Customisation checklist before go-live
 

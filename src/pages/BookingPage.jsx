@@ -11,7 +11,6 @@ import { FACILITIES } from '../data/facilities.js';
 import { SPECIALTIES } from '../content/specialties.js';
 import { SITE } from '../content/site.js';
 import Icon from '../components/Icon.jsx';
-import { WaButton } from '../components/site/Blocks.jsx';
 import { cityOf } from './ClinicsPage.jsx';
 
 const TOTAL = 4;
@@ -22,7 +21,7 @@ export default function BookingPage() {
   const { lang, t, wa } = useSite();
   const b = t.book;
   const q = useQuery();
-  const pre = SPECIALTIES.find((s) => s.slug === q.get('service') && s.bookable);
+  const pre = SPECIALTIES.find((s) => s.slug === q.get('service'));
   const preC = FACILITIES.find((f) => f.id === q.get('centre'));
 
   const [step, setStep] = useState(preC ? (pre ? 3 : 2) : 1);
@@ -80,18 +79,12 @@ export default function BookingPage() {
           {step === 2 && (
             <fieldset>
               <legend className="h2">{b.s2}</legend>
-              <p className="muted-sm">{b.s2note}</p>
               <div className="opt-grid">
-                {SPECIALTIES.map((s) => s.bookable ? (
+                {SPECIALTIES.map((s) => (
                   <label key={s.slug} className={`opt opt-tile${service === s.slug ? ' on' : ''}`}>
                     <input type="radio" name="service" checked={service === s.slug} onChange={() => setService(s.slug)} />
                     <Icon name={s.icon} size={22} /><span>{tx(s.title, lang)}</span>
                   </label>
-                ) : (
-                  <div key={s.slug} className="opt opt-tile opt-wa">
-                    <Icon name={s.icon} size={22} /><span>{tx(s.title, lang)}</span>
-                    <WaButton className="btn btn-wa btn-xs" label={t.common.askWhatsapp} text={tx(s.title, lang)} />
-                  </div>
                 ))}
               </div>
             </fieldset>

@@ -79,7 +79,7 @@ kochia-pwa/
 
 ## Voice mode
 
-A speaker toggle in the header turns on read-aloud. When it is on, articles and open FAQ answers show a Listen button, and each tool question (with its numbered options) and result is read automatically. The setting is remembered on the device.
+Articles, open FAQ answers, and each tool question and result have a Listen button. The buttons appear only in browsers that support speech. Nothing is ever read aloud without a tap. In a tool, tapping Listen once makes the following questions (with their numbered options) and the result read automatically until the user taps Stop or closes the tool. This choice is not remembered between sessions.
 
 Voice mode uses the browser's built-in text-to-speech (Web Speech API). Nothing is sent to SFPA or any backend, and on-device voices are chosen over cloud voices where both exist. Quality depends on the phone: most Android devices include an Arabic voice in Google text-to-speech, but some need it downloaded under Settings → Text-to-speech. If no voice is installed for the current language, the app says so under the Listen button. Voices read Modern Standard Arabic, not Sudanese dialect.
 

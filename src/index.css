@@ -113,6 +113,13 @@ a { color: var(--p); text-decoration: none; }
   transition: all .15s; white-space: nowrap; flex-shrink: 0;
 }
 .lang-btn:hover { background: var(--p); color: #fff; }
+.theme-btn {
+  width: 36px; height: 36px; border-radius: var(--r-full);
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--bdr); background: none; color: var(--txts);
+  transition: color .15s, border-color .15s, background .15s; flex-shrink: 0;
+}
+.theme-btn:hover { color: var(--p); border-color: var(--p); background: var(--pl); }
 
 /* ── Mobile top bar ────────────────────────────────────────────── */
 .nav-mt {
@@ -504,14 +511,6 @@ body::before {
 
 /* ── Voice mode ────────────────────────────────────────────────── */
 .hdr-acts { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.voice-btn {
-  width: 36px; height: 36px; border-radius: var(--r-full);
-  border: 1.5px solid var(--bdr); background: none;
-  font-size: 1.0625rem; line-height: 1; display: inline-flex;
-  align-items: center; justify-content: center; transition: all .15s;
-}
-.voice-btn:hover { border-color: var(--p); }
-.voice-btn.on { border-color: var(--p); background: var(--pl); }
 .spk-wrap { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 6px; }
 .spk-block { display: flex; margin: 0 0 16px; }
 .spk {

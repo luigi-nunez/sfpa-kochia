@@ -4,17 +4,12 @@
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
-const STORAGE_KEY = 'kochia.voiceMode';
 const VoiceContext = createContext(null);
 
 const synth = typeof window !== 'undefined' && 'speechSynthesis' in window ? window.speechSynthesis : null;
 
-function readStored() {
-  try { return localStorage.getItem(STORAGE_KEY) === '1'; } catch { return false; }
-}
-function writeStored(on) {
-  try { localStorage.setItem(STORAGE_KEY, on ? '1' : '0'); } catch { /* storage unavailable */ }
-}
+// Earlier builds saved a global voice-mode switch. It no longer exists, so clear it.
+try { localStorage.removeItem('kochia.voiceMode'); } catch { /* storage unavailable */ }
 
 // Pick the best installed voice for a language. Local (on-device) voices win over network voices.
 function pickVoice(voices, lang) {
@@ -46,7 +41,6 @@ function chunk(text, max = 180) {
 }
 
 export function VoiceProvider({ lang, children }) {
-  const [enabled, setEnabled] = useState(readStored);
   const [voices, setVoices] = useState(() => (synth ? synth.getVoices() : []));
   const [speakingId, setSpeakingId] = useState(null);
   const runRef = useRef(0);
@@ -94,23 +88,12 @@ export function VoiceProvider({ lang, children }) {
     });
   }, [lang, voice, stop]);
 
-  const toggle = useCallback(() => {
-    setEnabled((on) => {
-      const next = !on;
-      writeStored(next);
-      if (!next) stop();
-      return next;
-    });
-  }, [stop]);
-
   const value = {
     supported: !!synth,
-    enabled: enabled && !!synth,
     hasVoice: !!voice,
     speakingId,
     speak,
     stop,
-    toggle,
   };
 
   return <VoiceContext.Provider value={value}>{children}</VoiceContext.Provider>;

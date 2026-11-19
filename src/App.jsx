@@ -9,6 +9,8 @@ import ServicesView from './components/ServicesView.jsx';
 import { T } from './data/translations.js';
 import { WA_NUMBER } from './config.js';
 import { VoiceProvider, useVoice } from './hooks/useVoice.jsx';
+import useTheme from './hooks/useTheme.js';
+import ThemeToggle from './components/ThemeToggle.jsx';
 
 const NAV_ITEMS = [
   { id: 'home', icon: '🏠' },
@@ -19,24 +21,6 @@ const NAV_ITEMS = [
   { id: 'services', icon: '💊' },
 ];
 
-function VoiceToggle({ lang }) {
-  const v = useVoice();
-  if (!v.supported) return null;
-  const t = T[lang].voice;
-  const label = v.enabled ? t.toggleOn : t.toggleOff;
-  return (
-    <button
-      className={`voice-btn${v.enabled ? ' on' : ''}`}
-      onClick={v.toggle}
-      aria-pressed={v.enabled}
-      aria-label={label}
-      title={label}
-    >
-      <span aria-hidden="true">{v.enabled ? '🔊' : '🔈'}</span>
-    </button>
-  );
-}
-
 function StopOnChange({ tab }) {
   const v = useVoice();
   useEffect(() => { v.stop(); }, [tab]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -46,6 +30,7 @@ function StopOnChange({ tab }) {
 export default function App() {
   const [lang, setLang] = useState('ar');
   const [tab, setTab] = useState('home');
+  const [theme, toggleTheme] = useTheme();
 
   // Apply dir/lang to root
   useEffect(() => {
@@ -96,7 +81,7 @@ export default function App() {
           ))}
         </div>
         <div className="hdr-acts">
-          <VoiceToggle lang={lang} />
+          <ThemeToggle theme={theme} onToggle={toggleTheme} lang={lang} />
           <button className="lang-btn" onClick={toggleLang} aria-label="Switch language">
             {lang === 'ar' ? 'EN' : 'عربي'}
           </button>
@@ -112,7 +97,7 @@ export default function App() {
           <span>{t.appName}</span>
         </div>
         <div className="hdr-acts">
-          <VoiceToggle lang={lang} />
+          <ThemeToggle theme={theme} onToggle={toggleTheme} lang={lang} />
           <button className="lang-btn" onClick={toggleLang} aria-label="Switch language">
             {lang === 'ar' ? 'EN' : 'عربي'}
           </button>

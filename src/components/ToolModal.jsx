@@ -8,6 +8,10 @@ import { WA_NUMBER } from '../config.js';
 export default function ToolModal({ tool, lang, onClose }) {
   const [stepId, setStepId] = useState(tool.steps[0].id);
   const [result, setResult] = useState(null);
+  // Becomes true when the user taps Listen inside this tool. Following questions and the
+  // result are then read automatically until they tap Stop or close the tool. Nothing is
+  // ever read aloud without a tap, so the phone never speaks health content unprompted.
+  const [autoRead, setAutoRead] = useState(false);
 
   const steps = tool.steps;
   const stepIndex = steps.findIndex((s) => s.id === stepId);
@@ -42,10 +46,10 @@ export default function ToolModal({ tool, lang, onClose }) {
     ? [lang === 'ar' ? result.title_ar : result.title_en, lang === 'ar' ? result.body_ar : result.body_en].join('\n')
     : '';
 
-  // In voice mode, read each new question or result automatically. The tap that
-  // opened the tool or chose an option counts as the user gesture browsers require.
+  // After the user has started listening, read each new question or result automatically.
+  // The tap that chose an option counts as the user gesture browsers require.
   useEffect(() => {
-    if (!voice?.enabled) return;
+    if (!autoRead) return;
     if (result) voice.speak(`tool-${tool.id}-result`, resultText);
     else voice.speak(`tool-${tool.id}-${stepId}`, stepText);
   }, [stepId, result, lang]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -66,7 +70,7 @@ export default function ToolModal({ tool, lang, onClose }) {
             <div className="tfill" style={{ width: `${progress}%` }} />
           </div>
           <p className="tq">{lang === 'ar' ? step.q_ar : step.q_en}</p>
-          <SpeakButton id={`tool-${tool.id}-${stepId}`} lang={lang} className="spk-block" text={stepText} />
+          <SpeakButton id={`tool-${tool.id}-${stepId}`} lang={lang} className="spk-block" text={stepText} onStart={() => setAutoRead(true)} onStop={() => setAutoRead(false)} />
           <div className="topts">
             {step.opts.map((opt, i) => (
               <button key={i} className="topt" onClick={() => choose(opt)}>
@@ -85,7 +89,7 @@ export default function ToolModal({ tool, lang, onClose }) {
           </div>
           <p className="rhead">{lang === 'ar' ? 'نتيجتك' : 'Your result'}</p>
           <p className="rtitle">{lang === 'ar' ? result.title_ar : result.title_en}</p>
-          <SpeakButton id={`tool-${tool.id}-result`} lang={lang} className="spk-block" text={resultText} />
+          <SpeakButton id={`tool-${tool.id}-result`} lang={lang} className="spk-block" text={resultText} onStart={() => setAutoRead(true)} onStop={() => setAutoRead(false)} />
           <p className="rbody">{lang === 'ar' ? result.body_ar : result.body_en}</p>
 
           <div className="wac">

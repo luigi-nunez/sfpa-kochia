@@ -7,6 +7,16 @@
     <title>Kochia</title>
     <meta name="description" content="Confidential sexual and reproductive health information and support from SFPA Sudan." />
     <meta name="theme-color" content="#00796B" />
+    <script>
+      // Apply a saved theme before first paint to avoid a light-to-dark flash.
+      try {
+        var t = localStorage.getItem("kochia-theme");
+        if (t === "dark" || t === "light") {
+          document.documentElement.setAttribute("data-theme", t);
+          if (t === "dark") document.querySelector('meta[name="theme-color"]').setAttribute("content", "#0F1F1D");
+        }
+      } catch (e) {}
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />

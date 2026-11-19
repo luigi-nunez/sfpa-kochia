@@ -15,8 +15,6 @@
 //   in `unverified` for SFPA's validation and are never rendered or dialled.
 // - Opening hours and street addresses (except Khartoum, Gedaref, and Kassala) are not published.
 //
-// advisory: true marks branches in areas with active conflict in 2025 to 2026 (Darfur and
-// North Kordofan). The UI asks people to call before travelling. SFPA should confirm or change this.
 
 const SVC = {
   integrated: { en: 'Integrated centre', ar: 'مركز متكامل' },
@@ -27,7 +25,7 @@ const SVC = {
 
 const SOURCE = 'https://sudanfpa.org/branches/';
 
-function branch({ slug, state, city, address, lat, lng, points, phone, email, advisory = false }) {
+function branch({ slug, state, city, address, lat, lng, points, phone, email }) {
   const serviceKeys = [...new Set(points.map((p) => p.svc))];
   return {
     id: slug,
@@ -35,7 +33,6 @@ function branch({ slug, state, city, address, lat, lng, points, phone, email, ad
     source: `${SOURCE}${slug}/`,
     status: 'reported', // reported on sudanfpa.org; operational status not confirmed
     precision: 'town', // coordinates mark the town, not the building
-    advisory,
     state_en: state.en, state_ar: state.ar,
     city_en: city.en, city_ar: city.ar,
     name_en: `${state.en} Branch`,
@@ -120,7 +117,7 @@ export const FACILITIES = [
   }),
   branch({
     slug: 'north-darfur', state: { en: 'North Darfur State', ar: 'ولاية شمال دارفور' }, city: { en: 'El Fasher', ar: 'الفاشر' },
-    lat: 13.6289, lng: 25.3493, advisory: true,
+    lat: 13.6289, lng: 25.3493,
     points: [
       { en: 'North Darfur State Branch Integrated Centre', ar: 'المركز المتكامل فرع ولاية شمال دارفور', svc: 'integrated' },
       { en: 'Abu Shouk Centre, North Darfur State', ar: 'مركز أبو شوك - ولاية شمال دارفور', svc: 'integrated' },
@@ -129,7 +126,7 @@ export const FACILITIES = [
   }),
   branch({
     slug: 'south-darfur', state: { en: 'South Darfur State', ar: 'ولاية جنوب دارفور' }, city: { en: 'Nyala', ar: 'نيالا' },
-    lat: 12.05, lng: 24.8833, advisory: true,
+    lat: 12.05, lng: 24.8833,
     points: [
       { en: 'South Darfur State Branch Integrated Centre', ar: 'المركز المتكامل فرع ولاية جنوب دارفور', svc: 'integrated' },
       { en: 'Bulbul Centre, South Darfur State', ar: 'مركز بلبل - ولاية جنوب دارفور', svc: 'integrated' },
@@ -138,7 +135,7 @@ export const FACILITIES = [
   }),
   branch({
     slug: 'west-darfur', state: { en: 'West Darfur State', ar: 'ولاية غرب دارفور' }, city: { en: 'El Geneina', ar: 'الجنينة' },
-    lat: 13.45, lng: 22.45, advisory: true,
+    lat: 13.45, lng: 22.45,
     points: [
       { en: 'West Darfur State Branch Integrated Centre', ar: 'المركز المتكامل فرع ولاية غرب دارفور', svc: 'integrated' },
       { en: 'West Darfur State Centre', ar: 'مركز ولاية غرب دارفور', svc: 'fp' },
@@ -147,7 +144,7 @@ export const FACILITIES = [
   }),
   branch({
     slug: 'nkordofan-obeid', state: { en: 'North Kordofan State', ar: 'ولاية شمال كردفان' }, city: { en: 'El Obeid', ar: 'الأبيض' },
-    lat: 13.1833, lng: 30.2167, advisory: true,
+    lat: 13.1833, lng: 30.2167,
     points: [
       { en: 'North Kordofan State Branch Clinic, El Obeid', ar: 'عيادة فرع ولاية شمال كردفان - الأبيض', svc: 'rh' },
       { en: 'North Kordofan State Counselling Centre', ar: 'مركز إرشاد ولاية شمال كردفان', svc: 'counselling' },
@@ -156,7 +153,7 @@ export const FACILITIES = [
   }),
   branch({
     slug: 'nkordofan-umrwaba', state: { en: 'North Kordofan State', ar: 'ولاية شمال كردفان' }, city: { en: 'Umm Ruwaba', ar: 'أم روابة' },
-    lat: 12.9167, lng: 31.2167, advisory: true,
+    lat: 12.9167, lng: 31.2167,
     points: [
       { en: 'North Kordofan State Branch Clinic, Umm Ruwaba', ar: 'عيادة فرع ولاية شمال كردفان - أم روابة', svc: 'rh' },
       { en: 'North Kordofan State Counselling Centre, Umm Ruwaba', ar: 'مركز إرشاد ولاية شمال كردفان - أم روابة', svc: 'counselling' },

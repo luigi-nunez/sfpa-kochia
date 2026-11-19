@@ -8,8 +8,8 @@ export const VIDEOS = [
     title_en: 'How Does the IUD Work?',
     title_ar: 'كيف يعمل اللولب الرحمي؟',
     duration: '4:32',
-    thumbLabel_en: 'Video — add link before deployment',
-    thumbLabel_ar: 'فيديو — أضف الرابط قبل النشر',
+    thumbLabel_en: 'Video coming soon',
+    thumbLabel_ar: 'الفيديو قريباً',
     url: '',
   },
   {
@@ -19,8 +19,8 @@ export const VIDEOS = [
     title_en: 'Using Condoms Correctly',
     title_ar: 'الاستخدام الصحيح للواقي',
     duration: '3:15',
-    thumbLabel_en: 'Video — add link before deployment',
-    thumbLabel_ar: 'فيديو — أضف الرابط قبل النشر',
+    thumbLabel_en: 'Video coming soon',
+    thumbLabel_ar: 'الفيديو قريباً',
     url: '',
   },
   {
@@ -30,8 +30,8 @@ export const VIDEOS = [
     title_en: 'Understanding STI Testing',
     title_ar: 'فهم فحص الأمراض المنقولة جنسياً',
     duration: '5:48',
-    thumbLabel_en: 'Video — add link before deployment',
-    thumbLabel_ar: 'فيديو — أضف الرابط قبل النشر',
+    thumbLabel_en: 'Video coming soon',
+    thumbLabel_ar: 'الفيديو قريباً',
     url: '',
   },
   {
@@ -41,8 +41,8 @@ export const VIDEOS = [
     title_en: 'Tracking Your Cycle',
     title_ar: 'تتبع دورتك الشهرية',
     duration: '6:20',
-    thumbLabel_en: 'Video — add link before deployment',
-    thumbLabel_ar: 'فيديو — أضف الرابط قبل النشر',
+    thumbLabel_en: 'Video coming soon',
+    thumbLabel_ar: 'الفيديو قريباً',
     url: '',
   },
 ];

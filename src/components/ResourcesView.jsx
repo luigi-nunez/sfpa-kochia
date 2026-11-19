@@ -126,7 +126,7 @@ export default function ResourcesView({ lang }) {
               <div className="vmeta">
                 <p className="vcat">{lang === 'ar' ? v.cat_ar : v.cat_en}</p>
                 <p className="vtitle">{lang === 'ar' ? v.title_ar : v.title_en}</p>
-                <p style={{ fontSize: '.75rem', color: 'var(--txtm)', marginTop: '4px' }}>{v.duration}</p>
+                {v.url && <p style={{ fontSize: '.75rem', color: 'var(--txtm)', marginTop: '4px' }}>{v.duration}</p>}
               </div>
             </div>
           ))}

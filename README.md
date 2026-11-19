@@ -93,11 +93,11 @@ Content uses `{ en, ar }` pairs and plain arrays, so a headless CMS (WordPress R
 
 History, vision, mission, goals, departments, partners, the six programme areas, the 15-branch directory, two news stories, and the 2025 statistics come from SFPA's existing website (retrieved 19 November 2026). Every imported block links back to its source page. See `docs/sfpa-content-audit.md` for the full audit, the comparison with sudanfpa.org and CEMOPLAF, and the prioritised validation list.
 
-Branches are shown as reported, never as confirmed open. Coordinates mark the town, so the map uses dashed "approximate" pins and offers no directions. Branch phone numbers on sudanfpa.org are placeholders and are never shown; calls route to the 1700 call centre.
+Coordinates mark the town, so the map uses dashed town-location pins and offers no directions. Branch phone numbers on sudanfpa.org are placeholders and are never shown; every branch routes calls to the 1700 call centre, which also appears in the header, home page, mobile menu, and a floating desktop button.
 
-### Placeholders still to replace
+### Pending content
 
-Anything unconfirmed renders with a visible orange "To be confirmed" or "Status not confirmed" marker rather than invented data. Still to supply: branch operating status, branch phones and hours, street addresses for 12 branches, building-level coordinates, head-office hours, programme objectives and results, post-1965 milestones, values, donation payment link, newer news with photos, and Arabic review of translated text.
+Pending items are worded for clients ("Coming soon", "Ask our call centre"), never as internal notes. Still to supply: branch operating status, branch phones and hours, street addresses for 12 branches, building-level coordinates, head-office hours, programme objectives and results, post-1965 milestones, approved values, the beneficiaries definition, donation payment link, videos, newer news with photos, and Arabic review of translated text. See `docs/sfpa-content-audit.md`.
 
 ### Privacy in the demo flows
 

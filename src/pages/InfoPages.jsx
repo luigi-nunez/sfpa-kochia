@@ -88,11 +88,9 @@ export function ProgrammesPage() {
                 <h3 className="h4">{x.pillars}</h3>
                 <ul className="checks">{tx(p.pillars, lang).map((pl) => <li key={pl}><Icon name="check" size={18} />{pl}</li>)}</ul>
               </>}
-              {p.detailsPending && <p className="muted-sm pending-line"><Pending /> {x.detailsPending}</p>}
               {p.cta.type === 'whatsapp'
                 ? (wa() && <a className="btn btn-wa" href={wa(tx(p.cta.msg, lang))} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={18} />{tx(p.cta.label, lang)}</a>)
                 : <Link className="btn btn-cta" to={p.cta.to}>{tx(p.cta.label, lang)}</Link>}
-              {p.source && <p className="source-line"><a href={p.source} target="_blank" rel="noopener noreferrer">{x.sourceLink}</a></p>}
             </div>
           </div>
         </section>
@@ -128,7 +126,6 @@ export function NewsArticle({ slug }) {
         <time dateTime={n.date} className="muted">{fmtDate(n.date, lang)}</time>
         <div className="img-ph" aria-hidden="true"><Icon name="globe" size={40} strokeWidth={1.2} /></div>
         {tx(n.body, lang).map((p) => <p key={p}>{p}</p>)}
-        {n.source && <p className="source-line"><a href={n.source} target="_blank" rel="noopener noreferrer">{t.news.source}</a></p>}
       </div>
     </article>
   );
@@ -138,7 +135,6 @@ export function AboutPage() {
   const { lang, t } = useSite();
   const a = t.about;
   const year = (n) => n.toLocaleString(lang === 'ar' ? 'ar-SD' : 'en-US', { useGrouping: false });
-  const Src = ({ href }) => <p className="source-line"><a href={href} target="_blank" rel="noopener noreferrer">{a.sourceLabel}: sudanfpa.org</a></p>;
   return (
     <>
       <PageHero eyebrow={a.eyebrow} title={a.title} sub={a.sub} />
@@ -152,7 +148,6 @@ export function AboutPage() {
         <div className="wrap">
           <SectionHead title={a.goalsT} center />
           <ol className="goals">{ABOUT.goals.map((g, i) => <li key={g.en}><span className="step-n">{fmtNum(i + 1, lang)}</span><p>{tx(g, lang)}</p></li>)}</ol>
-          <Src href={ABOUT.source} />
         </div>
       </section>
       <section className="sec">
@@ -161,7 +156,6 @@ export function AboutPage() {
             <h2>{a.historyT}</h2>
             <p className="founded"><span>{a.founded}</span> <strong>{year(SITE.founded)}</strong></p>
             <p>{tx(ABOUT.history, lang)}</p>
-            <p className="muted-sm pending-line"><Pending /> {a.milestonesPending}</p>
           </div>
           <div className="card ippf"><h2 className="h3">{a.ippfT}</h2><p>{tx(ABOUT.ippf, lang)}</p></div>
         </div>
@@ -170,20 +164,19 @@ export function AboutPage() {
         <div className="wrap">
           <SectionHead title={a.statsT} sub={a.statsSub} center />
           <div className="grid-3 numbers">
-            {STATS_2025.items.map((it) => (
+            {STATS_2025.items.filter((it) => !it.needsDefinition).map((it) => (
               <div key={it.id} className="card num">
                 <strong>{fmtNum(it.value, lang)}</strong>
                 <span>{tx(it.label, lang)}</span>
-                {it.needsDefinition && <Pending label={a.statsDefinition} />}
               </div>
             ))}
           </div>
-          <p className="source-line center">{tx(STATS_2025.sourceNote, lang)} <a href={STATS_2025.source} target="_blank" rel="noopener noreferrer">sudanfpa.org</a></p>
+          <p className="source-line center">{tx(STATS_2025.sourceNote, lang)}</p>
         </div>
       </section>
       <section className="sec">
         <div className="wrap">
-          <SectionHead title={a.valuesT} sub={a.valuesNote} center />
+          <SectionHead title={a.valuesT} center />
           <div className="grid-4">
             {a.values.map((v) => <div key={v.t} className="card value"><span className="icon-badge"><Icon name={v.icon} /></span><h3>{v.t}</h3><p className="muted">{v.d}</p></div>)}
           </div>
@@ -197,11 +190,10 @@ export function AboutPage() {
               <div key={d.id} className="card dept">
                 <span className="icon-badge sm"><Icon name={d.icon} size={18} /></span>
                 <h3>{tx(d.name, lang)}</h3>
-                {d.desc ? <p className="muted">{tx(d.desc, lang)}</p> : <p className="muted-sm"><Pending label={a.deptNoDesc} /></p>}
+                {d.desc && <p className="muted">{tx(d.desc, lang)}</p>}
               </div>
             ))}
           </div>
-          <Src href={DEPARTMENTS.source} />
         </div>
       </section>
       <section className="sec" id="partners">
@@ -216,7 +208,6 @@ export function AboutPage() {
               </div>
             ))}
           </div>
-          <Src href={PARTNERS.source} />
         </div>
       </section>
       <CtaBand title={a.visit}>
@@ -271,7 +262,7 @@ export function ContactPage() {
               {SITE.whatsapp && <li><span className="icon-badge sm wa"><Icon name="whatsapp" size={18} /></span><div><small>WhatsApp</small><a href={waLink(SITE.whatsapp, '')} dir="ltr" target="_blank" rel="noopener noreferrer">+{SITE.whatsapp}</a></div></li>}
               <li><span className="icon-badge sm"><Icon name="mail" size={18} /></span><div><small>{c.email}</small>{SITE.email ? <a href={`mailto:${SITE.email}`}>{SITE.email}</a> : <Pending />}</div></li>
               <li><span className="icon-badge sm"><Icon name="pin" size={18} /></span><div><small>{c.address}</small>{SITE.address ? tx(SITE.address, lang) : <Pending />}</div></li>
-              <li><span className="icon-badge sm"><Icon name="clock" size={18} /></span><div><small>{c.hours}</small>{SITE.hours ? tx(SITE.hours, lang) : <Pending />}</div></li>
+              <li><span className="icon-badge sm"><Icon name="clock" size={18} /></span><div><small>{c.hours}</small>{SITE.hours ? tx(SITE.hours, lang) : t.clinics.hoursAsk}</div></li>
               {SITE.socials.length > 0 && <li><span className="icon-badge sm"><Icon name="globe" size={18} /></span><div><small>{c.social}</small><span className="social-links">{SITE.socials.map((so) => <a key={so.id} href={so.url} target="_blank" rel="noopener noreferrer">{so.id}</a>)}</span></div></li>}
             </ul>
             <Link to="/clinics" className="arrow-link">{t.nav.clinics}<Icon name="arrow" size={16} className="flip" /></Link>

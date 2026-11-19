@@ -106,6 +106,14 @@ export default function HomePage() {
             <Icon name="arrow" size={18} className="qcard-arrow flip" />
           </Link>
         ))}
+        {SITE.callCentre && (
+          <a href={`tel:${SITE.callCentre}`} className="qcard qcard-call">
+            <span className="icon-badge"><Icon name="call" /></span>
+            <span className="qcard-t">{h.callTitle} <span dir="ltr">{SITE.callCentre}</span></span>
+            <span className="muted">{h.callDesc}</span>
+            <Icon name="arrow" size={18} className="qcard-arrow flip" />
+          </a>
+        )}
       </div>
 
       <section className="stats" aria-label={h.statsLabel}>
@@ -150,6 +158,7 @@ export default function HomePage() {
 
       <CtaBand title={h.ctaTitle} sub={h.ctaSub}>
         <Link to="/book" className="btn btn-cta btn-lg">{h.bookOnline}</Link>
+        {SITE.callCentre && <a className="btn btn-light btn-lg" href={`tel:${SITE.callCentre}`}><Icon name="call" size={20} />{t.common.callUs} <span dir="ltr">{SITE.callCentre}</span></a>}
         <WaButton className="btn btn-light btn-lg" />
       </CtaBand>
     </>

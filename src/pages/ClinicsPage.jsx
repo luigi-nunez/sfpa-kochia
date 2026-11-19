@@ -5,7 +5,7 @@ import { fmtNum, waLink } from '../lib/i18n.js';
 import { FACILITIES, STATES } from '../data/facilities.js';
 import { SITE } from '../content/site.js';
 import Icon from '../components/Icon.jsx';
-import { PageHero, CtaBand, WaButton, Pending } from '../components/site/Blocks.jsx';
+import { PageHero, CtaBand, WaButton } from '../components/site/Blocks.jsx';
 
 const ClinicMap = lazy(() => import('../components/site/ClinicMap.jsx'));
 
@@ -37,10 +37,7 @@ export default function ClinicsPage() {
       </PageHero>
       <section className="sec">
         <div className="wrap">
-          <div className="notice notice-warn" role="note">
-            <Icon name="shield" size={18} />
-            <span>{c.statusNote} {SITE.callCentre && <>{c.callFirst} <a href={`tel:${SITE.callCentre}`} dir="ltr">{SITE.callCentre}</a>.</>}</span>
-          </div>
+          <p className="notice"><Icon name="call" size={18} /><span>{c.checkNote} {SITE.callCentre && <><a href={`tel:${SITE.callCentre}`} dir="ltr">{SITE.callCentre}</a> </>}{c.checkNote2}</span></p>
           <div className="clinics-layout">
             <aside className="city-filter" aria-label={c.states}>
               {[['all', c.all, FACILITIES.length], ...STATES.map((s) => [s, stateOf(FACILITIES.find((f) => f.state_en === s), lang), FACILITIES.filter((f) => f.state_en === s).length])].map(([id, label, n]) => (
@@ -58,31 +55,27 @@ export default function ClinicsPage() {
                 return (
                   <article key={f.id} id={`branch-${f.id}`} className={`clinic${selected === f.id ? ' sel' : ''}`}>
                     <div className="clinic-head">
-                      <div>
-                        <h2 className="h3">{nm(f)}</h2>
-                        <p className="muted-sm">{cityOf(f, lang)}</p>
-                      </div>
-                      <Pending kind="reported" label={c.reported} />
+                      <h2 className="h3">{nm(f)}</h2>
+                      <span className="tag">{cityOf(f, lang)}</span>
                     </div>
-                    {f.advisory && <p className="clinic-advisory"><Icon name="shield" size={16} />{c.advisory}</p>}
                     <ul className="clinic-meta">
-                      <li><Icon name="pin" size={18} /><span>{placeOf(f, lang)}{f.addressIsTownOnly && <> <Pending label={c.streetTbc} /></>}</span></li>
-                      <li><Icon name="clock" size={18} /><span><span className="lbl">{c.hours}: </span>{f.hours_en ? (lang === 'ar' ? f.hours_ar : f.hours_en) : <Pending />}</span></li>
-                      <li><Icon name="call" size={18} /><span><span className="lbl">{c.phone}: </span>
+                      <li><Icon name="pin" size={18} /><span>{placeOf(f, lang)}</span></li>
+                      <li><Icon name="call" size={18} /><span><span className="lbl">{f.phone ? c.phone : c.callCentre}: </span>
                         {f.phone
                           ? <a href={`tel:${f.phone}`} dir="ltr">{f.phone}</a>
-                          : <><Pending />{SITE.callCentre && <> {c.useCallCentre} <a href={`tel:${SITE.callCentre}`} dir="ltr">{SITE.callCentre}</a></>}</>}
+                          : SITE.callCentre && <a href={`tel:${SITE.callCentre}`} dir="ltr">{SITE.callCentre}</a>}
                       </span></li>
+                      <li><Icon name="clock" size={18} /><span><span className="lbl">{c.hours}: </span>{f.hours_en ? (lang === 'ar' ? f.hours_ar : f.hours_en) : c.hoursAsk}</span></li>
                     </ul>
                     {f.servicePoints.length > 0 && (
-                      <details className="spoints">
-                        <summary>{c.servicePoints} ({fmtNum(f.servicePoints.length, lang)})</summary>
+                      <div className="spoints">
+                        <h3 className="spoints-t">{c.servicePoints}</h3>
                         <ul>
                           {f.servicePoints.map((p) => (
                             <li key={p.name_ar}><strong>{lang === 'ar' ? p.name_ar : p.name_en}</strong><span className="tag">{lang === 'ar' ? p.type_ar : p.type_en}</span></li>
                           ))}
                         </ul>
-                      </details>
+                      </div>
                     )}
                     <div className="btn-row">
                       {waNum && <a className="btn btn-wa btn-sm" href={waLink(waNum, `${t.common.whatsappUs}: ${nm(f)}`)} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={16} />{t.nav.whatsapp}</a>}
@@ -92,7 +85,6 @@ export default function ClinicsPage() {
                       {exact && <a className="btn btn-outline btn-sm" href={`https://www.google.com/maps/dir/?api=1&destination=${f.lat},${f.lng}`} target="_blank" rel="noopener noreferrer"><Icon name="navigate" size={16} />{c.directions}</a>}
                       <Link to={`/book?centre=${f.id}`} className="btn btn-cta btn-sm"><Icon name="calendar" size={16} />{c.book}</Link>
                     </div>
-                    <p className="source-line"><a href={f.source} target="_blank" rel="noopener noreferrer">{c.source}</a></p>
                   </article>
                 );
               })}
@@ -110,6 +102,7 @@ export default function ClinicsPage() {
       </section>
       <CtaBand title={c.remoteTitle} sub={c.remoteSub}>
         <Link to="/telehealth" className="btn btn-light btn-lg">{t.nav.telehealth}</Link>
+        {SITE.callCentre && <a className="btn btn-light btn-lg" href={`tel:${SITE.callCentre}`}><Icon name="call" size={20} />{t.common.callUs} <span dir="ltr">{SITE.callCentre}</span></a>}
         <WaButton className="btn btn-wa btn-lg" />
       </CtaBand>
     </>

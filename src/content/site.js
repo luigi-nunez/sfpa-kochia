@@ -6,8 +6,9 @@
 //   About            https://sudanfpa.org/من-نحن/
 //   Contact          https://sudanfpa.org/تواصل-معنا/
 //   Statistics       https://sudanfpa.org/الإحصائيات/
-// Not imported, pending validation: the published landline +249-183-000-000 (looks like a
-// placeholder) and the Instagram link (points to instagram.com, not an SFPA profile).
+// Not imported: the published landline +249-183-000-000 (looks like a placeholder).
+// Instagram profile confirmed by Luigi Nuñez on 19 November 2026 (sudanfpa.org links to instagram.com only).
+// WhatsApp 249965100301 confirmed as published by SFPA, though not yet on sudanfpa.org.
 import { WA_NUMBER, CALL_CENTRE } from '../config.js';
 
 export const SOURCES = {
@@ -38,6 +39,7 @@ export const SITE = {
   socials: [
     { id: 'Facebook', url: 'https://www.facebook.com/SudanFamilyPlanning' },
     { id: 'YouTube', url: 'https://www.youtube.com/@SFPA-SUDAN' },
+    { id: 'Instagram', url: 'https://www.instagram.com/sfpa65/' },
   ],
   donationUrl: null, // payment gateway link once SFPA has one
 };
@@ -51,8 +53,8 @@ export const STATS_2025 = {
   year: 2025,
   source: SOURCES.stats,
   sourceNote: {
-    en: 'SFPA annual reports, as published on sudanfpa.org.',
-    ar: 'التقارير السنوية للجمعية، كما نُشرت على موقع sudanfpa.org.',
+    en: 'Source: SFPA annual reports, 2025.',
+    ar: 'المصدر: التقارير السنوية للجمعية، ٢٠٢٥.',
   },
   items: [
     { id: 'branches', value: 15, label: { en: 'Active branches', ar: 'فرع نشط' } },
@@ -60,7 +62,7 @@ export const STATS_2025 = {
     { id: 'sessions', value: 1200, label: { en: 'Awareness sessions', ar: 'جلسة توعية' } },
     { id: 'courses', value: 85, label: { en: 'Training courses', ar: 'دورة تدريبية' } },
     { id: 'partners', value: 25, label: { en: 'Partners and supporters', ar: 'شريك وداعم' } },
-    // Definition unclear (people, visits, or reach?) and very large relative to 26 service points.
+    // Hidden in the UI (needsDefinition) until SFPA confirms what it counts: people, visits, or reach.
     { id: 'beneficiaries', value: 13552299, label: { en: 'Total beneficiaries', ar: 'إجمالي المستفيدين' }, needsDefinition: true },
   ],
 };

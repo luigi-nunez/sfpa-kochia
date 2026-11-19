@@ -115,6 +115,7 @@ export function Header({ theme, toggleTheme }) {
           <div className="hdr-acts">
             <ThemeToggle theme={theme} onToggle={toggleTheme} lang={lang} />
             <LangButton />
+            {SITE.callCentre && <a href={`tel:${SITE.callCentre}`} className="hdr-call" aria-label={`${t.common.callUs} ${SITE.callCentre}`}><Icon name="call" size={18} /><span dir="ltr">{SITE.callCentre}</span></a>}
             <Link to="/book" className="btn btn-cta hdr-cta"><Icon name="calendar" size={18} />{n.book}</Link>
             <button type="button" className="burger" aria-label={n.menu} aria-expanded={drawer} aria-controls="drawer" onClick={() => setDrawer(true)}>
               <Icon name="menu" />
@@ -172,6 +173,7 @@ function Drawer({ open, onClose, theme, toggleTheme }) {
           <Link to="/contact">{n.contact}</Link>
           <Link to="/donate">{n.donate}</Link>
         </nav>
+        {SITE.callCentre && <a className="btn btn-outline btn-block" href={`tel:${SITE.callCentre}`}><Icon name="call" size={18} />{t.common.callUs} <span dir="ltr">{SITE.callCentre}</span></a>}
         {wa() && <a className="btn btn-wa btn-block" href={wa()} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={18} />{t.common.whatsappUs}</a>}
         <InstallButton className="btn btn-ghost btn-block" />
       </div>
@@ -224,6 +226,9 @@ export function FloatingActions() {
   return (
     <>
       <button type="button" className="donate-tab" onClick={() => setOpen(true)}><Icon name="gift" size={18} />{t.nav.donate}</button>
+      {SITE.callCentre && (
+        <a className="call-fab" href={`tel:${SITE.callCentre}`} aria-label={`${t.common.callUs} ${SITE.callCentre}`}><Icon name="call" size={20} /><span dir="ltr">{SITE.callCentre}</span></a>
+      )}
       {wa() && (
         <a className="wa-fab" href={wa()} target="_blank" rel="noopener noreferrer" aria-label={t.common.whatsappUs}><Icon name="whatsapp" size={28} /></a>
       )}
@@ -278,7 +283,7 @@ export function Footer() {
             <li><Icon name="pin" size={18} /><span>{SITE.address ? tx(SITE.address, lang) : `${t.contact.address}: ${t.common.tbc}`}</span></li>
             {SITE.callCentre && <li><Icon name="call" size={18} /><a href={`tel:${SITE.callCentre}`} dir="ltr">{SITE.callCentre}</a></li>}
             <li><Icon name="mail" size={18} />{SITE.email ? <a href={`mailto:${SITE.email}`} dir="ltr">{SITE.email}</a> : <span>{`${t.contact.email}: ${t.common.tbc}`}</span>}</li>
-            <li><Icon name="clock" size={18} /><span>{SITE.hours ? tx(SITE.hours, lang) : `${t.contact.hours}: ${t.common.tbc}`}</span></li>
+            {SITE.hours && <li><Icon name="clock" size={18} /><span>{tx(SITE.hours, lang)}</span></li>}
           </ul>
           <InstallButton className="btn btn-outline-light btn-sm" />
         </div>

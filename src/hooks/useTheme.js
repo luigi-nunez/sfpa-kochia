@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const KEY = "kochia-theme";
-const META_COLORS = { light: "#00796B", dark: "#0F1F1D" };
+const META_COLORS = { light: "#253D87", dark: "#0D1326" };
 
 function systemTheme() {
   return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";

@@ -1,52 +1,75 @@
 /* ── Design tokens ─────────────────────────────────────────────── */
 :root {
-  --p: #00796B;
-  --pd: #00574B;
-  --pl: #E0F2F1;
-  --acc: #26A69A;
+  /* SFPA brand: navy and red sampled from the SFPA logo */
+  --p: #253D87;
+  --pd: #1A2C66;
+  --pl: #E8ECF7;
+  --acc: #4A63B5;
+  --link: #253D87;
+  --cta: #C81E1F;
+  --cta-d: #A3171A;
+  --cta-l: #FDECEC;
+  --wa: #0F7A40;
+  --wa-d: #0B5E31;
+  --navy-bg: #1A2C66;
   --bg: #ffffff;
-  --surf: #F5FAF9;
-  --bdr: #D8ECEB;
-  --txt: #162423;
-  --txts: #436360;
-  --txtm: #7A9997;
-  --dis: #B0CECE;
+  --surf: #F5F7FC;
+  --bdr: #DDE3F0;
+  --txt: #141C33;
+  --txts: #4A5577;
+  --txtm: #6B7595;
+  --dis: #B7C0DA;
   --r-sm: 6px;
   --r-md: 10px;
   --r-lg: 16px;
+  --r-xl: 24px;
   --r-full: 999px;
-  --sh: 0 2px 12px rgba(0,121,107,.10);
-  --sh-lg: 0 8px 32px rgba(0,121,107,.14);
+  --sh: 0 2px 12px rgba(26,44,102,.08);
+  --sh-lg: 0 14px 40px rgba(26,44,102,.14);
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0F1F1D;
-    --surf: #162523;
-    --bdr: #243D3A;
-    --txt: #E8F2F1;
-    --txts: #9DC2C0;
-    --txtm: #5E8E8C;
-    --dis: #2D5250;
-    --pl: #1A3330;
-    --pd: #80CBC4;
+    --p: #4F6BC9;
+    --pd: #9FB2EE;
+    --pl: #1C2747;
+    --acc: #6E86D8;
+    --link: #A9BBF2;
+    --cta: #D23334;
+    --cta-d: #B0282A;
+    --cta-l: #3A1A20;
+    --navy-bg: #111B3D;
+    --bg: #0D1326;
+    --surf: #151D36;
+    --bdr: #26304F;
+    --txt: #E9EDF8;
+    --txts: #A9B3D1;
+    --txtm: #8590B3;
+    --dis: #2D3858;
     --sh: 0 2px 12px rgba(0,0,0,.3);
-    --sh-lg: 0 8px 32px rgba(0,0,0,.4);
+    --sh-lg: 0 14px 40px rgba(0,0,0,.45);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0F1F1D;
-  --surf: #162523;
-  --bdr: #243D3A;
-  --txt: #E8F2F1;
-  --txts: #9DC2C0;
-  --txtm: #5E8E8C;
-  --dis: #2D5250;
-  --pl: #1A3330;
-  --pd: #80CBC4;
+  --p: #4F6BC9;
+  --pd: #9FB2EE;
+  --pl: #1C2747;
+  --acc: #6E86D8;
+  --link: #A9BBF2;
+  --cta: #D23334;
+  --cta-d: #B0282A;
+  --cta-l: #3A1A20;
+  --navy-bg: #111B3D;
+  --bg: #0D1326;
+  --surf: #151D36;
+  --bdr: #26304F;
+  --txt: #E9EDF8;
+  --txts: #A9B3D1;
+  --txtm: #8590B3;
+  --dis: #2D3858;
   --sh: 0 2px 12px rgba(0,0,0,.3);
-  --sh-lg: 0 8px 32px rgba(0,0,0,.4);
+  --sh-lg: 0 14px 40px rgba(0,0,0,.45);
   color-scheme: dark;
 }
 
@@ -63,7 +86,7 @@ body {
 h1,h2,h3 { line-height: 1.3; font-weight: 700; text-wrap: balance; }
 p { line-height: 1.75; }
 button { font-family: inherit; cursor: pointer; }
-a { color: var(--p); text-decoration: none; }
+a { color: var(--link); text-decoration: none; }
 :focus-visible { outline: 2px solid var(--p); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }

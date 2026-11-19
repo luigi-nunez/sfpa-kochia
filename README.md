@@ -24,37 +24,20 @@ https://sfpa-kochia.vercel.app/
 ## Project structure
 
 ```
-kochia-pwa/
-├── public/
-│   └── favicon.svg          # SVG favicon (SFPA logo on teal background)
-├── src/
-│   ├── main.jsx             # React entry point
-│   ├── App.jsx              # Shell: nav, routing, language toggle
-│   ├── index.css            # Design tokens, layout, all component CSS
-│   ├── config.js            # ← WA_NUMBER and CALL_CENTRE — edit before deploying
-│   ├── components/
-│   │   ├── SFPALogo.jsx
-│   │   ├── Modal.jsx
-│   │   ├── ToolModal.jsx
-│   │   ├── HomeView.jsx
-│   │   ├── ResourcesView.jsx
-│   │   ├── ToolsView.jsx
-│   │   ├── FAQView.jsx
-│   │   ├── FacilitiesView.jsx
-│   │   └── ServicesView.jsx
-│   └── data/
-│       ├── translations.js  # All UI strings (EN + AR)
-│       ├── articles.js      # Health articles
-│       ├── videos.js        # Video placeholders
-│       ├── faqs.js          # FAQ entries
-│       ├── tools.js         # Interactive decision-aid tools
-│       ├── facilities.js    # Clinic data (populate before deployment)
-│       └── services.js      # Medical services & prices (from SFPA registry)
-├── index.html
-├── vite.config.js
-├── vercel.json              # SPA rewrite rule
-└── package.json
+src/
+├── main.jsx, App.jsx        # entry point and routes
+├── config.js                # WA_NUMBER and CALL_CENTRE (1700)
+├── index.css, site.css      # Kochia base styles and website layer
+├── lib/                     # router, site context, i18n helpers
+├── hooks/                   # theme and voice
+├── content/                 # site, org, programmes, news, specialties (CMS-ready)
+├── data/                    # UI strings, branches, prices, articles, videos, FAQs, tools
+├── pages/                   # website pages
+└── components/              # site chrome and blocks, plus Kochia views (Learn, Tools, FAQ, prices)
+docs/sfpa-content-audit.md   # sudanfpa.org audit and validation list
 ```
+
+This app runs alongside SFPA's existing WordPress site at sudanfpa.org; it does not replace it or redirect its URLs.
 
 ## Website layer (CEMOPLAF-style)
 
@@ -95,9 +78,13 @@ History, vision, mission, goals, departments, partners, the six programme areas,
 
 Coordinates mark the town, so the map uses dashed town-location pins and offers no directions. Branch phone numbers on sudanfpa.org are placeholders and are never shown; every branch routes calls to the 1700 call centre, which also appears in the header, home page, mobile menu, and a floating desktop button.
 
+### Content decisions (19 November 2026)
+
+Every branch on sudanfpa.org is treated as open. Branches show the 1700 call centre until SFPA supplies real branch numbers (the ones on sudanfpa.org are placeholders). SFPA statistics are not shown. The draft values section was removed. Arabic copy is approved as written.
+
 ### Pending content
 
-Pending items are worded for clients ("Coming soon", "Ask our call centre"), never as internal notes. Still to supply: branch operating status, branch phones and hours, street addresses for 12 branches, building-level coordinates, head-office hours, programme objectives and results, post-1965 milestones, approved values, the beneficiaries definition, donation payment link, videos, newer news with photos, and Arabic review of translated text. See `docs/sfpa-content-audit.md`.
+Pending items are worded for clients ("Coming soon", "Ask our call centre"), never as internal notes. Still to supply: branch operating status, branch phones and hours, street addresses for 12 branches, building-level coordinates, head-office hours, programme objectives and results, post-1965 milestones, donation payment link, videos, newer news with photos, and newer content. See `docs/sfpa-content-audit.md`.
 
 ### Privacy in the demo flows
 
@@ -112,7 +99,7 @@ The booking flow keeps everything in component state, never stores or transmits 
 
 ## Architecture notes
 
-- All translatable strings live in `src/data/translations.js` — white-label by editing one file.
+- Website strings live in `src/data/ui.js`; Kochia view strings live in `src/data/translations.js`.
 - Content (articles, videos, tools, FAQs) lives in `src/data/` — swap without touching components.
 - Components are stateless where possible; state lives in `App.jsx`.
 - RTL layout is driven by a `dir` attribute on the root element; no CSS duplication needed.

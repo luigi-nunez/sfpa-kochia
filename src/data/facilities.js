@@ -4,15 +4,16 @@
 // (each branch has a detail page at https://sudanfpa.org/branches/<slug>/). Retrieved 19 November 2026.
 //
 // What is and is not verified:
-// - Branch names, states, towns, and service-point names are as SFPA publishes them. Operational
-//   status is NOT confirmed: the war has affected many of these towns, so every record is shown
-//   as "reported", never as an open clinic.
+// - Branch names, states, towns, and service-point names are as SFPA publishes them. Every branch
+//   listed on sudanfpa.org is treated as open (decision of 19 November 2026); remove a branch here
+//   if SFPA reports it closed.
 // - lat/lng come from the OpenStreetMap embed on each branch page. They mark the town, not the
 //   building, so precision is 'town' and the UI shows them as approximate locations with no
 //   turn-by-turn directions.
 // - The branch pages list phone numbers +249-000-000-001 to -015 and @sfpa.sd emails. These look
-//   like placeholders (sequential, all zeros, different domain from sudanfpa.org). They are kept
-//   in `unverified` for SFPA's validation and are never rendered or dialled.
+//   like placeholders (sequential, all zeros, different domain from sudanfpa.org), so they are kept
+//   in `unverified` and never rendered or dialled. Each branch shows the 1700 call centre instead.
+//   Put a confirmed number in `phone` and the branch card shows it.
 // - Opening hours and street addresses (except Khartoum, Gedaref, and Kassala) are not published.
 //
 
@@ -31,7 +32,7 @@ function branch({ slug, state, city, address, lat, lng, points, phone, email }) 
     id: slug,
     slug,
     source: `${SOURCE}${slug}/`,
-    status: 'reported', // reported on sudanfpa.org; operational status not confirmed
+    status: 'open', // listed on sudanfpa.org, treated as open
     precision: 'town', // coordinates mark the town, not the building
     state_en: state.en, state_ar: state.ar,
     city_en: city.en, city_ar: city.ar,

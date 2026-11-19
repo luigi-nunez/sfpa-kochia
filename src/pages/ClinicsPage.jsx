@@ -60,10 +60,10 @@ export default function ClinicsPage() {
                     </div>
                     <ul className="clinic-meta">
                       <li><Icon name="pin" size={18} /><span>{placeOf(f, lang)}</span></li>
-                      <li><Icon name="call" size={18} /><span><span className="lbl">{f.phone ? c.phone : c.callCentre}: </span>
+                      <li><Icon name="call" size={18} /><span><span className="lbl">{c.phone}: </span>
                         {f.phone
                           ? <a href={`tel:${f.phone}`} dir="ltr">{f.phone}</a>
-                          : SITE.callCentre && <a href={`tel:${SITE.callCentre}`} dir="ltr">{SITE.callCentre}</a>}
+                          : SITE.callCentre && <>{c.viaCallCentre} <a href={`tel:${SITE.callCentre}`} dir="ltr">{SITE.callCentre}</a></>}
                       </span></li>
                       <li><Icon name="clock" size={18} /><span><span className="lbl">{c.hours}: </span>{f.hours_en ? (lang === 'ar' ? f.hours_ar : f.hours_en) : c.hoursAsk}</span></li>
                     </ul>

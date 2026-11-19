@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from '../lib/router.jsx';
 import { useSite } from '../lib/site.jsx';
 import { tx, fmtDate, fmtNum, waLink } from '../lib/i18n.js';
-import { SITE, STATS_2025 } from '../content/site.js';
+import { SITE } from '../content/site.js';
 import { PROGRAMMES, FEATURED_PROGRAMMES } from '../content/programmes.js';
 import { ABOUT, DEPARTMENTS, PARTNERS } from '../content/org.js';
 import { NEWS, getNews } from '../content/news.js';
@@ -158,28 +158,6 @@ export function AboutPage() {
             <p>{tx(ABOUT.history, lang)}</p>
           </div>
           <div className="card ippf"><h2 className="h3">{a.ippfT}</h2><p>{tx(ABOUT.ippf, lang)}</p></div>
-        </div>
-      </section>
-      <section className="sec sec-soft" id="numbers">
-        <div className="wrap">
-          <SectionHead title={a.statsT} sub={a.statsSub} center />
-          <div className="grid-3 numbers">
-            {STATS_2025.items.filter((it) => !it.needsDefinition).map((it) => (
-              <div key={it.id} className="card num">
-                <strong>{fmtNum(it.value, lang)}</strong>
-                <span>{tx(it.label, lang)}</span>
-              </div>
-            ))}
-          </div>
-          <p className="source-line center">{tx(STATS_2025.sourceNote, lang)}</p>
-        </div>
-      </section>
-      <section className="sec">
-        <div className="wrap">
-          <SectionHead title={a.valuesT} center />
-          <div className="grid-4">
-            {a.values.map((v) => <div key={v.t} className="card value"><span className="icon-badge"><Icon name={v.icon} /></span><h3>{v.t}</h3><p className="muted">{v.d}</p></div>)}
-          </div>
         </div>
       </section>
       <section className="sec sec-soft" id="departments">

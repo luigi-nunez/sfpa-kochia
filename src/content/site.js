@@ -5,7 +5,7 @@
 //   Home and footer  https://sudanfpa.org/?lang=en
 //   About            https://sudanfpa.org/من-نحن/
 //   Contact          https://sudanfpa.org/تواصل-معنا/
-//   Statistics       https://sudanfpa.org/الإحصائيات/
+// Statistics are deliberately not shown (decision of 19 November 2026).
 // Not imported: the published landline +249-183-000-000 (looks like a placeholder).
 // Instagram profile confirmed by Luigi Nuñez on 19 November 2026 (sudanfpa.org links to instagram.com only).
 // WhatsApp 249965100301 confirmed as published by SFPA, though not yet on sudanfpa.org.
@@ -42,27 +42,4 @@ export const SITE = {
     { id: 'Instagram', url: 'https://www.instagram.com/sfpa65/' },
   ],
   donationUrl: null, // payment gateway link once SFPA has one
-};
-
-// Institutional figures exactly as SFPA publishes them for 2025. They are shown one by one
-// with their year and source and are never added together or mixed with other periods.
-// The home hero on sudanfpa.org uses different figures (250K+ beneficiaries, 120+ service
-// points, 40+ years); those conflict with this table and with the 1965 founding date, so they
-// are not used.
-export const STATS_2025 = {
-  year: 2025,
-  source: SOURCES.stats,
-  sourceNote: {
-    en: 'Source: SFPA annual reports, 2025.',
-    ar: 'المصدر: التقارير السنوية للجمعية، ٢٠٢٥.',
-  },
-  items: [
-    { id: 'branches', value: 15, label: { en: 'Active branches', ar: 'فرع نشط' } },
-    { id: 'outlets', value: 26, label: { en: 'Service delivery points', ar: 'منفذ لتقديم الخدمة' } },
-    { id: 'sessions', value: 1200, label: { en: 'Awareness sessions', ar: 'جلسة توعية' } },
-    { id: 'courses', value: 85, label: { en: 'Training courses', ar: 'دورة تدريبية' } },
-    { id: 'partners', value: 25, label: { en: 'Partners and supporters', ar: 'شريك وداعم' } },
-    // Hidden in the UI (needsDefinition) until SFPA confirms what it counts: people, visits, or reach.
-    { id: 'beneficiaries', value: 13552299, label: { en: 'Total beneficiaries', ar: 'إجمالي المستفيدين' }, needsDefinition: true },
-  ],
 };

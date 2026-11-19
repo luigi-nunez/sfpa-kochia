@@ -31,7 +31,7 @@ The English version translates navigation, headings, and About content, but bran
 
 | Capability | Our app (before) | sudanfpa.org | CEMOPLAF | Decision |
 |---|---|---|---|---|
-| Home layout (hero, quick access, stats band, specialties, catalogue, programmes, news, CTA) | Yes, modelled on CEMOPLAF | Simpler hero and sections | Reference | Keep. Stats band now uses SFPA's 2025 figures. |
+| Home layout (hero, quick access, stats band, specialties, catalogue, programmes, news, CTA) | Yes, modelled on CEMOPLAF | Simpler hero and sections | Reference | Keep, without the stats band (no statistics shown). |
 | Service catalogue and per-service pages with prices | Yes (SFPA Medical Services Registry) | No | Yes | Keep unchanged. |
 | Clinic directory and map | Three placeholder Khartoum-area clinics, no coordinates | 15 branches, 30 service points, town-level map embeds | 20 centres, city filter | Import SFPA branches into our Leaflet directory; filter by state as SFPA does. |
 | Booking | Data-free request flow to WhatsApp or phone | None | Online scheduling | Keep ours. Now lists the 15 branches. |
@@ -39,7 +39,7 @@ The English version translates navigation, headings, and About content, but bran
 | About: mission, vision, history | Placeholders | Present | Present | Import. |
 | Departments | No | Nine | No | Add as a section of About, not a new page. |
 | Partners | No | Six | No | Add as a section of About. |
-| Statistics page | No | 2025 table | Stats band | Add as a section of About (`/about#numbers`), linked from the home band. |
+| Statistics page | No | 2025 table | Stats band | Not shown, by decision. |
 | Programmes | Three, two placeholders | Six | Three featured | Replace placeholders with SFPA's six; keep Kochia; feature three on home and Donate. |
 | News | Three samples | Two real stories | News grid | Replace samples with SFPA's stories, original dates and source links. |
 | Contact form | Opens WhatsApp, stores nothing | Email form (backend unknown) | Form | Keep ours. Do not add an email form until backend and privacy are approved. |
@@ -52,7 +52,7 @@ No new routes were added. Everything new lives inside existing pages.
 
 `src/data/facilities.js` holds the 15 branches with state, town, address where published, service points, town-level coordinates, an `advisory` flag, the source URL, and the placeholder phone and email in an `unverified` field that the UI never renders. `src/content/org.js` is new and holds history, IPPF membership, vision, mission, goals, departments, and partners. `src/content/site.js` now carries the email, headquarters, founding year, Facebook and YouTube, source URLs, and the 2025 statistics. `src/content/programmes.js` has SFPA's six programme areas plus Kochia. `src/content/news.js` has SFPA's two stories.
 
-On the pages: the branches page (`/clinics`) filters by state, lists every service point openly on each branch card, routes calls to the 1700 call centre instead of placeholder numbers, tells clients to ask the call centre for opening hours, uses dashed town-location map pins, and offers no turn-by-turn directions for town-level coordinates. About gains goals, history, the 2025 figures, departments, and partners. Programmes show status and focus areas only where SFPA names them. Contact and footer show the email, Facebook, YouTube, and Instagram.
+On the pages: the branches page (`/clinics`) filters by state, lists every service point openly on each branch card, routes calls to the 1700 call centre instead of placeholder numbers, tells clients to ask the call centre for opening hours, uses dashed town-location map pins, and offers no turn-by-turn directions for town-level coordinates. About gains goals, history, departments, and partners. Programmes show status and focus areas only where SFPA names them. Contact and footer show the email, Facebook, YouTube, and Instagram.
 
 ## 3a. Decisions taken on 19 November 2026 (Luigi Nuñez)
 
@@ -63,23 +63,21 @@ On the pages: the branches page (`/clinics`) filters by state, lists every servi
 - All service points are listed openly, since SFPA already publishes them.
 - Anything still pending is worded for clients ("Coming soon", "Ask our call centre"), not as internal notes. Source URLs stay in code comments and data, not in the UI.
 - The 1700 call centre is restored to the header (mobile and tablet), a floating button (desktop), the home quick-access row (as the original Kochia "Call Centre" card was), the home and branches CTA bands, and the mobile menu. It had been dropped from these places in the CEMOPLAF redesign.
-- "Total beneficiaries 13,552,299" is held back from the UI until SFPA confirms what it counts. The other five 2025 figures are shown.
+- Follow-up decisions the same day: every branch on sudanfpa.org is treated as open; branch cards show the 1700 call centre because the published branch numbers are placeholders; all 15 branches stay in booking; SFPA statistics are not shown anywhere; the draft values section is removed; this app runs alongside sudanfpa.org, not in place of it; the Arabic copy is approved as written; unused legacy files were deleted.
 
 ## 4. Validation list for SFPA (priority order)
 
-1. **Which branches and service points are operating now.** The site lists all 15 branches without status labels, per the decision above, so any closed branch would appear open. El Fasher, Nyala, and El Geneina have been RSF-held since late 2025, and El Obeid and Umm Ruwaba are on the Kordofan front. SFPA should confirm status branch by branch.
-2. **Branch phone numbers.** +249-000-000-001 to -015 are placeholders. Supply real numbers or confirm that all calls go through 1700.
-3. **Branch emails.** `@sfpa.sd` addresses differ from the `sudanfpa.org` domain. Confirm which domain is live.
-4. **Head office landline +249-183-000-000.** Looks like a placeholder; not shown.
-5. **Statistics definitions.** "Total beneficiaries 13,552,299" is far larger than the hero's "250K+" and implausible for 26 service points in one year; confirm whether it counts people, visits, or campaign reach, and over what period. Reconcile 26 service delivery points with the 30 service points listed in the branch directory, and 25 partners with the six named. Confirm the home-hero figures should be retired.
-6. **Exact coordinates.** Current pins mark towns. Supply building coordinates to enable directions.
-7. **Opening hours** for headquarters and branches.
-8. **Street addresses** for the 12 branches listed by town only.
-9. **Programme details:** objectives, locations, partners, dates, and results for each of the six areas; confirm all six are still active.
-10. **Arabic wording** of mission, vision, and goals against SFPA's official text, and review of the English translations of department and partner text.
-11. **Service-point names:** spelling of "Qunays" (قنيص) in Blue Nile and "Al Nazir" (الناظر) in Gedaref; whether Sennar's branch is in Singa as listed.
-12. **News:** confirm the two 8 July 2026 dates, add photos with consent, and supply newer stories.
-13. **Values:** the four values on About are our draft, shown without a draft label. SFPA should approve, replace, or remove them.
+These do not block launch. The site handles each gap with client-facing text.
+
+1. **Branch phone numbers.** +249-000-000-001 to -015 are placeholders, so branches show 1700. Supply real numbers to show them per branch.
+2. **Branch emails.** `@sfpa.sd` addresses differ from the `sudanfpa.org` domain. Confirm which domain is live.
+3. **Head office landline +249-183-000-000.** Looks like a placeholder; not shown.
+4. **Exact coordinates.** Current pins mark towns. Supply building coordinates to enable directions.
+5. **Opening hours** for headquarters and branches.
+6. **Street addresses** for the 12 branches listed by town only.
+7. **Programme details:** objectives, locations, partners, dates, and results for each of the six areas; confirm all six are still active.
+8. **Service-point names:** spelling of "Qunays" (قنيص) in Blue Nile and "Al Nazir" (الناظر) in Gedaref; whether Sennar's branch is in Singa as listed.
+9. **News:** confirm the two 8 July 2026 dates, add photos with consent, and supply newer stories.
 
 ## 5. Sources
 

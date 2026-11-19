@@ -465,8 +465,6 @@ h1, h2, h3 { color: var(--txt); }
 .source-line { margin-top: 12px; font-size: .8125rem; color: var(--txtm); }
 .source-line a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .pending-line { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
-.stats-src { font-size: .8125rem; opacity: .8; padding-bottom: 20px; text-align: center; }
-.stats-src a { color: #fff; text-decoration: underline; }
 
 .spoints { margin: 0 0 14px; font-size: .875rem; }
 .spoints-t { font-size: .8125rem; font-weight: 700; color: var(--txts); margin-bottom: 6px; }
@@ -485,8 +483,6 @@ h1, h2, h3 { color: var(--txt); }
 .goals p { line-height: 1.55; }
 .founded { display: flex; gap: 10px; align-items: baseline; margin: 6px 0 12px; color: var(--txts); }
 .founded strong { font-size: 2rem; color: var(--p); line-height: 1; }
-.numbers .num { display: grid; gap: 6px; text-align: center; justify-items: center; }
-.numbers .num strong { font-size: clamp(1.6rem, 3.4vw, 2.2rem); color: var(--p); line-height: 1.1; }
 .dept, .partner { display: grid; gap: 8px; align-content: start; }
 .dept h3, .partner h3 { font-size: 1rem; }
 .partner .tag { justify-self: start; }

@@ -5,7 +5,7 @@ import { tx, fmtNum } from '../lib/i18n.js';
 import { GROUPS, SPECIALTIES } from '../content/specialties.js';
 import { FEATURED_PROGRAMMES } from '../content/programmes.js';
 import { NEWS } from '../content/news.js';
-import { SITE, STATS_2025 } from '../content/site.js';
+import { SITE } from '../content/site.js';
 import Icon from '../components/Icon.jsx';
 import { SectionHead, ServiceTile, ProgrammeCard, NewsCard, CtaBand, WaButton } from '../components/site/Blocks.jsx';
 
@@ -74,8 +74,6 @@ function Specialties() {
 export default function HomePage() {
   const { lang, t } = useSite();
   const h = t.home;
-  const stat = (id) => STATS_2025.items.find((i) => i.id === id);
-  const band = [stat('branches'), stat('outlets'), stat('sessions')];
 
   return (
     <>
@@ -116,13 +114,6 @@ export default function HomePage() {
         )}
       </div>
 
-      <section className="stats" aria-label={h.statsLabel}>
-        <div className="wrap stats-in">
-          <div className="stat"><strong>{SITE.founded.toLocaleString(lang === 'ar' ? 'ar-SD' : 'en-US', { useGrouping: false })}</strong><span>{h.founded}</span></div>
-          {band.map((b) => <div key={b.id} className="stat"><strong>{fmtNum(b.value, lang)}</strong><span>{tx(b.label, lang)}</span></div>)}
-        </div>
-        <p className="wrap stats-src">{h.statsSource} <Link to="/about#numbers">{h.statsMore}</Link></p>
-      </section>
 
       <Specialties />
 

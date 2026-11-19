@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { T } from '../data/translations.js';
 import { ARTICLES } from '../data/articles.js';
 import { VIDEOS } from '../data/videos.js';
+import SpeakButton from './SpeakButton.jsx';
 
 function ArticleDetail({ article, lang, onBack }) {
   const t = T[lang].resources;
@@ -12,6 +13,12 @@ function ArticleDetail({ article, lang, onBack }) {
     <div className="pw adet">
       <button className="aback" onClick={onBack}>{t.backToList}</button>
       <h1>{title}</h1>
+      <SpeakButton
+        id={`article-${article.id}`}
+        lang={lang}
+        className="spk-block"
+        text={[title, ...body.map((b) => `${b.heading}. ${b.text}`)].join('\n')}
+      />
       {body.map((blk, i) => (
         <div key={i} className="ablk">
           <h3>{blk.heading}</h3>

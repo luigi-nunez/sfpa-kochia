@@ -8,6 +8,7 @@ import FacilitiesView from './components/FacilitiesView.jsx';
 import ServicesView from './components/ServicesView.jsx';
 import { T } from './data/translations.js';
 import { WA_NUMBER } from './config.js';
+import { VoiceProvider, useVoice } from './hooks/useVoice.jsx';
 
 const NAV_ITEMS = [
   { id: 'home', icon: '🏠' },
@@ -17,6 +18,30 @@ const NAV_ITEMS = [
   { id: 'facilities', icon: '📍' },
   { id: 'services', icon: '💊' },
 ];
+
+function VoiceToggle({ lang }) {
+  const v = useVoice();
+  if (!v.supported) return null;
+  const t = T[lang].voice;
+  const label = v.enabled ? t.toggleOn : t.toggleOff;
+  return (
+    <button
+      className={`voice-btn${v.enabled ? ' on' : ''}`}
+      onClick={v.toggle}
+      aria-pressed={v.enabled}
+      aria-label={label}
+      title={label}
+    >
+      <span aria-hidden="true">{v.enabled ? '🔊' : '🔈'}</span>
+    </button>
+  );
+}
+
+function StopOnChange({ tab }) {
+  const v = useVoice();
+  useEffect(() => { v.stop(); }, [tab]); // eslint-disable-line react-hooks/exhaustive-deps
+  return null;
+}
 
 export default function App() {
   const [lang, setLang] = useState('ar');
@@ -48,6 +73,8 @@ export default function App() {
   }
 
   return (
+    <VoiceProvider lang={lang}>
+    <StopOnChange tab={tab} />
     <div className="shell">
       {/* ── Desktop nav ── */}
       <nav className="nav-d" aria-label="Main navigation">
@@ -68,9 +95,12 @@ export default function App() {
             </button>
           ))}
         </div>
-        <button className="lang-btn" onClick={toggleLang} aria-label="Switch language">
-          {lang === 'ar' ? 'EN' : 'عربي'}
-        </button>
+        <div className="hdr-acts">
+          <VoiceToggle lang={lang} />
+          <button className="lang-btn" onClick={toggleLang} aria-label="Switch language">
+            {lang === 'ar' ? 'EN' : 'عربي'}
+          </button>
+        </div>
       </nav>
 
       {/* ── Mobile top bar ── */}
@@ -81,9 +111,12 @@ export default function App() {
           </div>
           <span>{t.appName}</span>
         </div>
-        <button className="lang-btn" onClick={toggleLang} aria-label="Switch language">
-          {lang === 'ar' ? 'EN' : 'عربي'}
-        </button>
+        <div className="hdr-acts">
+          <VoiceToggle lang={lang} />
+          <button className="lang-btn" onClick={toggleLang} aria-label="Switch language">
+            {lang === 'ar' ? 'EN' : 'عربي'}
+          </button>
+        </div>
       </header>
 
       {/* ── Main content ── */}
@@ -121,5 +154,6 @@ export default function App() {
         </a>
       )}
     </div>
+    </VoiceProvider>
   );
 }

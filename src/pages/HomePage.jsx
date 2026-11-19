@@ -3,9 +3,9 @@ import { Link } from '../lib/router.jsx';
 import { useSite } from '../lib/site.jsx';
 import { tx, fmtNum } from '../lib/i18n.js';
 import { GROUPS, SPECIALTIES } from '../content/specialties.js';
-import { PROGRAMMES } from '../content/programmes.js';
+import { FEATURED_PROGRAMMES } from '../content/programmes.js';
 import { NEWS } from '../content/news.js';
-import { getStats } from '../content/site.js';
+import { SITE } from '../content/site.js';
 import Icon from '../components/Icon.jsx';
 import { SectionHead, ServiceTile, ProgrammeCard, NewsCard, CtaBand, WaButton } from '../components/site/Blocks.jsx';
 
@@ -74,7 +74,6 @@ function Specialties() {
 export default function HomePage() {
   const { lang, t } = useSite();
   const h = t.home;
-  const st = getStats();
 
   return (
     <>
@@ -105,16 +104,16 @@ export default function HomePage() {
             <Icon name="arrow" size={18} className="qcard-arrow flip" />
           </Link>
         ))}
+        {SITE.callCentre && (
+          <a href={`tel:${SITE.callCentre}`} className="qcard qcard-call">
+            <span className="icon-badge"><Icon name="call" /></span>
+            <span className="qcard-t">{h.callTitle} <span dir="ltr">{SITE.callCentre}</span></span>
+            <span className="muted">{h.callDesc}</span>
+            <Icon name="arrow" size={18} className="qcard-arrow flip" />
+          </a>
+        )}
       </div>
 
-      <section className="stats" aria-label="SFPA in numbers">
-        <div className="wrap stats-in">
-          <div className="stat"><strong>{fmtNum(st.services, lang)}</strong><span>{h.stats.services}</span></div>
-          <div className="stat"><strong>{fmtNum(st.free, lang)}</strong><span>{h.stats.free}</span></div>
-          <div className="stat"><strong>{lang === 'ar' ? '٪١٠٠' : '100%'}</strong><span>{h.stats.confidential}</span></div>
-          <div className="stat"><strong>{fmtNum(2, lang)}</strong><span>{h.stats.languages}</span></div>
-        </div>
-      </section>
 
       <Specialties />
 
@@ -137,7 +136,7 @@ export default function HomePage() {
       <section className="sec">
         <div className="wrap">
           <SectionHead eyebrow={h.progEyebrow} title={h.progTitle} center />
-          <div className="grid-3">{PROGRAMMES.map((p) => <ProgrammeCard key={p.id} p={p} />)}</div>
+          <div className="grid-3">{FEATURED_PROGRAMMES.map((p) => <ProgrammeCard key={p.id} p={p} />)}</div>
         </div>
       </section>
 
@@ -150,6 +149,7 @@ export default function HomePage() {
 
       <CtaBand title={h.ctaTitle} sub={h.ctaSub}>
         <Link to="/book" className="btn btn-cta btn-lg">{h.bookOnline}</Link>
+        {SITE.callCentre && <a className="btn btn-light btn-lg" href={`tel:${SITE.callCentre}`}><Icon name="call" size={20} />{t.common.callUs} <span dir="ltr">{SITE.callCentre}</span></a>}
         <WaButton className="btn btn-light btn-lg" />
       </CtaBand>
     </>

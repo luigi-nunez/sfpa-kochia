@@ -91,6 +91,6 @@ export function CtaBand({ title, sub, children }) {
 export function WaButton({ text, label, className = 'btn btn-wa' }) {
   const { t, wa } = useSite();
   const href = wa(text);
-  if (!href) return <span className={`${className} is-disabled`} aria-disabled="true"><Icon name="whatsapp" size={18} />{t.common.tbc}</span>;
+  if (!href) return <span className={`${className} is-disabled`} aria-disabled="true"><Icon name="whatsapp" size={18} />{t.common.comingSoon}</span>;
   return <a className={className} href={href} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={18} />{label ?? t.common.whatsappUs}</a>;
 }

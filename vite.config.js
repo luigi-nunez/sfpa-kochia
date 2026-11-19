@@ -24,7 +24,7 @@ export default defineConfig({
         categories: ['health', 'medical'],
         shortcuts: [
           { name: 'Book an appointment', short_name: 'Book', url: '/book', icons: [{ src: 'pwa-192.png', sizes: '192x192' }] },
-          { name: 'Find a clinic', short_name: 'Clinics', url: '/clinics', icons: [{ src: 'pwa-192.png', sizes: '192x192' }] },
+          { name: 'Find a branch', short_name: 'Branches', url: '/clinics', icons: [{ src: 'pwa-192.png', sizes: '192x192' }] },
           { name: 'Health articles', short_name: 'Learn', url: '/learn', icons: [{ src: 'pwa-192.png', sizes: '192x192' }] },
         ],
         icons: [

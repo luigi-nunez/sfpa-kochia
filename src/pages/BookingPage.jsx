@@ -11,7 +11,7 @@ import { FACILITIES } from '../data/facilities.js';
 import { SPECIALTIES } from '../content/specialties.js';
 import { SITE } from '../content/site.js';
 import Icon from '../components/Icon.jsx';
-import { cityOf } from './ClinicsPage.jsx';
+import { placeOf } from './ClinicsPage.jsx';
 
 const TOTAL = 4;
 const GENERAL_DAYS = ['asap', 'thisWeek', 'nextWeek'];
@@ -65,11 +65,12 @@ export default function BookingPage() {
           {step === 1 && (
             <fieldset>
               <legend className="h2">{b.s1}</legend>
+              <p className="muted-sm">{b.s1Note}</p>
               <div className="opt-list">
                 {FACILITIES.map((f) => (
                   <label key={f.id} className={`opt${centre === f.id ? ' on' : ''}`}>
                     <input type="radio" name="centre" checked={centre === f.id} onChange={() => setCentre(f.id)} />
-                    <span className="opt-main"><strong>{nm(f)}</strong><small>{cityOf(f, lang)} · {lang === 'ar' ? f.address_ar : f.address_en}</small></span>
+                    <span className="opt-main"><strong>{nm(f)}</strong><small>{placeOf(f, lang)}</small></span>
                   </label>
                 ))}
               </div>
@@ -142,7 +143,7 @@ export default function BookingPage() {
                   <p className="muted-sm">{b.waEdit} {b.waNumberNote}</p>
                   {waHref
                     ? <a className="btn btn-wa btn-block" href={waHref} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={18} />{b.waOpen}</a>
-                    : <span className="btn btn-wa btn-block is-disabled" aria-disabled="true"><Icon name="whatsapp" size={18} />{t.common.tbc}</span>}
+                    : <span className="btn btn-wa btn-block is-disabled" aria-disabled="true"><Icon name="whatsapp" size={18} />{t.common.comingSoon}</span>}
                 </div>
               )}
 
@@ -157,7 +158,7 @@ export default function BookingPage() {
                   <p className="muted-sm">{b.callNumberNote}</p>
                   {SITE.callCentre
                     ? <a className="btn btn-cta btn-block" href={`tel:${SITE.callCentre}`}><Icon name="call" size={18} />{b.callNow} <span dir="ltr">{SITE.callCentre}</span></a>
-                    : <span className="btn btn-cta btn-block is-disabled" aria-disabled="true"><Icon name="call" size={18} />{t.common.tbc}</span>}
+                    : <span className="btn btn-cta btn-block is-disabled" aria-disabled="true"><Icon name="call" size={18} />{t.common.comingSoon}</span>}
                 </div>
               )}
 

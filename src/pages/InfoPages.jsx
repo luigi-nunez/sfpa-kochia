@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from '../lib/router.jsx';
 import { useSite } from '../lib/site.jsx';
-import { tx, fmtDate, waLink } from '../lib/i18n.js';
+import { tx, fmtDate, fmtNum, waLink } from '../lib/i18n.js';
 import { SITE } from '../content/site.js';
-import { PROGRAMMES } from '../content/programmes.js';
+import { PROGRAMMES, FEATURED_PROGRAMMES } from '../content/programmes.js';
+import { ABOUT, DEPARTMENTS, PARTNERS } from '../content/org.js';
 import { NEWS, getNews } from '../content/news.js';
 import Icon from '../components/Icon.jsx';
 import { PageHero, SectionHead, ProgrammeCard, NewsCard, CtaBand, WaButton, Pending } from '../components/site/Blocks.jsx';
@@ -80,11 +81,13 @@ export function ProgrammesPage() {
           <div className={`wrap prog-detail${i % 2 ? ' rev' : ''}`}>
             <div className={`prog-art art-${p.id}`} aria-hidden="true"><Icon name={p.icon} size={88} strokeWidth={1.1} /></div>
             <div>
-              <span className="tag">{tx(p.tag, lang)}</span> {p.placeholder && <Pending kind="placeholder" />}
+              <div className="ncard-meta"><span className="tag">{tx(p.tag, lang)}</span><span className="tag tag-status">{x[p.status]}</span></div>
               <h2>{tx(p.title, lang)}</h2>
-              <p className={p.placeholder ? 'placeholder-text' : 'lead'}>{tx(p.desc, lang)}</p>
-              <h3 className="h4">{x.pillars}</h3>
-              <ul className="checks">{tx(p.pillars, lang).map((pl) => <li key={pl}><Icon name="check" size={18} />{pl}</li>)}</ul>
+              <p className="lead">{tx(p.desc, lang)}</p>
+              {tx(p.pillars, lang).length > 0 && <>
+                <h3 className="h4">{x.pillars}</h3>
+                <ul className="checks">{tx(p.pillars, lang).map((pl) => <li key={pl}><Icon name="check" size={18} />{pl}</li>)}</ul>
+              </>}
               {p.cta.type === 'whatsapp'
                 ? (wa() && <a className="btn btn-wa" href={wa(tx(p.cta.msg, lang))} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={18} />{tx(p.cta.label, lang)}</a>)
                 : <Link className="btn btn-cta" to={p.cta.to}>{tx(p.cta.label, lang)}</Link>}
@@ -103,7 +106,6 @@ export function NewsPage() {
       <PageHero eyebrow={t.news.eyebrow} title={t.news.title} sub={t.news.sub} />
       <section className="sec">
         <div className="wrap">
-          <p className="notice">{t.news.sampleNote}</p>
           <div className="news-list">{NEWS.map((n, i) => <NewsCard key={n.slug} n={n} latest={i === 0} />)}</div>
         </div>
       </section>
@@ -130,29 +132,60 @@ export function NewsArticle({ slug }) {
 }
 
 export function AboutPage() {
-  const { t } = useSite();
+  const { lang, t } = useSite();
   const a = t.about;
+  const year = (n) => n.toLocaleString(lang === 'ar' ? 'ar-SD' : 'en-US', { useGrouping: false });
   return (
     <>
       <PageHero eyebrow={a.eyebrow} title={a.title} sub={a.sub} />
       <section className="sec">
         <div className="wrap grid-2">
-          <div className="card mv"><span className="icon-badge"><Icon name="heart" /></span><h2 className="h3">{a.missionT}</h2><p className="placeholder-text">{a.mission}</p></div>
-          <div className="card mv"><span className="icon-badge"><Icon name="globe" /></span><h2 className="h3">{a.visionT}</h2><p className="placeholder-text">{a.vision}</p></div>
+          <div className="card mv"><span className="icon-badge"><Icon name="heart" /></span><h2 className="h3">{a.missionT}</h2><p>{tx(ABOUT.mission, lang)}</p></div>
+          <div className="card mv"><span className="icon-badge"><Icon name="globe" /></span><h2 className="h3">{a.visionT}</h2><p>{tx(ABOUT.vision, lang)}</p></div>
         </div>
       </section>
       <section className="sec sec-soft">
         <div className="wrap">
-          <SectionHead title={a.valuesT} sub={a.valuesNote} center />
-          <div className="grid-4">
-            {a.values.map((v) => <div key={v.t} className="card value"><span className="icon-badge"><Icon name={v.icon} /></span><h3>{v.t}</h3><p className="muted">{v.d}</p></div>)}
-          </div>
+          <SectionHead title={a.goalsT} center />
+          <ol className="goals">{ABOUT.goals.map((g, i) => <li key={g.en}><span className="step-n">{fmtNum(i + 1, lang)}</span><p>{tx(g, lang)}</p></li>)}</ol>
         </div>
       </section>
       <section className="sec">
         <div className="wrap grid-2">
-          <div><h2>{a.historyT}</h2><p className="placeholder-text">{a.history}</p></div>
-          <div className="card ippf"><h2 className="h3">{a.ippfT}</h2><p>{a.ippf}</p></div>
+          <div>
+            <h2>{a.historyT}</h2>
+            <p className="founded"><span>{a.founded}</span> <strong>{year(SITE.founded)}</strong></p>
+            <p>{tx(ABOUT.history, lang)}</p>
+          </div>
+          <div className="card ippf"><h2 className="h3">{a.ippfT}</h2><p>{tx(ABOUT.ippf, lang)}</p></div>
+        </div>
+      </section>
+      <section className="sec sec-soft" id="departments">
+        <div className="wrap">
+          <SectionHead title={a.deptT} sub={a.deptSub} center />
+          <div className="grid-3">
+            {DEPARTMENTS.items.map((d) => (
+              <div key={d.id} className="card dept">
+                <span className="icon-badge sm"><Icon name={d.icon} size={18} /></span>
+                <h3>{tx(d.name, lang)}</h3>
+                {d.desc && <p className="muted">{tx(d.desc, lang)}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="sec" id="partners">
+        <div className="wrap">
+          <SectionHead title={a.partnersT} sub={a.partnersSub} center />
+          <div className="grid-3">
+            {PARTNERS.items.map((p) => (
+              <div key={p.id} className="card partner">
+                <span className="tag">{tx(p.type, lang)}</span>
+                <h3>{tx(p.name, lang)}</h3>
+                <p className="muted">{tx(p.role, lang)}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
       <CtaBand title={a.visit}>
@@ -207,7 +240,8 @@ export function ContactPage() {
               {SITE.whatsapp && <li><span className="icon-badge sm wa"><Icon name="whatsapp" size={18} /></span><div><small>WhatsApp</small><a href={waLink(SITE.whatsapp, '')} dir="ltr" target="_blank" rel="noopener noreferrer">+{SITE.whatsapp}</a></div></li>}
               <li><span className="icon-badge sm"><Icon name="mail" size={18} /></span><div><small>{c.email}</small>{SITE.email ? <a href={`mailto:${SITE.email}`}>{SITE.email}</a> : <Pending />}</div></li>
               <li><span className="icon-badge sm"><Icon name="pin" size={18} /></span><div><small>{c.address}</small>{SITE.address ? tx(SITE.address, lang) : <Pending />}</div></li>
-              <li><span className="icon-badge sm"><Icon name="clock" size={18} /></span><div><small>{c.hours}</small>{SITE.hours ? tx(SITE.hours, lang) : <Pending />}</div></li>
+              <li><span className="icon-badge sm"><Icon name="clock" size={18} /></span><div><small>{c.hours}</small>{SITE.hours ? tx(SITE.hours, lang) : t.clinics.hoursAsk}</div></li>
+              {SITE.socials.length > 0 && <li><span className="icon-badge sm"><Icon name="globe" size={18} /></span><div><small>{c.social}</small><span className="social-links">{SITE.socials.map((so) => <a key={so.id} href={so.url} target="_blank" rel="noopener noreferrer">{so.id}</a>)}</span></div></li>}
             </ul>
             <Link to="/clinics" className="arrow-link">{t.nav.clinics}<Icon name="arrow" size={16} className="flip" /></Link>
           </aside>
@@ -242,7 +276,7 @@ export function DonatePage() {
       <section className="sec sec-soft">
         <div className="wrap">
           <SectionHead title={d.where} center />
-          <div className="grid-3">{PROGRAMMES.map((p) => <ProgrammeCard key={p.id} p={p} />)}</div>
+          <div className="grid-3">{FEATURED_PROGRAMMES.map((p) => <ProgrammeCard key={p.id} p={p} />)}</div>
         </div>
       </section>
       <CtaBand title={d.partnersT} sub={d.partners}>

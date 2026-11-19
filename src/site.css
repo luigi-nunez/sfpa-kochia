@@ -455,3 +455,56 @@ h1, h2, h3 { color: var(--txt); }
   .hdr, .ftr, .mbar, .donate-tab, .wa-fab, .no-print, .demo-banner { display: none !important; }
   .card { box-shadow: none; }
 }
+
+/* SFPA content integration (sudanfpa.org import) ---------------------------- */
+.art-reproductive-health { background: linear-gradient(140deg, #253D87, #5B78D6); }
+.art-women { background: linear-gradient(140deg, #A3171A, #E0484A); }
+.art-outreach { background: linear-gradient(140deg, #0B5E31, #2E9C61); }
+.art-gbv { background: linear-gradient(140deg, #4B2C82, #7C5BC2); }
+.tag-status { background: var(--surf); color: var(--txts); border: 1px solid var(--bdr); }
+.source-line { margin-top: 12px; font-size: .8125rem; color: var(--txtm); }
+.source-line a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.pending-line { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+
+.spoints { margin: 0 0 14px; font-size: .875rem; }
+.spoints-t { font-size: .8125rem; font-weight: 700; color: var(--txts); margin-bottom: 6px; }
+.spoints ul { list-style: none; display: grid; gap: 8px; }
+.spoints li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; align-items: center; padding: 8px 10px; border-radius: var(--r-md); background: var(--surf); }
+.spoints strong { font-weight: 600; }
+.map-pin.approx span { background: transparent; border: 3px dashed var(--cta); box-shadow: none; }
+:root[data-theme="dark"] .map-pin.approx span { border-color: #FF8A8C; }
+.map-legend { display: flex; gap: 8px; align-items: center; margin-top: 8px; font-size: .8125rem; color: var(--txtm); }
+.legend-pin { width: 14px; height: 14px; border: 2px dashed var(--cta); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); flex-shrink: 0; }
+.leaflet-popup-content small { color: #555; }
+
+.goals { list-style: none; display: grid; gap: 14px; max-width: 900px; margin-inline: auto; }
+@media (min-width: 760px) { .goals { grid-template-columns: 1fr 1fr; } }
+.goals li { display: flex; gap: 12px; align-items: flex-start; background: var(--bg); border: 1px solid var(--bdr); border-radius: var(--r-lg); padding: 16px; }
+.goals p { line-height: 1.55; }
+.founded { display: flex; gap: 10px; align-items: baseline; margin: 6px 0 12px; color: var(--txts); }
+.founded strong { font-size: 2rem; color: var(--p); line-height: 1; }
+.dept, .partner { display: grid; gap: 8px; align-content: start; }
+.dept h3, .partner h3 { font-size: 1rem; }
+.partner .tag { justify-self: start; }
+.social-links { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 999px) {
+  .city-filter { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .city-btn { flex-shrink: 0; white-space: nowrap; scroll-snap-align: start; }
+}
+.ftr-social { display: flex; flex-wrap: wrap; gap: 14px; }
+.ftr-social a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Call centre 1700, restored to header, home, drawer, and desktop floating actions */
+.hdr-call { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 4px 12px; border-radius: var(--r-full); border: 1.5px solid var(--cta); color: var(--cta); font-weight: 700; font-size: .875rem; white-space: nowrap; }
+.hdr-call:hover { background: var(--cta); color: #fff; }
+@media (max-width: 360px) { .hdr-call span { display: none; } .hdr-call { padding: 4px 9px; } }
+.call-fab { display: none; }
+@media (min-width: 900px) {
+  .call-fab { display: inline-flex; align-items: center; gap: 8px; position: fixed; bottom: 94px; inset-inline-end: 24px; z-index: 130; padding: 10px 16px; border-radius: var(--r-full); background: var(--bg); color: var(--cta); border: 2px solid var(--cta); font-weight: 700; box-shadow: 0 10px 26px rgba(0,0,0,.15); }
+}
+@media (min-width: 760px) { .quick { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .quick { grid-template-columns: repeat(4, 1fr); } }
+@media print { .hdr-call, .call-fab { display: none !important; } }
+/* With the full nav visible the header has no room; the floating 1700 button covers desktop. */
+@media (min-width: 1240px) { .hdr-call { display: none; } }
+@media (min-width: 1240px) and (max-width: 1699px) { .hnav-link { padding-inline: 6px; } .hdr-acts { gap: 6px; } }

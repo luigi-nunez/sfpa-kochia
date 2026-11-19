@@ -1,40 +1,37 @@
-// News. All items are SAMPLE content that demonstrates the layout; replace with SFPA stories.
-// CMS note: maps to a "post" type with category, date, excerpt, and body blocks.
+// News imported from https://sudanfpa.org/news/ (retrieved 19 November 2026). That page lists
+// two stories, both dated 8 July 2026. Titles follow SFPA's Arabic; bodies are short summaries of
+// what each story says, with nothing added. Each item keeps its original date and source URL.
+// SFPA's Arabic title spells قرى as قري; corrected here. SFPA's site gives no category, author, or photo credit; categories here are ours.
+// CMS note: maps to a "post" type with category, date, excerpt, body blocks, and source.
 export const NEWS = [
   {
-    slug: 'sample-clinic-hours',
-    sample: true,
-    date: '2026-11-10',
-    cat: { en: 'Announcement', ar: 'إعلان' },
-    title: { en: 'Sample: updated clinic opening hours', ar: 'نموذج: تحديث ساعات عمل العيادات' },
-    excerpt: { en: 'This is a sample announcement showing how service updates will appear. Replace it with a real SFPA notice.', ar: 'هذا إعلان نموذجي يوضح طريقة عرض تحديثات الخدمات. يُستبدل بإعلان حقيقي من الجمعية.' },
+    slug: 'women-health-workshop-khartoum',
+    date: '2026-07-08',
+    source: 'https://sudanfpa.org/news/women-health-workshop-khartoum/',
+    cat: { en: 'Awareness', ar: 'التوعية' },
+    title: { en: 'Health awareness workshops for women in Khartoum State', ar: 'ورشة توعية صحية للنساء في ولاية الخرطوم' },
+    excerpt: {
+      en: 'SFPA launched a series of awareness workshops on reproductive health and family planning, aiming to reach more than 500 women.',
+      ar: 'أطلقت الجمعية سلسلة ورش توعية تستهدف أكثر من ٥٠٠ امرأة حول الصحة الإنجابية وتنظيم الأسرة.',
+    },
     body: {
-      en: ['This sample shows how an announcement reads on its own page. Each paragraph is a separate block, so content from a future CMS can drop in without layout changes.', 'Clinic hours, closures, and new services are typical announcements.'],
-      ar: ['يوضح هذا النموذج طريقة عرض الإعلان في صفحته الخاصة. كل فقرة كتلة مستقلة، لذا يمكن إضافة المحتوى من نظام إدارة محتوى مستقبلاً دون تغيير التصميم.', 'من الإعلانات المعتادة: ساعات العمل والإغلاقات والخدمات الجديدة.'],
+      en: ['SFPA has launched a series of awareness workshops for women in Khartoum State. The workshops cover reproductive health and family planning and aim to reach more than 500 women.', 'The photo published with the story shows an awareness session at one of SFPA’s branches.'],
+      ar: ['أطلقت جمعية تنظيم الأسرة السودانية سلسلة ورش توعية للنساء في ولاية الخرطوم، تتناول الصحة الإنجابية وتنظيم الأسرة وتستهدف أكثر من ٥٠٠ امرأة.', 'وتُظهر الصورة المنشورة مع الخبر جلسة توعية في أحد فروع الجمعية.'],
     },
   },
   {
-    slug: 'sample-youth-campaign',
-    sample: true,
-    date: '2026-10-28',
-    cat: { en: 'Youth', ar: 'الشباب' },
-    title: { en: 'Sample: youth awareness campaign', ar: 'نموذج: حملة توعية للشباب' },
-    excerpt: { en: 'A sample story about a youth outreach activity. Replace with a real campaign report and photo.', ar: 'قصة نموذجية عن نشاط توعوي للشباب. تُستبدل بتقرير وصورة حملة حقيقية.' },
-    body: {
-      en: ['Campaign stories can include a photo, a short summary of what happened, and a call to action such as requesting a talk.'],
-      ar: ['يمكن أن تتضمن قصص الحملات صورة وملخصاً لما حدث ودعوة لاتخاذ إجراء مثل طلب محاضرة.'],
-    },
-  },
-  {
-    slug: 'sample-outreach',
-    sample: true,
-    date: '2026-10-05',
+    slug: 'mobile-clinic-kordofan',
+    date: '2026-07-08',
+    source: 'https://sudanfpa.org/news/mobile-clinic-kordofan/',
     cat: { en: 'Outreach', ar: 'الوصول المجتمعي' },
-    title: { en: 'Sample: mobile outreach visit', ar: 'نموذج: زيارة فريق متنقل' },
-    excerpt: { en: 'A sample report on a mobile clinic visit. Replace with real outreach updates.', ar: 'تقرير نموذجي عن زيارة عيادة متنقلة. يُستبدل بتحديثات حقيقية.' },
+    title: { en: 'Mobile clinic launched in remote villages of North Kordofan', ar: 'انطلاق العيادة المتنقلة في قرى نائية بشمال كردفان' },
+    excerpt: {
+      en: 'SFPA’s mobile clinic now travels to remote villages in North Kordofan, offering free health services to families.',
+      ar: 'العيادة المتنقلة تصل إلى القرى النائية وتقدم خدمات صحية مجانية للأسر السودانية.',
+    },
     body: {
-      en: ['Outreach reports help partners and donors see where services reach. Avoid publishing details that could identify clients or put teams at risk.'],
-      ar: ['تساعد تقارير الوصول المجتمعي الشركاء والمانحين على معرفة أماكن وصول الخدمات. تجنب نشر تفاصيل قد تكشف هوية المستفيدين أو تعرض الفرق للخطر.'],
+      en: ['SFPA has started running a mobile clinic in remote villages of North Kordofan. The clinic travels to the villages and provides free health services to Sudanese families.'],
+      ar: ['بدأت الجمعية تشغيل عيادة متنقلة في القرى النائية بولاية شمال كردفان، تصل إلى القرى وتقدم خدمات صحية مجانية للأسر السودانية.'],
     },
   },
 ];
